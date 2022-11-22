@@ -369,37 +369,58 @@ TODO: Linda
 **Returns**  
 - An array of trends created by user with given username (taken from session)  
 **Throws**  
-- `400` if `user` is not found in session  
-- `404` if `user` (taken from session) is not a recognized username of any user  
+- `401` if `user` is not found in session  
 
-#### `POST /api/trends` - Create a new trend  
+#### `GET /api/trends/:itemId` - Get set of points that reference a given item (data entry)  
+**Returns**  
+- An array of points  
+**Throws**  
+- `401` if the user is not logged in  
+- `403` if the user is not the author of the point  
+- `404` if `item` is invalid  
+
+#### `GET /api/trends` - Get trend (set of points) that includes a given set of items (log entries)  
 **Body**  
-- `category` _{string}_ - “Appointment,” “procedure,” or “medication;” for filtering purposes  
+- `items` _{array<Entry>}_ - Set of items to be plotted in the trend  
 - `title` _{string}_ - The title of the graph  
+- `start_date` _{date}_ - Date from which to start plotting the trend graph  
+- `end_date` _{date}_ - Date at which to finish plotting the trend graph  
+**Returns**  
+- An array of points (one trend)  
+**Throws**  
+- `400` if the items, title, start_date, or end_date is empty/a stream of empty spaces  
+- `401` if the user is not logged in  
+
+#### `POST /api/trends` - Add a point to a trend  
+**Body**  
+- `item` _{Entry}_ - Log entry to be added to trend  
+- `title` _{string}_ - The title of the graph  
+- `date` _{date}_ - The date when the entry was logged
 - `value` _{int}_ - The value of the condition scale (1-5) from the first point  
 **Returns**  
 - A success message  
-- A object with the created trend  
+- A object with the created point  
 **Throws**  
-- `403` if the user is not logged in  
-- `400` If the category, title, or value content is empty/a stream of empty spaces  
+- `400` If the item, title, date, or value content is empty/a stream of empty spaces  
+- `401` if the user is not logged in  
 
-#### `DELETE /api/trends/:trendId` - Delete an existing trend  
-**Returns**  
-- A success message  
-**Throws**  
-- `403` if the user is not logged in  
-- `403` if the user is not the creator of the trend  
-- `404` if the trendId is invalid  
-
-#### `PUT /api/trends/:trendId` - Update an existing trend  
+#### `PUT /api/trends/:pointId` - Update an existing point's label  
 **Body**  
-- `value` _{int}_ - A new value of the condition scale (1-5), from a new log  
+- `label` _{int}_ - A new value of the condition scale (1-5)  
+- `date` _{date}_ - A new date  
+- `title` _{string}_ - A new title of the point  
 **Returns**  
 - A success message  
-- An object with the updated trend  
+- An object with the updated point  
 **Throws**  
-- `403` if the user is not logged in  
-- `404` if the trendId is invalid  
-- `403` if the user is not the author of the trend  
-- `400` if the new point value is empty  
+- `400` if the new point value, date, or title is empty  
+- `401` if the user is not logged in  
+- `404` if the pointId is invalid  
+
+#### `DELETE /api/trends/:pointId` - Delete an existing point  
+**Returns**  
+- A success message  
+**Throws**  
+- `401` if the user is not logged in  
+- `403` if the user is not the creator of the point  
+- `404` if the pointId is invalid  
