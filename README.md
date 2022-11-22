@@ -384,7 +384,7 @@ TODO: Linda
 - `403` if the user is not logged in  
 - `400` If the category, title, or value content is empty/a stream of empty spaces  
 
-#### `DELETE /api/trends/:trendId?` - Delete an existing trend  
+#### `DELETE /api/trends/:trendId` - Delete an existing trend  
 **Returns**  
 - A success message  
 **Throws**  
@@ -392,7 +392,7 @@ TODO: Linda
 - `403` if the user is not the creator of the trend  
 - `404` if the trendId is invalid  
 
-#### `PUT /api/trends/:trendId?` - Update an existing trend  
+#### `PUT /api/trends/:trendId` - Update an existing trend  
 **Body**  
 - `value` _{int}_ - A new value of the condition scale (1-5), from a new log  
 **Returns**  
