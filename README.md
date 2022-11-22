@@ -12,7 +12,126 @@ TODO: description
 
 ### Shared Account
 
-TODO: Jeremiah
+#### `POST /api/accounts` - Create an new shared account
+
+**Body**
+
+- `name` _{string}_ - The account owner's name
+- `username` _{string}_ - The user's username
+- `password` _{string}_ - The user's password
+
+**Returns**
+
+- A success message
+- The created shared account's details
+
+**Throws**
+
+- `403` if there is a user already logged in
+- `400` if `name` is empty or missing
+- `400` if `username` or `password` is not in correct format or missing
+- `409` if `username` is already in use
+
+#### `PATCH /api/accounts` - Update a shared account's details
+
+**Body**
+
+- `name` _{string}_ - The new name
+
+**Returns**
+
+- A success message
+- The updated shared account details
+
+**Throws**
+
+- `401` if the user is not logged in
+- `400` if `name` is empty
+
+#### `DELETE /api/accounts` - Delete shared account
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `401` if the user is not logged in
+
+#### `POST /api/accounts/credentials` - Create an new credential for a shared account
+
+**Body**
+
+- `username` _{string}_ - The user's username
+- `password` _{string}_ - The user's password
+
+**Returns**
+
+- A success message
+- The created shared account's details
+
+**Throws**
+
+- `401` if the user is not logged in
+- `400` if `username` or `password` is not in correct format or missing
+- `409` if `username` is already in use
+
+#### `PATCH /api/accounts/credentials` - Update the session credential's details
+
+**Body**
+
+- `username` _{string}_ - The new username (optional)
+- `password` _{string}_ - The new password (optional)
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `401` if the user is not logged in
+- `400` if `username` or `password` is not in correct format
+- `400` if `username` and `password` are both missing
+
+#### `DELETE /api/accounts/credentials/:username` - Delete a credential from the shared account
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `401` if the user is not logged in
+- `404` if no credential with username `username` exists
+- `403` if the credential `username` doesn't belong to the user's account
+
+#### `POST /api/users/session` - Sign in user
+
+**Body**
+
+- `username` _{string}_ - The user's username
+- `password` _{string}_ - The user's password
+
+**Returns**
+
+- A success message
+- The shared account's details
+
+**Throws**
+
+- `403` if the user is already logged in
+- `400` if username or password is not in correct format or missing
+- `401` if the user login credentials are invalid
+
+#### `DELETE /api/users/session` - Sign out user
+
+**Returns**
+
+- A success message
+
+**Throws**
+
+- `401` if user is not logged in
 
 ### Insurance Card
 
