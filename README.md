@@ -16,9 +16,9 @@ TODO: document API routes
 
 This renders the `index.html` file that will be used to interact with the backend
 
-### Insurance Card 
+### Insurance Card
 
-### `GET /api/insuranceCards?owner=USERNAME` - Get insurance cards by owner
+#### `GET /api/insuranceCards?owner=USERNAME` - Get insurance cards by owner
 
 **Returns**
 
@@ -29,7 +29,7 @@ This renders the `index.html` file that will be used to interact with the backen
 - `400` if `owner` is not given
 - `404` if `owner` is not a recognized username of any user
 
-### `GET /api/insuranceCards?purpose=PURPOSE` - Get insurance cards by purpose
+#### `GET /api/insuranceCards?purpose=PURPOSE` - Get insurance cards by purpose
 
 **Returns**
 
@@ -43,13 +43,13 @@ This renders the `index.html` file that will be used to interact with the backen
 
 **Body**
 
-- `subscriber_name` _{string}_ - The insurance card's subscriber 
+- `subscriber_name` _{string}_ - The insurance card's subscriber
 - `member_id` _{string}_ - The insurance card's member ID
 - `group_number` _{string}_ - The insurance card's group number
 - `plan_number` _{string}_ - The insurance card's plan number
-- `plan_type` _{string}_ - The insurance card's plan type 
-- `purpose` _{string}_ - The insurance card's purpose 
-- `notes` _{string}_ - Notes about the insurance card 
+- `plan_type` _{string}_ - The insurance card's plan type
+- `purpose` _{string}_ - The insurance card's purpose
+- `notes` _{string}_ - Notes about the insurance card
 
 **Returns**
 
@@ -65,13 +65,13 @@ This renders the `index.html` file that will be used to interact with the backen
 
 **Body**
 
-- `subscriber_name` _{string}_ - The insurance card's subscriber 
+- `subscriber_name` _{string}_ - The insurance card's subscriber
 - `member_id` _{string}_ - The insurance card's member ID
 - `group_number` _{string}_ - The insurance card's group number
 - `plan_number` _{string}_ - The insurance card's plan number
-- `plan_type` _{string}_ - The insurance card's plan type 
-- `purpose` _{string}_ - The insurance card's purpose 
-- `notes` _{string}_ - Notes about the insurance card 
+- `plan_type` _{string}_ - The insurance card's plan type
+- `purpose` _{string}_ - The insurance card's purpose
+- `notes` _{string}_ - Notes about the insurance card
 
 **Returns**
 
@@ -95,9 +95,9 @@ This renders the `index.html` file that will be used to interact with the backen
 - `403` if the user is not the owner of the insurance card
 - `404` if the insuranceCardId is invalid
 
-### Medical Contact 
+### Medical Contact
 
-### `GET /api/medicalContacts?owner=USERNAME` - Get medical contacts by owner
+#### `GET /api/medicalContacts?owner=USERNAME` - Get medical contacts by owner
 
 **Returns**
 
@@ -112,13 +112,13 @@ This renders the `index.html` file that will be used to interact with the backen
 
 **Body**
 
-- `active` _{string}_ - Whether the medical contact is in use or not 
-- `title` _{string}_ - The medical contact's title 
+- `active` _{string}_ - Whether the medical contact is in use or not
+- `title` _{string}_ - The medical contact's title
 - `first_name` _{string}_ - The medical contact's first name
-- `last_name` _{string}_ - The medical contact's last name 
-- `hospital` _{string}_ - The medical contact's associated hospital  
-- `specialty` _{string}_ - The medical contact's specialty 
-- `phone_number` _{string}_ - The medical contact's phone number 
+- `last_name` _{string}_ - The medical contact's last name
+- `hospital` _{string}_ - The medical contact's associated hospital
+- `specialty` _{string}_ - The medical contact's specialty
+- `phone_number` _{string}_ - The medical contact's phone number
 - `notes` _{string}_ - Notes about the medical contact
 
 **Returns**
@@ -135,13 +135,13 @@ This renders the `index.html` file that will be used to interact with the backen
 
 **Body**
 
-- `active` _{string}_ - Whether the medical contact is in use or not 
-- `title` _{string}_ - The medical contact's title 
+- `active` _{string}_ - Whether the medical contact is in use or not
+- `title` _{string}_ - The medical contact's title
 - `first_name` _{string}_ - The medical contact's first name
-- `last_name` _{string}_ - The medical contact's last name 
-- `hospital` _{string}_ - The medical contact's associated hospital  
-- `specialty` _{string}_ - The medical contact's specialty 
-- `phone_number` _{string}_ - The medical contact's phone number 
+- `last_name` _{string}_ - The medical contact's last name
+- `hospital` _{string}_ - The medical contact's associated hospital
+- `specialty` _{string}_ - The medical contact's specialty
+- `phone_number` _{string}_ - The medical contact's phone number
 - `notes` _{string}_ - Notes about the medical contact
 
 **Returns**
@@ -166,9 +166,9 @@ This renders the `index.html` file that will be used to interact with the backen
 - `403` if the user is not the owner of the medical contacts
 - `404` if the medicalContactId is invalid
 
-### Medication 
+### Medication
 
-### `GET /api/medications?owner=USERNAME` - Get medications by owner
+#### `GET /api/medications?owner=USERNAME` - Get medications by owner
 
 **Returns**
 
@@ -179,7 +179,7 @@ This renders the `index.html` file that will be used to interact with the backen
 - `400` if `owner` is not given
 - `404` if `owner` is not a recognized username of any user
 
-### `GET /api/medications?name=NAME` - Get medications by name
+#### `GET /api/medications?name=NAME` - Get medications by name
 
 **Returns**
 
@@ -189,12 +189,11 @@ This renders the `index.html` file that will be used to interact with the backen
 
 - `400` if `NAME` is not given
 
-
 #### `POST /api/medications` - Create a new medication
 
 **Body**
 
-- `active` _{string}_ - Whether the medication is in use or not 
+- `active` _{string}_ - Whether the medication is in use or not
 - `name` _{string}_ - The medication's name
 - `generic_name` _{string}_ - The medication's generic compound name
 - `dose` _{string}_ - The medication's dose
@@ -214,7 +213,7 @@ This renders the `index.html` file that will be used to interact with the backen
 
 **Body**
 
-- `active` _{string}_ - Whether the medication is in use or not 
+- `active` _{string}_ - Whether the medication is in use or not
 - `name` _{string}_ - The medication's name
 - `generic_name` _{string}_ - The medication's generic compound name
 - `dose` _{string}_ - The medication's dose
