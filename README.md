@@ -10,11 +10,9 @@ TODO: description
 
 ## API Routes
 
-TODO: document API routes
+### Shared Account
 
-#### `GET /`
-
-This renders the `index.html` file that will be used to interact with the backend
+TODO: Jeremiah
 
 ### Insurance Card
 
@@ -240,3 +238,11 @@ This renders the `index.html` file that will be used to interact with the backen
 - `403` if the user is not logged in
 - `403` if the user is not the owner of the medication
 - `404` if the medicationId is invalid
+
+### Entry
+
+TODO: Linda
+
+### Trend
+
+TODO: Olivia
