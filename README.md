@@ -52,7 +52,7 @@ TODO: Jeremiah
 **Returns**
 
 - A success message
-- A object with the created insurance card
+- An object with the created insurance card
 
 **Throws**
 
@@ -74,7 +74,7 @@ TODO: Jeremiah
 **Returns**
 
 - A success message
-- A object with the edited insurance card
+- An object with the edited insurance card
 
 **Throws**
 
@@ -122,7 +122,7 @@ TODO: Jeremiah
 **Returns**
 
 - A success message
-- A object with the created medical contact
+- An object with the created medical contact
 
 **Throws**
 
@@ -145,7 +145,7 @@ TODO: Jeremiah
 **Returns**
 
 - A success message
-- A object with the edited medical contact
+- An object with the edited medical contact
 
 **Throws**
 
@@ -200,7 +200,7 @@ TODO: Jeremiah
 **Returns**
 
 - A success message
-- A object with the created medication
+- An object with the created medication
 
 **Throws**
 
@@ -220,7 +220,7 @@ TODO: Jeremiah
 **Returns**
 
 - A success message
-- A object with the edited medication
+- An object with the edited medication
 
 **Throws**
 
