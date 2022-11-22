@@ -362,6 +362,44 @@ TODO: description
 
 TODO: Linda
 
+
 ### Trend
 
-TODO: Olivia
+#### `GET /api/trends` - Get all trends for a given user  
+**Returns**  
+- An array of trends created by user with given username (taken from session)  
+**Throws**  
+- `400` if `user` is not found in session  
+- `404` if `user` (taken from session) is not a recognized username of any user  
+
+#### `POST /api/trends` - Create a new trend  
+**Body**  
+- `category` _{string}_ - “Appointment,” “procedure,” or “medication;” for filtering purposes  
+- `title` _{string}_ - The title of the graph  
+- `value` _{int}_ - The value of the condition scale (1-5) from the first point  
+**Returns**  
+- A success message  
+- A object with the created trend  
+**Throws**  
+- `403` if the user is not logged in  
+- `400` If the category, title, or value content is empty/a stream of empty spaces  
+
+#### `DELETE /api/trends/:trendId?` - Delete an existing trend  
+**Returns**  
+- A success message  
+**Throws**  
+- `403` if the user is not logged in  
+- `403` if the user is not the creator of the trend  
+- `404` if the trendId is invalid  
+
+#### `PUT /api/trends/:trendId?` - Update an existing trend  
+**Body**  
+- `value` _{int}_ - A new value of the condition scale (1-5), from a new log  
+**Returns**  
+- A success message  
+- An object with the updated trend  
+**Throws**  
+- `403` if the user is not logged in  
+- `404` if the trendId is invalid  
+- `403` if the user is not the author of the trend  
+- `400` if the new point value is empty  
