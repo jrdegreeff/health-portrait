@@ -401,19 +401,11 @@ TODO: description
 **Returns**  
 - An array of trends created by user with given username (taken from session)  
 **Throws**  
-- `401` if `user` is not found in session  
-
-#### `GET /api/trends/:itemId` - Get set of points that reference a given item (data entry)  
-**Returns**  
-- An array of points  
-**Throws**  
-- `401` if the user is not logged in  
-- `403` if the user is not the author of the point  
-- `404` if `item` is invalid  
+- `401` if the user is not logged in
 
 #### `GET /api/trends` - Get trend (set of points) that includes a given set of items (log entries)  
 **Body**  
-- `items` _{array<Entry>}_ - Set of items to be plotted in the trend  
+- `items` _{array<string>}_ - Set of items to be plotted in the trend  
 - `title` _{string}_ - The title of the graph  
 - `start_date` _{date}_ - Date from which to start plotting the trend graph  
 - `end_date` _{date}_ - Date at which to finish plotting the trend graph  
@@ -425,7 +417,7 @@ TODO: description
 
 #### `POST /api/trends` - Add a point to a trend  
 **Body**  
-- `item` _{Entry}_ - Log entry to be added to trend  
+- `item` _{string}_ - Log entry to be added to trend  
 - `title` _{string}_ - The title of the graph  
 - `date` _{date}_ - The date when the entry was logged
 - `value` _{int}_ - The value of the condition scale (1-5) from the first point  
@@ -434,11 +426,13 @@ TODO: description
 - A object with the created point  
 **Throws**  
 - `400` If the item, title, date, or value content is empty/a stream of empty spaces  
+- `400` If the title is not one of "pain," "happiness," or "cognition"  
+- `400` If the value is not one of {1, 2, 3, 4, 5}
 - `401` if the user is not logged in  
 
-#### `PUT /api/trends/:pointId` - Update an existing point's label  
+#### `PATCH /api/trends/:pointId` - Update an existing point's label  
 **Body**  
-- `label` _{int}_ - A new value of the condition scale (1-5)  
+- `value` _{int}_ - A new value of the condition scale (1-5)  
 - `date` _{date}_ - A new date  
 - `title` _{string}_ - A new title of the point  
 **Returns**  
@@ -446,7 +440,10 @@ TODO: description
 - An object with the updated point  
 **Throws**  
 - `400` if the new point value, date, or title is empty  
+- `400` If the title is not one of "pain," "happiness," or "cognition"  
+- `400` If the value is not one of {1, 2, 3, 4, 5}  
 - `401` if the user is not logged in  
+- `402` if the user is not the creator of the point  
 - `404` if the pointId is invalid  
 
 #### `DELETE /api/trends/:pointId` - Delete an existing point  
