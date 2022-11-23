@@ -343,7 +343,56 @@ TODO: description
 
 ### Entry
 
-TODO: Linda
+#### `GET /api/entries` - Get all entries of the user
+
+**Returns**
+- The array of entries by the user sorted in descending order by date
+
+**Throws** 
+- `401` if the user is not logged in
+
+#### `POST /api/entries` - Make a new entry in the log
+
+**Body**
+- `type` _{string}_ - The type of the log entry
+- `detail` _{string}_ - The detail of the log entry
+- `notes` _{string}_ - The log entry's notes (optional)
+- `date` _{Date}_ - The date associated with the log entry (optional)
+
+**Returns**
+- A success message
+- The newly created entry object
+
+**Throws** 
+- `401` if the user is not logged in
+- `400` if the `type` or `detail` is empty or a stream of empty spaces
+
+#### `PATCH /api/entries/:entryId` - Editing an entry in the log
+
+**Body**
+- `type` _{string}_ - The type of the log entry (optional)
+- `detail` _{string}_ - The detail of the log entry (optional)
+- `notes` _{string}_ - The log entry's notes (optional)
+- `date` _{Date}_ - The date associated with the log entry (optional)
+
+**Returns**
+- A success message
+- The updated entry object
+
+**Throws** 
+- `401` if the user is not logged in
+- `404` if the `entryId` is invalid
+- `403` if the user is not the owner of the entry
+
+#### `DELETE /api/entries/:entryId` - Delete an entry in the log
+
+**Returns**
+- A success message
+
+**Throws** 
+- `401` if the user is not logged in
+- `404` if the `entryId` is invalid
+- `403` if the user is not the owner of the entry
 
 
 ### Trend
