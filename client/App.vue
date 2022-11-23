@@ -1,18 +1,8 @@
 <template>
   <div id="app">
-    <NavBar />
+    <NavBar/>
     <div id="content">
-      <header>
-        <section class="alerts">
-          <article
-            v-for="(status, alert, index) in $store.state.alerts"
-            :key="index"
-            :class="status"
-          >
-            <p>{{ alert }}</p>
-          </article>
-        </section>
-      </header>
+      <Header/>
       <!-- https://stackoverflow.com/questions/40404787/best-practice-for-reacting-to-params-changes-with-vue-router -->
       <router-view :key="$route.fullPath" />
     </div>
@@ -21,10 +11,11 @@
 
 <script lang="ts">
 import NavBar from '@/components/layout/NavBar.vue';
+import Header from '@/components/layout/Header.vue';
 
 export default {
   name: 'App',
-  components: {NavBar},
+  components: {NavBar, Header},
   beforeCreate() {
     // Sync stored username to current session
     fetch('/api/accounts/session', {
@@ -73,19 +64,15 @@ body {
 }
 
 #content > header {
-  display: flex;
-  align-items: center;
-  position: relative;
-}
-
-#content > header .alerts {
-  width: 25%;
+  padding: 2em;
 }
 
 #content > main {
   flex-grow: 1;
   padding: 2em;
 }
+
+/* TODO: responsive CSS */
 
 section + hr {
   margin: 1rem 0;
@@ -176,34 +163,4 @@ input {
   padding: 0.5rem;
   margin: 0.5rem;
 }
-
-.alerts {
-  position: absolute;
-  z-index: 99;
-  bottom: 0;
-  top: 100%;
-  left: 50%;
-  transform: translate(-50%, 10%);
-  width: 100%;
-  text-align: center;
-}
-
-.alerts article {
-  border-radius: 5px;
-  padding: 10px 20px;
-  color: #fff;
-}
-
-.alerts p {
-  margin: 0;
-}
-
-.alerts .error {
-  background-color: rgb(166, 23, 33);
-}
-
-.alerts .success {
-  background-color: rgb(45, 135, 87);
-}
-
 </style>

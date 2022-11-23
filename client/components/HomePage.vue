@@ -29,3 +29,12 @@
     <hr/>
   </main>
 </template>
+
+<script lang="ts">
+export default {
+  name: 'HomePage',
+  mounted() {
+    this.$store.commit('setTitle', {title: 'Home', enableBack: false});
+  },
+};
+</script>

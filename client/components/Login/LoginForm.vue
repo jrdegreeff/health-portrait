@@ -18,10 +18,10 @@ export default {
       ],
       title: 'Log in',
       callback: () => {
-        this.$router.push({name: 'Home'});
         this.$store.commit('alert', {
           message: 'You are now logged in!', status: 'success'
         });
+        this.$router.push({name: 'Home'});
       }
     };
   }
