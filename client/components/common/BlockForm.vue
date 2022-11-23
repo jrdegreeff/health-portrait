@@ -3,7 +3,8 @@
 
 <template>
   <form @submit.prevent="submit">
-    <h3>{{ title }}</h3>
+    <fieldset>
+    <legend>{{ title }}</legend>
     <article
       v-if="fields.length"
     >
@@ -11,41 +12,40 @@
         v-for="field in fields"
         :key="field.id"
       >
-        <label
-          v-if="!field.hidden"
-          :for="field.id"
-        >
-          {{ field.label }}:
-        </label>
-        <input
-          v-if="field.hidden"
-          type=hidden
-          :name="field.id"
-          :value="field.value"
-        >
-        <textarea
-          v-else-if="field.id === 'content'"
-          :name="field.id"
-          :value="field.value"
-          @input="field.value = $event.target.value"
-        />
-        <input
-          v-else
-          :type="field.id === 'password' ? 'password' : 'text'"
-          :name="field.id"
-          :value="field.value"
-          @input="field.value = $event.target.value"
-        >
+        <span>
+          <label
+            v-if="!field.hidden"
+            :for="field.id"
+          >
+            {{ field.label }}:
+          </label>
+          <input
+            v-if="field.hidden"
+            type=hidden
+            :name="field.id"
+            :value="field.value"
+          >
+          <textarea
+            v-else-if="field.id === 'content'"
+            :name="field.id"
+            :value="field.value"
+            @input="field.value = $event.target.value"
+          />
+          <input
+            v-else
+            :type="field.id === 'password' ? 'password' : 'text'"
+            :name="field.id"
+            :value="field.value"
+            @input="field.value = $event.target.value"
+          >
+        </span>
       </div>
     </article>
-    <article v-else>
-      <p>{{ content }}</p>
-    </article>
-    <button
-      type="submit"
-    >
+    <p v-else>{{ content }}</p>
+    <button class="btn-primary" type="submit">
       {{ title }}
     </button>
+    </fieldset>
     <section class="alerts">
       <article
         v-for="(status, alert, index) in alerts"
@@ -59,7 +59,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'BlockForm',
   data() {
@@ -120,38 +119,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-form {
-  border: 1px solid #111;
-  padding: 0.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  position: relative;
-  margin-bottom: -1px;
-}
-
-article > div {
-  display: flex;
-  flex-direction: column;
-}
-
-form > article p {
-  margin: 0;
-}
-
-form h3,
-form > * {
-  margin: 0.3em 0;
-}
-
-form h3 {
-  margin-top: 0;
-}
-
-textarea {
-   font-family: inherit;
-   font-size: inherit;
-}
-</style>

@@ -1,13 +1,30 @@
 <template>
   <div id="app">
-    <!-- https://stackoverflow.com/questions/40404787/best-practice-for-reacting-to-params-changes-with-vue-router -->
-    <router-view :key="$route.fullPath" />
+    <NavBar />
+    <div id="content">
+      <header>
+        <section class="alerts">
+          <article
+            v-for="(status, alert, index) in $store.state.alerts"
+            :key="index"
+            :class="status"
+          >
+            <p>{{ alert }}</p>
+          </article>
+        </section>
+      </header>
+      <!-- https://stackoverflow.com/questions/40404787/best-practice-for-reacting-to-params-changes-with-vue-router -->
+      <router-view :key="$route.fullPath" />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
+import NavBar from '@/components/layout/NavBar.vue';
+
 export default {
   name: 'App',
+  components: {NavBar},
   beforeCreate() {
     // Sync stored username to current session
     fetch('/api/accounts/session', {
@@ -15,6 +32,9 @@ export default {
     }).then(res => res.json()).then(async res => {
       await this.$store.commit('setUsername', res.account ? res.account.username : null);
     });
+
+    // Clear alerts on page refresh
+    this.$store.state.alerts = {};
   }
 };
 </script>
@@ -33,138 +53,117 @@ export default {
 }
 
 body {
-  height: 100vh;
   font-family: 'Inter', sans-serif;
-  margin: 0;
-  font-size: 1.1rem;
-  padding: 2rem;
-}
-
-h1 {
-  margin-top: 0rem;
-}
-
-@media (max-width: 30rem) {
-  main {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-  }
-}
-
-.sidenav {
-  height: 100%; 
-  width: 30%; 
-  position: fixed; 
-  z-index: 1; 
-  top: 0; 
-  left: 0;
-  background-color: var(--primaryGray); 
-  overflow-x: hidden; 
+  font-size: 1.2rem;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 2rem;
-  padding: 1rem 1rem 1rem 3rem;
+  margin: 0;
 }
 
-.sidenav h1 {
-  font-weight: 600;
+#app {
+  flex-grow: 1;
+  display: flex;
 }
 
-.sidenav a {
-  text-decoration: none;
-  color: black;
+#content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
-.navGroup ul {
-  margin: 0rem !important;
+#content > header {
+  display: flex;
+  align-items: center;
+  position: relative;
 }
 
-.navGroup li {
-  padding-bottom: 1rem;
-  text-align: left;
-  font-size: 1.4rem;
+#content > header .alerts {
+  width: 25%;
 }
 
-.navItem {
-  color: black;
+#content > main {
+  flex-grow: 1;
+  padding: 2em;
 }
 
-.navItem:hover {
-  color: var(--darkGray);
-  cursor: pointer;
+section + hr {
+  margin: 1rem 0;
+  width: calc(100% + 2rem);
+  transform: translateX(-1rem);
 }
 
-.content {
-  margin-left: 32% !important;
-  width: 66%;
+section > header {
+  margin-bottom: 1rem;
 }
 
-@media (max-width: 60rem) {
-  .main, #app {
-    display: flex;
-    justify-content: center;
-    margin: 1rem;
-  }
-
-  .content {
-    width: 90%;
-    text-align: center;
-    margin: auto !important;
-  }
+section > header:last-child {
+  margin-bottom: 0;
 }
 
-@media (min-width: 60rem) {
-
+header > h1,
+header > h2,
+header > h3,
+header > h4,
+header > h5,
+header > h6 {
+  margin: 0;
 }
 
-.btn {
+a {
+  color: inherit;
+}
+
+button {
   border: 1px solid black;
   border-radius: 1rem;
   padding: 0.5rem 2rem;
-  margin: 1rem;
 }
 
-.btn:hover {
+button:hover {
   cursor: pointer;
 }
 
-.btnPrimary {
+button.btn-primary {
   background-color: var(--primaryGray);
 }
 
-.btnPrimary:hover {
+button.btn-primary:hover {
   background-color: var(--lightPrimaryGray);
 }
 
-.btnSecondary {
+button.btn-secondary {
   background-color: var(--secondaryGray);
-  border: none;
-  padding: 1rem 2rem;
+  border-color: rgba(0,0,0,0); /* transparent border to maintain button size */
 }
 
-.btnSecondary:hover {
+button.btn-secondary:hover {
   background-color: var(--lightSecondaryGray);
 }
 
-.btnTertiary {
+button.btn-tertiary {
   background-color: white;
-  border-radius: 15px;
-  padding: 0.5rem 0.7rem;
 }
 
-.btnTertiary:hover {
+button.btn-tertiary:hover {
   background-color: var(--lightSecondaryGray);
 }
 
 fieldset {
   border: 1px solid black;
+  margin: 1rem 0 0 0;
 }
 
-legend {
+fieldset > legend {
   font-weight: bold;
+}
+
+fieldset > span {
+  display: block;
+}
+
+fieldset > article + button {
+  margin-top: 1rem;
 }
 
 label {
