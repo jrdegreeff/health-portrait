@@ -7,7 +7,8 @@ import http from 'http';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import MongoStore from 'connect-mongo';
-// import * as userValidator from '../server/user/middleware';
+import * as accountValidator from '../server/account/middleware';
+import {accountRouter} from '../server/account/router';
 
 // Load environmental variables
 dotenv.config({});
@@ -50,23 +51,26 @@ app.use(express.urlencoded({extended: false}));
 
 // Initialize cookie session
 // https://www.npmjs.com/package/express-session#options
-// app.use(session({
-//   secret: '61040', // Should generate a real secret
-//   resave: true,
-//   saveUninitialized: false,
-//   store: MongoStore.create({
-//     clientPromise: client,
-//     dbName: 'sessions',
-//     autoRemove: 'interval',
-//     autoRemoveInterval: 10 // Minutes
-//   })
-// }));
+
+// @ts-ignore
+const store = MongoStore.create({
+  clientPromise: client,
+  dbName: 'sessions',
+  autoRemove: 'interval',
+  autoRemoveInterval: 10 // Minutes
+});
+app.use(session({
+  secret: '61040', // Should generate a real secret
+  resave: true,
+  saveUninitialized: false,
+  store
+}));
 
 // This makes sure that if a user is logged in, they still exist in the database
-// app.use(userValidator.isCurrentSessionUserExists);
+app.use(accountValidator.isCurrentSessionAccountExists);
 
 // Add routers from routes folder
-// TODO
+app.use('/api/accounts', accountRouter);
 
 const isProduction = process.env.NODE_ENV === 'production';
 const vuePath = path.resolve(__dirname, "..", "client", isProduction ? "dist" : "public");

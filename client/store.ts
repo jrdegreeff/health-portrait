@@ -9,13 +9,28 @@ Vue.use(Vuex);
  */
 const store = new Vuex.Store({
   state: {
-    // TODO
+    title: "",
+    enableBack: false,
+    username: null,
+    alerts: {},
   },
   mutations: {
-    // TODO
+    setTitle(state, payload) {
+      state.title = payload.title;
+      state.enableBack = payload.enableBack;
+    },
+    setUsername(state, username) {
+      state.username = username;
+    },
+    alert(state, payload) {
+      Vue.set(state.alerts, payload.message, payload.status);
+      setTimeout(() => {
+        Vue.delete(state.alerts, payload.message);
+      }, 3000);
+    },
   },
   actions: {
-    // TODO
+    
   },
   // Store data across page refreshes, only discard on browser close
   plugins: [createPersistedState()]
