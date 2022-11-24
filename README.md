@@ -167,7 +167,7 @@ TODO: description
 - `401` if the user is not logged in
 - `400` If the subscriber_name or purpose is empty or a stream of empty spaces
 
-#### `PATCH /api/insurance-cards/:insuranceCardId?` - Edit the information of an insurance card
+#### `PATCH /api/insurance-cards/:insuranceCardId` - Edit the information of an insurance card
 
 **Body**
 
@@ -191,7 +191,7 @@ TODO: description
 - `400` If the subscriber_name or purpose is empty or a stream of empty spaces
 - `404` if the insuranceCardId is invalid
 
-#### `DELETE /api/insuranceCards/:insuranceCardId?` - Delete an insurance card
+#### `DELETE /api/insuranceCards/:insuranceCardId` - Delete an insurance card
 
 **Returns**
 
@@ -238,7 +238,7 @@ TODO: description
 - `401` if the user is not logged in
 - `400` If the first_name, last_name, or phone_number is empty or a stream of empty spaces
 
-#### `PATCH /api/medical-contacts/:medicalContactId?` - Edit the information of a medical contact
+#### `PATCH /api/medical-contacts/:medicalContactId` - Edit the information of a medical contact
 
 **Body**
 
@@ -263,7 +263,7 @@ TODO: description
 - `400` If the first_name, last_name, or phone_number is empty or a stream of empty spaces
 - `404` if the medicalContactId is invalid
 
-#### `DELETE /api/medical-contacts/:medicalContactId?` - Deactivates a medical contact
+#### `DELETE /api/medical-contacts/:medicalContactId` - Deactivates a medical contact
 
 **Returns**
 
@@ -307,7 +307,7 @@ TODO: description
 - `401` if the user is not logged in
 - `400` If the name, generic_name, or dose is empty or a stream of empty spaces
 
-#### `PATCH /api/medications/:medicationId?` - Edit the information of a medication
+#### `PATCH /api/medications/:medicationId` - Edit the information of a medication
 
 **Body**
 
@@ -328,7 +328,7 @@ TODO: description
 - `400` If the name, generic_name, or dose is empty or a stream of empty spaces
 - `404` if the medicationId is invalid
 
-#### `DELETE /api/medications/:medicationId?` - Deactivates a medication
+#### `DELETE /api/medications/:medicationId` - Deactivates a medication
 
 **Returns**
 
