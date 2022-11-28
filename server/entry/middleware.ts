@@ -18,20 +18,33 @@ const isValidEntry = async (req: Request, res: Response, next: NextFunction) => 
 
 const isValidEntryDetail = async (req: Request, res: Response, next: NextFunction) => {
     const {type, detail} = req.body as {type: string, detail: string};
-    if (!type || !detail || !type.trim || !detail.trim) {
+    const emptyRegex = /^\w+$/i;
+    if (!emptyRegex.test(type) || !emptyRegex.test(detail)) {
         res.status(400).json({
             error: 'Entry type/detail must be at least one character long.'
         });
         return;
     }
 
-    // TODO: check if type is in set of specified types
+    if (!(type in ["Appointment", "Medication", "Other"])) {
+        res.status(400).json({
+            error: 'Entry type must be either "Appointment", "Medication", or "Other".'
+        });
+        return;
+    }
 
     next();
 }
 
 const isValidEntryDate = async (req: Request, res: Response, next: NextFunction) => {
-    // TODO
+    try {
+        new Date(req.body.date);  
+    } catch (e) {
+        res.status(400).json({
+            error: 'Invalid format for entry date: must be YYYY/MM/DD.'
+        });
+        return;
+    }
 
     next();
 }
@@ -41,17 +54,29 @@ const isValidEntryModifier = async (req: Request, res: Response, next: NextFunct
     const accountId = entry.owner._id;
     if (req.session.accountId !== accountId.toString()) {
       res.status(403).json({
-        error: 'Cannot modify other users\' entries.'
+        error: 'Cannot modify other accounts\' entries.'
       });
       return;
     }
   
     next();
-  };
+}
+
+const isValidEntryScale = (req: Request, res: Response, next: NextFunction) => {
+    if (!(req.body.scale in [1,2,3,4,5])) {
+        res.status(400).json({
+            error: 'Scale must be a valid integer between 1 and 5.'
+        });
+        return;
+    }
+
+    next();
+}
 
 export {
     isValidEntry,
     isValidEntryDetail,
     isValidEntryDate,
     isValidEntryModifier,
+    isValidEntryScale,
 };

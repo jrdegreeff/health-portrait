@@ -74,7 +74,7 @@ router.post(
  * @param {string} date
  * @return {EntryResponse} - The updated entry object
  * @throws {401} if the account is not logged in
- * @throws {404} if the entryId is invald
+ * @throws {404} if the entryId is invalid
  * @throws {403} if the account is not the owner of the entry
  * @throws {400} - If type, detail, notes, or date is not in correct format
  *
@@ -105,7 +105,7 @@ router.patch(
  *
  * @return {string} - A success message
  * @throws {401} if the account is not logged in
- * @throws {404} if the entryId is invald
+ * @throws {404} if the entryId is invalid
  * @throws {403} if the account is not the owner of the entry
  */
 router.delete(
