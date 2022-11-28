@@ -9,6 +9,7 @@ import dotenv from 'dotenv';
 import MongoStore from 'connect-mongo';
 import * as accountValidator from '../server/account/middleware';
 import {accountRouter} from '../server/account/router';
+import {trendRouter} from '../server/trend/router';
 
 // Load environmental variables
 dotenv.config({});
@@ -71,6 +72,7 @@ app.use(accountValidator.isCurrentSessionAccountExists);
 
 // Add routers from routes folder
 app.use('/api/accounts', accountRouter);
+app.use('/api/trends', trendRouter);
 
 const isProduction = process.env.NODE_ENV === 'production';
 const vuePath = path.resolve(__dirname, "..", "client", isProduction ? "dist" : "public");
