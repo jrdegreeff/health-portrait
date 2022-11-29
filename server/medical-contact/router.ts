@@ -1,20 +1,12 @@
-// import type {NextFunction, Request, Response} from 'express';
-// import express from 'express';
-// import FreetCollection from './collection';
-// import * as userValidator from '../user/middleware';
-// import * as freetValidator from '../freet/middleware';
-// import * as util from './util';
+import type {NextFunction, Request, Response} from 'express';
+import express from 'express';
+import MedicalContactCollection from './collection';
+import * as accountValidator from './middleware';
+import * as medicalContactValidator from '../medical-contact/middleware';
+import * as util from './util';
 
-// const router = express.Router();
+const router = express.Router();
 
-// /**
-//  * Get all the freets
-//  *
-//  * @name GET /api/freets
-//  *
-//  * @return {FreetResponse[]} - A list of all the freets sorted in descending
-//  *                      order by date modified
-//  */
 // /**
 //  * Get freets by author.
 //  *
@@ -131,4 +123,4 @@
 //   }
 // );
 
-// export {router as freetRouter};
+export {router as medicalContactRouter};
