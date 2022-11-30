@@ -20,15 +20,34 @@ const isMedicalContactExists = async (req: Request, res: Response, next: NextFun
 };
 
 /**
+ * Checks if a medical contact with medicalContactId in req.params is active
+ */
+ const isMedicalContactActive = async (req: Request, res: Response, next: NextFunction) => {
+  const validFormat = Types.ObjectId.isValid(req.params.medicalContactId);
+  const medicalContact = validFormat ? await MedicalContactCollection.findOne(req.params.medicalContactId) : '';
+  if (!medicalContact.active) {
+    res.status(409).json({
+      error: `Medical contact with medical contact ID ${req.params.medicalContactId} is already deactivated.`
+    });
+    return;
+  }
+
+next();
+
+};
+
+/**
  * Checks if a first name in req.body is valid, that is, it matches the name regex
  */
 const isValidFirstName = (req: Request, res: Response, next: NextFunction) => {
     const nameRegex = /^\w+$/i;
-    if (!nameRegex.test(req.body.first_name)) {
+    if (req.body.first_name){
+      if (!nameRegex.test(req.body.first_name)) {
         res.status(400).json({
         error: 'First name must be a nonempty alphanumeric string.'
         });
         return;
+    }
     }
 
     next();
@@ -39,11 +58,13 @@ const isValidFirstName = (req: Request, res: Response, next: NextFunction) => {
  */
  const isValidLastName = (req: Request, res: Response, next: NextFunction) => {
     const nameRegex = /^\w+$/i;
-    if (!nameRegex.test(req.body.last_name)) {
-      res.status(400).json({
-        error: 'Last name must be a nonempty alphanumeric string.'
-      });
-      return;
+    if (req.body.last_name){
+      if (!nameRegex.test(req.body.last_name)) {
+        res.status(400).json({
+          error: 'Last name must be a nonempty alphanumeric string.'
+        });
+        return;
+      }
     }
   
     next();
@@ -54,11 +75,13 @@ const isValidFirstName = (req: Request, res: Response, next: NextFunction) => {
  */
  const isValidPhoneNumber = (req: Request, res: Response, next: NextFunction) => {
     const phoneRegex = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/;
-    if (!phoneRegex.test(req.body.phone_number)) {
-      res.status(400).json({
-        error: 'Must be a valid phone number.'
-      });
-      return;
+    if (req.body.phone_number){
+      if (!phoneRegex.test(req.body.phone_number)) {
+        res.status(400).json({
+          error: 'Must be a valid phone number.'
+        });
+        return;
+      }
     }
   
     next();
@@ -87,5 +110,6 @@ export {
     isValidFirstName,
     isValidLastName,
     isValidPhoneNumber,
-    isValidMedicalContactModifier
+    isValidMedicalContactModifier,
+    isMedicalContactActive
 };
