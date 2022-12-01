@@ -52,8 +52,8 @@ class MedicalContactCollection {
    * @return {Promise<HydratedDocument<MedicalContact>[]>} - An array of all of the medical contacts sorted in alphabetical order by last name
    */
    static async findAllByOwnerId(ownerId: string): Promise<Array<HydratedDocument<MedicalContact>>> {
-    const owner = await AccountCollection.findOneByAccountId(ownerId);
-    return MedicalContactModel.find({ownerId: owner._id}).sort({last_name: 1});
+    //const owner = await AccountCollection.findOneByAccountId(ownerId);
+    return MedicalContactModel.find({ownerId: ownerId}).sort({last_name: 1});
   }
 
   /**
@@ -87,6 +87,10 @@ class MedicalContactCollection {
         medicalContact.specialty = contactDetails.specialty;
     }
 
+    if (contactDetails.phone_number) {
+      medicalContact.phone_number = contactDetails.phone_number;
+  }
+
     if (contactDetails.notes) {
         medicalContact.notes = contactDetails.notes;
     }
@@ -99,7 +103,6 @@ class MedicalContactCollection {
    * Delete a medical contact from the collection.
    *
    * @param {string} medicalContactId - The medicalContactId of medical contact to delete
-   * @return {Promise<Boolean>} - true if the user has been deleted, false otherwise
    */
   static async deleteOne(medicalContactId: Types.ObjectId | string): Promise<void> {
 

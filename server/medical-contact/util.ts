@@ -1,9 +1,9 @@
 import type {HydratedDocument} from 'mongoose';
+import { Account } from 'server/account/model';
 import type {MedicalContact, PopulatedMedicalContact} from './model';
 
 type MedicalContactResponse = {
   _id: string;
-  owner: string;
   title: string;
   first_name: string;
   last_name: string;
@@ -26,12 +26,9 @@ const constructMedicalContactResponse = (medicalContact: HydratedDocument<Medica
       versionKey: false // Cosmetics; prevents returning of __v property
     })
   };
-  const {username} = medicalContactCopy.ownerId;
-  delete medicalContactCopy.ownerId;
   return {
     ...medicalContactCopy,
-    _id: medicalContactCopy._id.toString(),
-    owner: username
+    _id: medicalContactCopy._id.toString()
   };
 };
 
