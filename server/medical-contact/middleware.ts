@@ -40,7 +40,7 @@ next();
  * Checks if a first name in req.body is valid, that is, it matches the name regex
  */
 const isValidFirstName = (req: Request, res: Response, next: NextFunction) => {
-    const nameRegex = /^\w+$/i;
+    const nameRegex = /^(?!\s*$).+/i;
     if (req.body.first_name){
       if (!nameRegex.test(req.body.first_name)) {
         res.status(400).json({
@@ -57,7 +57,7 @@ const isValidFirstName = (req: Request, res: Response, next: NextFunction) => {
  * Checks if a last name in req.body is valid, that is, it matches the name regex
  */
  const isValidLastName = (req: Request, res: Response, next: NextFunction) => {
-    const nameRegex = /^\w+$/i;
+    const nameRegex = /^(?!\s*$).+/i;
     if (req.body.last_name){
       if (!nameRegex.test(req.body.last_name)) {
         res.status(400).json({
@@ -72,6 +72,7 @@ const isValidFirstName = (req: Request, res: Response, next: NextFunction) => {
 
 /**
  * Checks if a phone number in req.body is valid, that is, it matches the phone number regex
+ * Phone regex found here: https://stackoverflow.com/a/16699507
  */
  const isValidPhoneNumber = (req: Request, res: Response, next: NextFunction) => {
     const phoneRegex = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/;

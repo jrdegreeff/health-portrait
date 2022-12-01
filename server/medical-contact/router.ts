@@ -117,7 +117,7 @@ router.patch(
  * @throws {409} - If the medicalContactId is already deactivated
  */
 router.delete(
-  '/::medicalContactId',
+  '/:medicalContactId',
   [
     accountValidator.isAccountLoggedIn,
     medicalContactValidator.isMedicalContactExists,
