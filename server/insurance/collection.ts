@@ -50,8 +50,8 @@ class InsuranceCardCollection {
    * @return {Promise<HydratedDocument<InsuranceCard>[]>} - An array of all of the insurance cards sorted in alphabetical order by purpose
    */
    static async findAllByOwnerId(ownerId: string): Promise<Array<HydratedDocument<InsuranceCard>>> {
-    const owner = await AccountCollection.findOneByAccountId(ownerId);
-    return InsuranceCardModel.find({ownerId: owner._id}).sort({purpose: 1});
+    //const owner = await AccountCollection.findOneByAccountId(ownerId);
+    return InsuranceCardModel.find({ownerId: ownerId}).sort({purpose: 1});
   }
 
   /**
