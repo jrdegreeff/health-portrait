@@ -18,16 +18,15 @@ class InsuranceCardCollection {
    * @return {Promise<HydratedDocument<InsuranceCard>>} - The newly created insurance card
    */
   static async addOne(ownerId: Types.ObjectId | string, subscriber_name: string, member_id: string, group_number: string, plan_number: string, plan_type: string, purpose: string, notes: string): Promise<HydratedDocument<InsuranceCard>> {
-    
     const insuranceCard = new InsuranceCardModel({
-        ownerId,
-        subscriber_name, 
-        member_id, 
-        group_number, 
-        plan_number, 
-        plan_type, 
-        purpose,
-        notes
+      ownerId,
+      subscriber_name,
+      member_id,
+      group_number,
+      plan_number,
+      plan_type,
+      purpose,
+      notes
     });
     await insuranceCard.save(); // Saves user to MongoDB
     return insuranceCard;
@@ -39,7 +38,7 @@ class InsuranceCardCollection {
    * @param {string} insuranceCardId - The id of the insurance card to find
    * @return {Promise<HydratedDocument<InsuranceCard>> | Promise<null>} - The insurance card with the given id, if any
    */
-   static async findOne(insuranceCardId: Types.ObjectId | string): Promise<HydratedDocument<InsuranceCard>> {
+  static async findOne(insuranceCardId: Types.ObjectId | string): Promise<HydratedDocument<InsuranceCard>> {
     return InsuranceCardModel.findOne({_id: insuranceCardId});
   }
 
@@ -49,9 +48,9 @@ class InsuranceCardCollection {
    * @param {string} ownerId - The id of the owner of the medical contacts
    * @return {Promise<HydratedDocument<InsuranceCard>[]>} - An array of all of the insurance cards sorted in alphabetical order by purpose
    */
-   static async findAllByOwnerId(ownerId: string): Promise<Array<HydratedDocument<InsuranceCard>>> {
-    //const owner = await AccountCollection.findOneByAccountId(ownerId);
-    return InsuranceCardModel.find({ownerId: ownerId}).sort({purpose: 1});
+  static async findAllByOwnerId(ownerId: string): Promise<Array<HydratedDocument<InsuranceCard>>> {
+    // Const owner = await AccountCollection.findOneByAccountId(ownerId);
+    return InsuranceCardModel.find({ownerId}).sort({purpose: 1});
   }
 
   /**
@@ -61,10 +60,9 @@ class InsuranceCardCollection {
    * @param {Object} cardDetails - An object with the insurance card's updated details
    * @return {Promise<HydratedDocument<InsuranceCard>>} - The updated insurance card
    */
-  static async updateOne(insuranceCardId: Types.ObjectId | string, cardDetails: {subscriber_name?: string; member_id?: string, group_number?: string, plan_number?: string, plan_type?: string, purpose?: string, notes?: string}): Promise<HydratedDocument<InsuranceCard>> {
-    
+  static async updateOne(insuranceCardId: Types.ObjectId | string, cardDetails: {subscriber_name?: string; member_id?: string; group_number?: string; plan_number?: string; plan_type?: string; purpose?: string; notes?: string}): Promise<HydratedDocument<InsuranceCard>> {
     const insuranceCard = await InsuranceCardModel.findOne({_id: insuranceCardId});
-    
+
     if (cardDetails.subscriber_name) {
       insuranceCard.subscriber_name = cardDetails.subscriber_name;
     }
@@ -111,10 +109,9 @@ class InsuranceCardCollection {
    *
    * @param {string} ownerId - The id of owner of medical contacts
    */
-   static async deleteMany(ownerId: Types.ObjectId | string): Promise<void> {
+  static async deleteMany(ownerId: Types.ObjectId | string): Promise<void> {
     await InsuranceCardModel.deleteMany({ownerId});
   }
-
 }
 
 export default InsuranceCardCollection;

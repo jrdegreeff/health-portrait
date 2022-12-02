@@ -4,7 +4,7 @@ import InsuranceCardCollection from './collection';
 import * as accountValidator from '../account/middleware';
 import * as insuranceCardValidator from '../insurance/middleware';
 import * as util from './util';
-import { InsuranceCard } from './model';
+import {InsuranceCard} from './model';
 
 const router = express.Router();
 
@@ -18,15 +18,15 @@ const router = express.Router();
  *
  */
 router.get(
-    '/',
-    [
-        accountValidator.isAccountLoggedIn
-    ],
-    async (req: Request, res: Response) => {
-        const insuranceCards = await InsuranceCardCollection.findAllByOwnerId(req.session.accountId as string);
-        const response = insuranceCards.map(util.constructInsuranceCardResponse);
-        res.status(200).json(response);
-    }
+  '/',
+  [
+    accountValidator.isAccountLoggedIn
+  ],
+  async (req: Request, res: Response) => {
+    const insuranceCards = await InsuranceCardCollection.findAllByOwnerId(req.session.accountId as string);
+    const response = insuranceCards.map(util.constructInsuranceCardResponse);
+    res.status(200).json(response);
+  }
 );
 
 /**
@@ -47,20 +47,20 @@ router.get(
  * @throws {400} - If the purpose of the insurance card is empty or a stream of empty spaces
  */
 router.post(
-    '/',
-    [
-      accountValidator.isAccountLoggedIn,
-      insuranceCardValidator.isValidSubscriberName,
-      insuranceCardValidator.isValidPurpose
-    ],
-    async (req: Request, res: Response) => {
-        const accountId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isAccountLoggedIn
-        const insuranceCard = await InsuranceCardCollection.addOne(accountId, req.body.subscriber_name, req.body.member_id, req.body.group_number, req.body.plan_number, req.body.plan_type, req.body.purpose, req.body.notes)
-        res.status(201).json({
-            message: 'Your insurance card was created successfully.',
-            insuranceCard: util.constructInsuranceCardResponse(insuranceCard)
-        });
-    }
+  '/',
+  [
+    accountValidator.isAccountLoggedIn,
+    insuranceCardValidator.isValidSubscriberName,
+    insuranceCardValidator.isValidPurpose
+  ],
+  async (req: Request, res: Response) => {
+    const accountId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isAccountLoggedIn
+    const insuranceCard = await InsuranceCardCollection.addOne(accountId, req.body.subscriber_name, req.body.member_id, req.body.group_number, req.body.plan_number, req.body.plan_type, req.body.purpose, req.body.notes);
+    res.status(201).json({
+      message: 'Your insurance card was created successfully.',
+      insuranceCard: util.constructInsuranceCardResponse(insuranceCard)
+    });
+  }
 );
 
 /**
@@ -116,7 +116,7 @@ router.delete(
   [
     accountValidator.isAccountLoggedIn,
     insuranceCardValidator.isInsuranceCardExists,
-    insuranceCardValidator.isValidInsuranceCardModifier,
+    insuranceCardValidator.isValidInsuranceCardModifier
   ],
   async (req: Request, res: Response) => {
     await InsuranceCardCollection.deleteOne(req.params.insuranceCardId);
@@ -125,6 +125,5 @@ router.delete(
     });
   }
 );
-
 
 export {router as insuranceCardRouter};
