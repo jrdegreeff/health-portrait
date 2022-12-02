@@ -1,4 +1,4 @@
-import path from "path";
+import path from 'path';
 import type {Request, Response} from 'express';
 import express from 'express';
 import session from 'express-session';
@@ -10,6 +10,8 @@ import MongoStore from 'connect-mongo';
 import * as accountValidator from '../server/account/middleware';
 import {accountRouter} from '../server/account/router';
 import { medicalContactRouter } from "../server/medical-contact/router";
+
+import {insuranceCardRouter} from 'server/insurance/router';
 
 // Load environmental variables
 dotenv.config({});
@@ -53,7 +55,7 @@ app.use(express.urlencoded({extended: false}));
 // Initialize cookie session
 // https://www.npmjs.com/package/express-session#options
 
-// @ts-ignore
+// @ts-expect-error
 const store = MongoStore.create({
   clientPromise: client,
   dbName: 'sessions',
@@ -74,11 +76,13 @@ app.use(accountValidator.isCurrentSessionAccountExists);
 app.use('/api/accounts', accountRouter);
 app.use('/api/medical-contacts', medicalContactRouter);
 
+app.use('/api/insurance-cards', insuranceCardRouter);
+
 const isProduction = process.env.NODE_ENV === 'production';
-const vuePath = path.resolve(__dirname, "..", "client", isProduction ? "dist" : "public");
+const vuePath = path.resolve(__dirname, '..', 'client', isProduction ? 'dist' : 'public');
 app.use(express.static(vuePath));
-app.get("*", (req: Request, res: Response) => {
-  res.sendFile(path.join(vuePath, "index.html"));
+app.get('*', (req: Request, res: Response) => {
+  res.sendFile(path.join(vuePath, 'index.html'));
 });
 
 // Create server to listen to request at specified port
