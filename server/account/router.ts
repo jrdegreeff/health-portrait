@@ -203,7 +203,8 @@ router.delete(
  * @param {string} username - The user's new username (optional)
  * @param {string} password - The user's new password (optional)
  * 
- * @return {string} - The updated username
+ * @return {AccountResponse} - The updated shared account details
+ * @return {string}          - The updated username
  * 
  * @throws {401} - If the user is not logged in
  * @throws {400} - If username or password present and not in the correct format
@@ -220,8 +221,10 @@ router.patch(
   async (req: Request, res: Response) => {
     const credentialId = (req.session.credentialId as string) ?? ''; // Will not be an empty string since its validated in isLoggedIn
     const credential = await CredentialCollection.updateOne(credentialId, req.body);
+    const account = await AccountCollection.findOne(credential.account);
     res.status(200).json({
       message: 'Your credentials were updated successfully.',
+      account: await util.constructAccountResponse(account),
       username: credential.username
     });
   }

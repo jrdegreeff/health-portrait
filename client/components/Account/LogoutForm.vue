@@ -10,6 +10,7 @@ export default {
     return {
       url: '/api/accounts/session',
       method: 'DELETE',
+      setAccount: true,
       setUsername: true,
       title: 'Log out',
       fields: [],

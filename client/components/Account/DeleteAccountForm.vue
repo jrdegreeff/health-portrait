@@ -10,6 +10,7 @@ export default {
     return {
       url: '/api/accounts',
       method: 'DELETE',
+      setAccount: true,
       setUsername: true,
       title: 'Delete account',
       fields: [],
@@ -18,7 +19,7 @@ export default {
         this.$store.commit('alert', {
           message: 'Your account has been deleted!', status: 'success'
         });
-        this.$router.push({name: 'Home'});
+        this.$router.push({name: 'Login'});
       }
     };
   }

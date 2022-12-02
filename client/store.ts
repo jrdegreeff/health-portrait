@@ -11,21 +11,25 @@ const store = new Vuex.Store({
   state: {
     title: "",
     enableBack: false,
+    account: null,
     username: null,
     alerts: {},
   },
   mutations: {
-    setTitle(state, payload) {
-      state.title = payload.title;
-      state.enableBack = payload.enableBack;
+    setTitle(state, {title, enableBack}) {
+      state.title = title;
+      state.enableBack = enableBack;
+    },
+    setAccount(state, account) {
+      state.account = account || null;
     },
     setUsername(state, username) {
-      state.username = username;
+      state.username = username || null;
     },
-    alert(state, payload) {
-      Vue.set(state.alerts, payload.message, payload.status);
+    alert(state, {message, status}) {
+      Vue.set(state.alerts, message, status);
       setTimeout(() => {
-        Vue.delete(state.alerts, payload.message);
+        Vue.delete(state.alerts, message);
       }, 3000);
     },
   },

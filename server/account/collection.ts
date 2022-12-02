@@ -16,6 +16,16 @@ export class AccountCollection {
   }
 
   /**
+   * Find an account by accountId.
+   *
+   * @param {string} accountId - The id of the account to find
+   * @return {Promise<HydratedDocument<Account>> | Promise<null>} - The account with the given accountId, if any
+   */
+  static async findOne(accountId: Types.ObjectId | string): Promise<HydratedDocument<Account>> {
+    return AccountModel.findOne({_id: accountId});
+  }
+
+  /**
    * Find an account by credentialId.
    *
    * @param {string} credentialId - The id of the credential whose account to find
@@ -23,7 +33,7 @@ export class AccountCollection {
    */
   static async findOneByCredentialId(credentialId: Types.ObjectId | string): Promise<HydratedDocument<Account>> {
     const credential = await CredentialCollection.findOne(credentialId);
-    return AccountModel.findOne({_id: credential.account});
+    return credential ? AccountModel.findOne({_id: credential.account}) : null;
   }
 
   /**
@@ -69,17 +79,17 @@ export class CredentialCollection {
   }
 
   /**
-   * Find an credential by credentialId.
+   * Find a credential by credentialId.
    *
    * @param {string} credentialId - The id of the credential to find
-   * @return {Promise<HydratedDocument<Credential>> | Promise<null>} - The credential with the given username, if any
+   * @return {Promise<HydratedDocument<Credential>> | Promise<null>} - The credential with the given credentialId, if any
    */
   static async findOne(credentialId: Types.ObjectId | string): Promise<HydratedDocument<Credential>> {
     return CredentialModel.findOne({_id: credentialId});
   }
 
   /**
-   * Find an credential by username (case insensitive).
+   * Find a credential by username (case insensitive).
    *
    * @param {string} username - The username of the credential to find
    * @return {Promise<HydratedDocument<Credential>> | Promise<null>} - The credential with the given username, if any
@@ -89,7 +99,7 @@ export class CredentialCollection {
   }
 
   /**
-   * Find an credential by username (case insensitive) and password.
+   * Find a credential by username (case insensitive) and password.
    *
    * @param {string} username - The username of the credential to find
    * @param {string} password - The password of the credential to find
@@ -103,7 +113,7 @@ export class CredentialCollection {
   }
 
   /**
-   * Update an credential's information
+   * Update a credential's information
    *
    * @param {string} credentialId - The id of the credential to update
    * @param {Object} credentialDetails - An object with the credential's updated credentials
@@ -124,7 +134,7 @@ export class CredentialCollection {
   }
 
   /**
-   * Delete an credential from the collection.
+   * Delete a credential from the collection.
    *
    * @param {string} credentialId - The id of credential to delete
    */

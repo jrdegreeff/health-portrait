@@ -87,6 +87,7 @@ TODO: description
 **Returns**
 
 - A success message
+- The updated shared account details
 - The updated username
 
 **Throws**

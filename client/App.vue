@@ -21,7 +21,8 @@ export default {
     fetch('/api/accounts/session', {
       credentials: 'same-origin' // Sends express-session credentials with request
     }).then(res => res.json()).then(async res => {
-      await this.$store.commit('setUsername', res.account ? res.account.username : null);
+      await this.$store.commit('setAccount', res.account);
+      await this.$store.commit('setUsername', res.username);
     });
 
     // Clear alerts on page refresh

@@ -52,13 +52,13 @@ const isLoggedOut = (req: Request, res: Response, next: NextFunction) => {
  * Checks if a name in req.body is valid, that is, it matches the name regex
  */
 const isValidAccountName = (required: boolean) => (req: Request, res: Response, next: NextFunction) => {
-  if (!required && req.body.username === undefined) {
+  if (!required && req.body.name === undefined) {
     next();
     return;
   }
-  
+
   const nameRegex = /^[a-z ,.'-]+$/i;
-  if (!nameRegex.test(req.body.name)) {
+  if (!req.body.name || !nameRegex.test(req.body.name)) {
     res.status(400).json({
       error: 'Name must be a nonempty string of valid characters.'
     });
@@ -78,7 +78,7 @@ const isValidUsername = (required: boolean) => (req: Request, res: Response, nex
   }
   
   const usernameRegex = /^\w+$/i;
-  if (!usernameRegex.test(req.body.username)) {
+  if (!req.body.username || !usernameRegex.test(req.body.username)) {
     res.status(400).json({
       error: 'Username must be a nonempty alphanumeric string.'
     });
@@ -92,13 +92,13 @@ const isValidUsername = (required: boolean) => (req: Request, res: Response, nex
  * Checks if a password in req.body is valid, that is, at 6-50 characters long without any spaces
  */
 const isValidPassword = (required: boolean) => (req: Request, res: Response, next: NextFunction) => {
-  if (!required && req.body.username === undefined) {
+  if (!required && req.body.password === undefined) {
     next();
     return;
   }
   
   const passwordRegex = /^\S+$/;
-  if (!passwordRegex.test(req.body.password)) {
+  if (!req.body.password || !passwordRegex.test(req.body.password)) {
     res.status(400).json({
       error: 'Password must be a nonempty string.'
     });
