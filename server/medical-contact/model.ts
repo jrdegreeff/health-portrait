@@ -35,7 +35,7 @@ export type PopulatedMedicalContact = {
 
 const MedicalContactSchema = new Schema<MedicalContact>({
   // The owner of the medical contact
-  owner: {
+  ownerId: {
     // Use Types.ObjectId outside of the schema
     type: Schema.Types.ObjectId,
     required: true,
