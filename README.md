@@ -12,11 +12,11 @@ TODO: description
 
 ### Shared Account
 
-#### `POST /api/accounts` - Create an new shared account
+#### `POST /api/accounts` - Create a shared account
 
 **Body**
 
-- `name` _{string}_ - The account owner's name
+- `name` _{string}_ - The shared account owner's name
 - `username` _{string}_ - The user's username
 - `password` _{string}_ - The user's password
 
@@ -24,6 +24,7 @@ TODO: description
 
 - A success message
 - The created shared account's details
+- The username registered
 
 **Throws**
 
@@ -36,7 +37,7 @@ TODO: description
 
 **Body**
 
-- `name` _{string}_ - The new name
+- `name` _{string}_ - The new name for the shared account
 
 **Returns**
 
@@ -48,7 +49,7 @@ TODO: description
 - `401` if the user is not logged in
 - `400` if `name` is empty
 
-#### `DELETE /api/accounts` - Delete shared account
+#### `DELETE /api/accounts` - Delete a shared account
 
 **Returns**
 
@@ -58,7 +59,7 @@ TODO: description
 
 - `401` if the user is not logged in
 
-#### `POST /api/accounts/credentials` - Create an new credential for a shared account
+#### `POST /api/accounts/credentials` - Create a credential for a shared account
 
 **Body**
 
@@ -80,12 +81,13 @@ TODO: description
 
 **Body**
 
-- `username` _{string}_ - The new username (optional)
-- `password` _{string}_ - The new password (optional)
+- `username` _{string}_ - The user's new username (optional)
+- `password` _{string}_ - The user's new password (optional)
 
 **Returns**
 
 - A success message
+- The updated username
 
 **Throws**
 
@@ -98,14 +100,23 @@ TODO: description
 **Returns**
 
 - A success message
+- The updated shared account details
 
 **Throws**
 
 - `401` if the user is not logged in
 - `404` if no credential with username `username` exists
-- `403` if the credential `username` doesn't belong to the user's account
+- `403` if the credential `username` doesn't belong to the user's shared account
 
-#### `POST /api/users/session` - Sign in user
+#### `GET /api/accounts/session` - Get the session shared account
+
+**Returns**
+
+- A success message
+- The signed in shared account's details, or null if not signed in
+- The username used to authenticate, or null if not signed in
+
+#### `POST /api/accounts/session` - Sign in user
 
 **Body**
 
@@ -116,6 +127,7 @@ TODO: description
 
 - A success message
 - The shared account's details
+- The username used to authenticate
 
 **Throws**
 
@@ -123,7 +135,7 @@ TODO: description
 - `400` if username or password is not in correct format or missing
 - `401` if the user login credentials are invalid
 
-#### `DELETE /api/users/session` - Sign out user
+#### `DELETE /api/accounts/session` - Sign out user
 
 **Returns**
 
@@ -143,13 +155,13 @@ TODO: description
 
 **Throws**
 
-- `401` if user is not logged in 
+- `401` if user is not logged in
 
 #### `POST /api/insurance-cards` - Create a new insurance card
 
 **Body**
 
-- `subscriber_name` _{string}_ - The insurance card's subscriber 
+- `subscriber_name` _{string}_ - The insurance card's subscriber
 - `member_id` _{string}_ - The insurance card's member ID
 - `group_number` _{string}_ - The insurance card's group number
 - `plan_number` _{string}_ - The insurance card's plan number
