@@ -64,7 +64,7 @@ export default {
     LogoutForm,
   },
   mounted() {
-    this.$store.commit('setTitle', {title: 'Account', enableBack: true});
+    this.$store.commit('setHeader', {title: 'Account', enableBack: true});
   },
   methods: {
     async deleteCredential(username) {

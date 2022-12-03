@@ -21,13 +21,13 @@
       </h2></header>
       <ul>
         <li>
-          <router-link to="/">Contacts</router-link>
+          <router-link to="/contacts">Contacts</router-link>
         </li>
         <li>
-          <router-link to="/">Medications</router-link>
+          <router-link to="/medications">Medications</router-link>
         </li>
         <li>
-          <router-link to="/">Insurance</router-link>
+          <router-link to="/insurance">Insurance</router-link>
         </li>
       </ul>
       </section>
@@ -58,16 +58,6 @@ nav {
 
 h2 {
   font-weight: 600;
-}
-
-a {
-  text-decoration: none;
-  color: black;
-}
-
-a:hover {
-  color: var(--darkGray);
-  cursor: pointer;
 }
 
 ul {
