@@ -9,6 +9,7 @@ import dotenv from 'dotenv';
 import MongoStore from 'connect-mongo';
 import * as accountValidator from '../server/account/middleware';
 import {accountRouter} from '../server/account/router';
+import {entryRouter} from '../server/entry/router';
 import {medicalContactRouter} from '../server/medical-contact/router';
 import {insuranceCardRouter} from '../server/insurance/router';
 
@@ -73,8 +74,8 @@ app.use(accountValidator.isCurrentSessionAccountExists);
 
 // Add routers from routes folder
 app.use('/api/accounts', accountRouter);
+app.use('/api/entries', entryRouter);
 app.use('/api/medical-contacts', medicalContactRouter);
-
 app.use('/api/insurance-cards', insuranceCardRouter);
 
 const isProduction = process.env.NODE_ENV === 'production';
