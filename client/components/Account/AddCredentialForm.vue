@@ -19,7 +19,7 @@ export default {
       title: 'Add user to shared account',
       callback: () => {
         this.$store.commit('alert', {
-          message: 'Successfully added a user to the account!',
+          message: 'Successfully added the new user to your account!',
           status: 'success'
         });
       }

@@ -251,12 +251,12 @@ router.delete(
     const credential = await CredentialCollection.findOneByUsername(req.body.username);
     const account = await AccountCollection.findOneByCredentialId(credential._id);
     await CredentialCollection.deleteOne(credential._id);
-    if (credential._id == req.session.credentialId) {
+    if (credential._id.toString() === req.session.credentialId) {
       req.session.credentialId = undefined;
     }
     res.status(200).json({
-      message: `The credential with username ${req.params.username} has been deleted successfully.`,
-      account: await util.constructAccountResponse(account)
+      message: `The credential with username ${req.body.username} has been deleted successfully.`,
+      account: req.session.credentialId === undefined ? null : await util.constructAccountResponse(account)
     });
   }
 );

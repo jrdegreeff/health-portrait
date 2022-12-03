@@ -151,10 +151,7 @@ const isUsernameNotExists = (required: boolean) => async (req: Request, res: Res
   }
   
   const credential = await CredentialCollection.findOneByUsername(req.body.username);
-
-  // If the current session user wants to change their username to one which matches
-  // the current one irrespective of the case, we should allow them to do so
-  if (credential && (credential?._id.toString() !== req.session.credentialId)) {
+  if (credential) {
     res.status(409).json({
       error: `An account with username ${req.body.username} already exists.`
     });
@@ -184,8 +181,6 @@ const isUsernameOrPasswordPresent = (req: Request, res: Response, next: NextFunc
 const isUsernameSameAccount = async (req: Request, res: Response, next: NextFunction) => {
   const credential1 = await CredentialCollection.findOne(req.session.credentialId);
   const credential2 = await CredentialCollection.findOneByUsername(req.body.username);
-
-  console.log(credential1, credential2)
 
   if (credential1.account.toString() !== credential2.account.toString()) {
     res.status(403).json({

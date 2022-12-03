@@ -82,6 +82,13 @@ export default {
           throw new Error(res.error);
         }
         this.$store.commit('setAccount', res.account);
+        if (!res.account) {
+          this.$store.commit('setUsername', null);
+          this.$router.push({name: 'Login'});
+        }
+        this.$store.commit('alert', {
+          message: `Successfully removed ${username} from your account!`, status: 'success'
+        });
       } catch (e) {
         this.$store.commit('alert', {
           message: e, status: 'error'
