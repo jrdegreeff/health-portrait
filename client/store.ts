@@ -12,6 +12,7 @@ const store = new Vuex.Store({
     title: "",
     enableBack: false,
     username: null,
+    contacts: null, // All contacts created in the app
     alerts: {},
   },
   mutations: {
@@ -27,6 +28,14 @@ const store = new Vuex.Store({
       setTimeout(() => {
         Vue.delete(state.alerts, payload.message);
       }, 3000);
+    },
+    async refreshContacts(state) {
+      /**
+       * Request the server for the currently available contacts.
+       */
+      const url = `/api/medical-contacts`;
+      const res = await fetch(url).then(async r => r.json());
+      state.contacts = res;
     },
   },
   actions: {

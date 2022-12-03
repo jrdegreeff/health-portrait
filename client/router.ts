@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import HomePage from './components/HomePage.vue';
 import AccountPage from './components/Account/AccountPage.vue';
+import ContactPage from './components/Medical-Contact/ContactPage.vue';
 import LoginPage from './components/Login/LoginPage.vue';
 import NotFound from './NotFound.vue';
 
@@ -10,6 +11,7 @@ Vue.use(VueRouter);
 const routes = [
   {path: '/', name: 'Home', component: HomePage},
   {path: '/account', name: 'Account', component: AccountPage},
+  {path: '/contacts', name: 'Contacts', component: ContactPage},
   {path: '/login', name: 'Login', component: LoginPage},
   {path: '*', name: 'Not Found', component: NotFound}
 ];

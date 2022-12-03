@@ -20,7 +20,7 @@
     </h2></header>
     <ul>
       <li>
-        <router-link to="/">Contacts</router-link>
+        <router-link to="/contacts">Contacts</router-link>
       </li>
       <li>
         <router-link to="/">Medications</router-link>
