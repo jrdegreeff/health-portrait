@@ -236,7 +236,8 @@ TODO: description
 **Throws**
 
 - `401` if the user is not logged in
-- `400` If the first_name, last_name, or phone_number is empty or a stream of empty spaces
+- `400` If the first_name or last_name is empty or a stream of empty spaces
+- `400` If the phone_number is not a valid phone number (https://stackoverflow.com/a/16699507)
 
 #### `PATCH /api/medical-contacts/:medicalContactId` - Edit the information of a medical contact
 
@@ -260,7 +261,8 @@ TODO: description
 
 - `401` if the user is not logged in
 - `403` if the user is not the owner of the medical contact
-- `400` If the first_name, last_name, or phone_number is empty or a stream of empty spaces
+- `400` If the first_name or last_name is empty or a stream of empty spaces
+- `400` If the phone_number is not a valid phone number (https://stackoverflow.com/a/16699507)
 - `404` if the medicalContactId is invalid
 
 #### `DELETE /api/medical-contacts/:medicalContactId` - Deactivates a medical contact
