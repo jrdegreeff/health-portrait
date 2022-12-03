@@ -1,5 +1,5 @@
 import type {Request, Response, NextFunction} from 'express';
-import {AccountCollection, CredentialCollection} from './collection';
+import AccountCollection, {CredentialCollection} from './collection';
 
 /**
  * Checks if the current session (if any) still exists in the database

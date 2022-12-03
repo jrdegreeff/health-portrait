@@ -1,6 +1,6 @@
 import type {Request, Response} from 'express';
 import express from 'express';
-import {AccountCollection, CredentialCollection} from './collection';
+import AccountCollection, {CredentialCollection} from './collection';
 import * as accountValidator from './middleware';
 import * as util from './util';
 

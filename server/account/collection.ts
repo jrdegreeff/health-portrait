@@ -2,7 +2,7 @@ import type {HydratedDocument, Types} from 'mongoose';
 import type {Account, Credential} from './model';
 import {AccountModel, CredentialModel} from './model';
 
-export class AccountCollection {
+export default class AccountCollection {
   /**
    * Add a new account
    *

@@ -14,7 +14,7 @@ export type AccountResponse = {
  * @param {HydratedDocument<Account>} account - An account object
  * @returns {Promise<AccountResponse>} - The account object without the password
  */
-const constructAccountResponse = async (account: HydratedDocument<Account>): Promise<AccountResponse> => {
+export const constructAccountResponse = async (account: HydratedDocument<Account>): Promise<AccountResponse> => {
   const populatedAccount = await account.populate('credentials');
   return {
     _id: populatedAccount._id.toString(),
@@ -22,8 +22,4 @@ const constructAccountResponse = async (account: HydratedDocument<Account>): Pro
     // @ts-ignore
     credentials: populatedAccount.credentials.map((c: Credential) => c.username)
   };
-};
-
-export {
-  constructAccountResponse
 };
