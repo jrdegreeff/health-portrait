@@ -6,7 +6,7 @@
     </h2></header>
     <ul>
       <li>
-        <router-link to="/">Logs</router-link>
+        <router-link to="/logs">Logs</router-link>
       </li>
       <li>
         <router-link to="/">Trends</router-link>

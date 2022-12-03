@@ -3,6 +3,9 @@ import VueRouter from 'vue-router';
 import HomePage from './components/HomePage.vue';
 import AccountPage from './components/Account/AccountPage.vue';
 import LoginPage from './components/Login/LoginPage.vue';
+import EntryPage from './components/Entry/EntryPage.vue';
+import CreateEntryPage from './components/Entry/CreateEntryPage.vue';
+import EditEntryPage from './components/Entry/EditEntryPage.vue';
 import NotFound from './NotFound.vue';
 
 Vue.use(VueRouter);
@@ -11,6 +14,9 @@ const routes = [
   {path: '/', name: 'Home', component: HomePage},
   {path: '/account', name: 'Account', component: AccountPage},
   {path: '/login', name: 'Login', component: LoginPage},
+  {path: '/logs', name: 'Logs', component: EntryPage},
+  {path: '/newLog', name: 'New Log', component: CreateEntryPage},
+  {path: '/editLog/:entryId', name: 'Edit Log', component: EditEntryPage, props: true},
   {path: '*', name: 'Not Found', component: NotFound}
 ];
 

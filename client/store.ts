@@ -12,6 +12,7 @@ const store = new Vuex.Store({
     title: "",
     enableBack: false,
     username: null,
+    entries: [],
     alerts: {},
   },
   mutations: {
@@ -27,6 +28,14 @@ const store = new Vuex.Store({
       setTimeout(() => {
         Vue.delete(state.alerts, payload.message);
       }, 3000);
+    },
+    async refreshEntries(state) {
+      /**
+       * Request the server for the currently available entries.
+       */
+      const url = '/api/entries';
+      const res = await fetch(url).then(async r => r.json());
+      state.entries = res;
     },
   },
   actions: {
