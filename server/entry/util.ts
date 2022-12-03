@@ -4,9 +4,10 @@ import type {Entry, PopulatedEntry} from './model';
 
 export type EntryResponse = {
   _id: string;
-  owner: string;
   type: string;
   detail: string;
+  condition: string;
+  scale: number;
   notes: string;
   date: string;
 };
@@ -32,12 +33,10 @@ const constructEntryResponse = (entry: HydratedDocument<Entry>): EntryResponse =
       versionKey: false // Cosmetics; prevents returning of __v property
     })
   };
-  const {username} = entryCopy.owner;
   delete entryCopy.owner;
   return {
     ...entryCopy,
     _id: entryCopy._id.toString(),
-    owner: username,
     date: formatDate(entry.date)
   };
 };

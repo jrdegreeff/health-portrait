@@ -2,17 +2,19 @@ import type {Types} from 'mongoose';
 import {Schema, model} from 'mongoose';
 import type { Account } from '../account/model';
 
-type ParameterizedEntry<U, T, D> = {
+type ParameterizedEntry<U, T, D, C> = {
   _id: Types.ObjectId;
   owner: U;
   type: T;
   detail: D;
+  condition: C;
+  scale: number,
   notes: string;
   date: Date;
 };
 
-export type Entry = ParameterizedEntry<Types.ObjectId, string, string>;
-export type PopulatedEntry = ParameterizedEntry<Account, string, string>;
+export type Entry = ParameterizedEntry<Types.ObjectId, string, string, string>;
+export type PopulatedEntry = ParameterizedEntry<Account, string, string, string>;
 
 const EntrySchema = new Schema<Entry>({
   owner: {
@@ -25,6 +27,14 @@ const EntrySchema = new Schema<Entry>({
   },
   detail: {
     type: String,
+    required: true
+  },
+  condition: {
+    type: String,
+    required: true
+  },
+  scale: {
+    type: Number,
     required: true
   },
   notes: {

@@ -34,6 +34,8 @@ router.get(
  *
  * @param {string} type
  * @param {string} detail
+ * @param {string} condition
+ * @param {number} scale
  * @param {string} notes
  * @param {string} date
  * @return {EntryResponse} - The newly created entry object
@@ -46,6 +48,8 @@ router.post(
   [
     accountValidator.isAccountLoggedIn,
     entryValidator.isValidEntryDetail,
+    entryValidator.isValidEntryCondition,
+    entryValidator.isValidEntryScale,
     entryValidator.isValidEntryDate,
   ],
   async (req: Request, res: Response) => {
@@ -53,6 +57,8 @@ router.post(
       req.session.accountId,
       req.body.type, 
       req.body.detail,
+      req.body.condition,
+      req.body.scale,
       req.body.notes, 
       req.body.date,
       );
@@ -70,6 +76,8 @@ router.post(
  *
  * @param {string} type
  * @param {string} detail
+ * @param {string} condition
+ * @param {number} scale
  * @param {string} notes
  * @param {string} date
  * @return {EntryResponse} - The updated entry object
@@ -86,6 +94,8 @@ router.patch(
     entryValidator.isValidEntry,
     entryValidator.isValidEntryModifier,
     entryValidator.isValidEntryDetail,
+    entryValidator.isValidEntryCondition,
+    entryValidator.isValidEntryScale,
     entryValidator.isValidEntryDate,
   ],
   async (req: Request, res: Response) => {

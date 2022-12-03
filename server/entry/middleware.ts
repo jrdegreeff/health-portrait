@@ -26,9 +26,35 @@ const isValidEntryDetail = async (req: Request, res: Response, next: NextFunctio
         return;
     }
 
-    if (!(type in ["Appointment", "Medication", "Other"])) {
+    const specifiedTypes = ["appointment", "medication", "other"];
+    if (!specifiedTypes.includes(type)) {
         res.status(400).json({
-            error: 'Entry type must be either "Appointment", "Medication", or "Other".'
+            error: 'Entry type must be either "appointment", "medication", or "other".'
+        });
+        return;
+    }
+
+    next();
+}
+
+const isValidEntryCondition = async (req: Request, res: Response, next: NextFunction) => {
+    const condition = req.body.condition;
+    const specifiedConditions = ["pain", "cognition", "happiness"];
+    if (!specifiedConditions.includes(condition)) {
+        res.status(400).json({
+            error: 'Condition must be either "pain", "cognition", or "happiness".'
+        });
+        return;
+    }
+
+    next();
+}
+
+const isValidEntryScale = async (req: Request, res: Response, next: NextFunction) => {
+    const specifiedScales = [1,2,3,4,5];
+    if (!specifiedScales.includes(parseInt(req.body.scale))) {
+        res.status(400).json({
+            error: 'Scale must be a valid integer between 1 and 5.'
         });
         return;
     }
@@ -62,21 +88,11 @@ const isValidEntryModifier = async (req: Request, res: Response, next: NextFunct
     next();
 }
 
-const isValidEntryScale = (req: Request, res: Response, next: NextFunction) => {
-    if (!(req.body.scale in [1,2,3,4,5])) {
-        res.status(400).json({
-            error: 'Scale must be a valid integer between 1 and 5.'
-        });
-        return;
-    }
-
-    next();
-}
-
 export {
     isValidEntry,
     isValidEntryDetail,
+    isValidEntryCondition,
+    isValidEntryScale,
     isValidEntryDate,
     isValidEntryModifier,
-    isValidEntryScale,
 };
