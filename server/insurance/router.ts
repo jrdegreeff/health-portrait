@@ -19,7 +19,7 @@ const router = express.Router();
 router.get(
   '/',
   [
-    accountValidator.isAccountLoggedIn
+    accountValidator.isLoggedIn
   ],
   async (req: Request, res: Response) => {
     const insuranceCards = await InsuranceCardCollection.findAllByOwnerId(req.session.accountId as string);
@@ -48,12 +48,12 @@ router.get(
 router.post(
   '/',
   [
-    accountValidator.isAccountLoggedIn,
+    accountValidator.isLoggedIn,
     insuranceCardValidator.isValidSubscriberName,
     insuranceCardValidator.isValidPurpose
   ],
   async (req: Request, res: Response) => {
-    const accountId = (req.session.userId as string) ?? ''; // Will not be an empty string since its validated in isAccountLoggedIn
+    const accountId = (req.session.accountId as string) ?? ''; // Will not be an empty string since its validated in isLoggedIn
     const insuranceCard = await InsuranceCardCollection.addOne(accountId, req.body.subscriber_name, req.body.member_id, req.body.group_number, req.body.plan_number, req.body.plan_type, req.body.purpose, req.body.notes);
     res.status(201).json({
       message: 'Your insurance card was created successfully.',
@@ -85,7 +85,7 @@ router.post(
 router.patch(
   '/:insuranceCardId',
   [
-    accountValidator.isAccountLoggedIn,
+    accountValidator.isLoggedIn,
     insuranceCardValidator.isInsuranceCardExists,
     insuranceCardValidator.isValidInsuranceCardModifier,
     insuranceCardValidator.isValidSubscriberName,
@@ -113,7 +113,7 @@ router.patch(
 router.delete(
   '/:insuranceCardId',
   [
-    accountValidator.isAccountLoggedIn,
+    accountValidator.isLoggedIn,
     insuranceCardValidator.isInsuranceCardExists,
     insuranceCardValidator.isValidInsuranceCardModifier
   ],

@@ -18,7 +18,7 @@ const router = express.Router();
 router.get(
   '/',
   [
-    accountValidator.isAccountLoggedIn,
+    accountValidator.isLoggedIn,
   ],
   async (req: Request, res: Response) => {
     const entries = await EntryCollection.findAllByOwnerId(req.session.accountId);
@@ -46,7 +46,7 @@ router.get(
 router.post(
   '/',
   [
-    accountValidator.isAccountLoggedIn,
+    accountValidator.isLoggedIn,
     entryValidator.isValidEntryDetail,
     entryValidator.isValidEntryCondition,
     entryValidator.isValidEntryScale,
@@ -90,7 +90,7 @@ router.post(
 router.patch(
   '/:entryId',
   [
-    accountValidator.isAccountLoggedIn,
+    accountValidator.isLoggedIn,
     entryValidator.isValidEntry,
     entryValidator.isValidEntryModifier,
     entryValidator.isValidEntryDetail,
@@ -121,7 +121,7 @@ router.patch(
 router.delete(
   '/:entryId',
   [
-    accountValidator.isAccountLoggedIn,
+    accountValidator.isLoggedIn,
     entryValidator.isValidEntry,
     entryValidator.isValidEntryModifier,
   ],

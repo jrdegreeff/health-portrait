@@ -8,9 +8,10 @@ export default {
   mixins: [BlockForm],
   data() {
     return {
-      url: '/api/accounts',
+      url: '/api/accounts/credentials',
       method: 'PATCH',
       hasBody: true,
+      setAccount: true,
       setUsername: true,
       fields: [
         {id: 'username', label: 'Username', value: ''}
