@@ -15,7 +15,7 @@ export default {
       fields: [
         {id: 'name', label: 'Name', value: ''}
       ],
-      title: 'Change account name',
+      title: 'Change shared account name',
       callback: () => {
         this.$store.commit('alert', {
           message: 'Successfully changed account name!',

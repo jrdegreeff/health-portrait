@@ -131,9 +131,9 @@ export class CredentialCollection {
   /**
    * Delete all credentials associated with an account.
    *
-   * @param {string} account - The id of account whose credentials to delete
+   * @param {string} accountId - The id of account whose credentials to delete
    */
-  static async deleteMany(account: Types.ObjectId | string): Promise<void> {
-    await CredentialModel.deleteMany({account});
+  static async deleteMany(accountId: Types.ObjectId | string): Promise<void> {
+    await CredentialModel.deleteMany({account: accountId});
   }
 }

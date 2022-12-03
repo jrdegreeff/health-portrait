@@ -16,10 +16,10 @@ export default {
         {id: 'username', label: 'Username', value: ''},
         {id: 'password', label: 'Password', value: ''}
       ],
-      title: 'Add user to shared account',
+      title: 'Create a user and add to the shared account',
       callback: () => {
         this.$store.commit('alert', {
-          message: 'Successfully added the new user to your account!',
+          message: 'Successfully created the new user and added to your account!',
           status: 'success'
         });
       }

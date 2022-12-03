@@ -51,7 +51,7 @@ const isLoggedOut = (req: Request, res: Response, next: NextFunction) => {
 };
 
 /**
- * Checks if a name in req.body is valid, that is, it matches the name regex
+ * Checks if a name in req.body is valid, that is, it matches the name regex.
  */
 const isValidAccountName = (required: boolean) => (req: Request, res: Response, next: NextFunction) => {
   if (!required && req.body.name === undefined) {
@@ -71,7 +71,7 @@ const isValidAccountName = (required: boolean) => (req: Request, res: Response, 
 };
 
 /**
- * Checks if a username in req.body is valid, that is, it matches the username regex
+ * Checks if a username in req.body is a nonempty alphanumeric string.
  */
 const isValidUsername = (required: boolean) => (req: Request, res: Response, next: NextFunction) => {
   if (!required && req.body.username === undefined) {
@@ -91,7 +91,7 @@ const isValidUsername = (required: boolean) => (req: Request, res: Response, nex
 };
 
 /**
- * Checks if a password in req.body is valid, that is, at 6-50 characters long without any spaces
+ * Checks if a password in req.body is nonempty and contains no whitespace characters.
  */
 const isValidPassword = (required: boolean) => (req: Request, res: Response, next: NextFunction) => {
   if (!required && req.body.password === undefined) {
