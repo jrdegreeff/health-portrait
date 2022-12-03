@@ -5,11 +5,13 @@ import AccountCollection, {CredentialCollection} from './collection';
  * Checks if the current session (if any) still exists in the database
  */
 const isCurrentSessionAccountExists = async (req: Request, res: Response, next: NextFunction) => {
-  if (req.session.credentialId) {
-    const account = await AccountCollection.findOneByCredentialId(req.session.credentialId);
+  if (req.session.credentialId && req.session.accountId) {
+    const credential = await CredentialCollection.findOne(req.session.credentialId);
+    const account = await AccountCollection.findOne(req.session.accountId);
 
-    if (!account) {
+    if (!credential || !account || credential.account.toString() !== req.session.accountId) {
       req.session.credentialId = undefined;
+      req.session.accountId = undefined;
       res.status(500).json({
         error: 'Session was not recognized.'
       });
@@ -24,7 +26,7 @@ const isCurrentSessionAccountExists = async (req: Request, res: Response, next: 
  * Checks if the account is logged in, that is, whether the credentialId is set in session
  */
 const isLoggedIn = (req: Request, res: Response, next: NextFunction) => {
-  if (!req.session.credentialId) {
+  if (!req.session.credentialId || !req.session.accountId) {
     res.status(401).json({
       error: 'You must be logged in to complete this action.'
     });
@@ -38,7 +40,7 @@ const isLoggedIn = (req: Request, res: Response, next: NextFunction) => {
  * Checks if the account is signed out, that is, credentialId is undefined in session
  */
 const isLoggedOut = (req: Request, res: Response, next: NextFunction) => {
-  if (req.session.credentialId) {
+  if (req.session.credentialId || req.session.accountId) {
     res.status(403).json({
       error: 'You are already signed in.'
     });
@@ -179,10 +181,9 @@ const isUsernameOrPasswordPresent = (req: Request, res: Response, next: NextFunc
  * Checks if a username in req.body belongs to the same shared account as the session credential
  */
 const isUsernameSameAccount = async (req: Request, res: Response, next: NextFunction) => {
-  const credential1 = await CredentialCollection.findOne(req.session.credentialId);
-  const credential2 = await CredentialCollection.findOneByUsername(req.body.username);
+  const credential = await CredentialCollection.findOneByUsername(req.body.username);
 
-  if (credential1.account.toString() !== credential2.account.toString()) {
+  if (req.session.accountId !== credential.account.toString()) {
     res.status(403).json({
       error: `Your account does not have any credential with username ${req.body.username}`
     });

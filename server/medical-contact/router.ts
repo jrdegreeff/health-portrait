@@ -22,7 +22,7 @@ router.get(
     accountValidator.isLoggedIn
   ],
   async (req: Request, res: Response) => {
-    const medicalContacts = await MedicalContactCollection.findAllByOwnerId(req.session.credentialId as string);
+    const medicalContacts = await MedicalContactCollection.findAllByOwnerId(req.session.accountId as string);
     const response = medicalContacts.map(util.constructMedicalContactResponse);
     res.status(200).json(response);
   }
@@ -55,7 +55,7 @@ router.post(
     medicalContactValidator.isValidPhoneNumber,
   ],
   async (req: Request, res: Response) => {
-    const accountId = (req.session.credentialId as string) ?? ''; // Will not be an empty string since its validated in isLoggedIn
+    const accountId = (req.session.accountId as string) ?? ''; // Will not be an empty string since its validated in isLoggedIn
     const medicalContact = await MedicalContactCollection.addOne(accountId, req.body.title, req.body.first_name, req.body.last_name, req.body.hospital, req.body.specialty, req.body.phone_number, req.body.notes)
     res.status(201).json({
       message: 'Your medical contact was created successfully.',

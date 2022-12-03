@@ -22,7 +22,7 @@ router.get(
     accountValidator.isLoggedIn
   ],
   async (req: Request, res: Response) => {
-    const insuranceCards = await InsuranceCardCollection.findAllByOwnerId(req.session.credentialId as string);
+    const insuranceCards = await InsuranceCardCollection.findAllByOwnerId(req.session.accountId as string);
     const response = insuranceCards.map(util.constructInsuranceCardResponse);
     res.status(200).json(response);
   }
@@ -53,7 +53,7 @@ router.post(
     insuranceCardValidator.isValidPurpose
   ],
   async (req: Request, res: Response) => {
-    const accountId = (req.session.credentialId as string) ?? ''; // Will not be an empty string since its validated in isLoggedIn
+    const accountId = (req.session.accountId as string) ?? ''; // Will not be an empty string since its validated in isLoggedIn
     const insuranceCard = await InsuranceCardCollection.addOne(accountId, req.body.subscriber_name, req.body.member_id, req.body.group_number, req.body.plan_number, req.body.plan_type, req.body.purpose, req.body.notes);
     res.status(201).json({
       message: 'Your insurance card was created successfully.',

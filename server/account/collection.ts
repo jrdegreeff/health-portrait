@@ -26,26 +26,14 @@ export default class AccountCollection {
   }
 
   /**
-   * Find an account by credentialId.
-   *
-   * @param {string} credentialId - The id of the credential whose account to find
-   * @return {Promise<HydratedDocument<Account>> | Promise<null>} - The account with the given credentialId, if any
-   */
-  static async findOneByCredentialId(credentialId: Types.ObjectId | string): Promise<HydratedDocument<Account>> {
-    const credential = await CredentialCollection.findOne(credentialId);
-    return credential ? AccountModel.findOne({_id: credential.account}) : null;
-  }
-
-  /**
    * Update an account's information
    *
-   * @param {string} credentialId - The id of the credential whose account to update
+   * @param {string} accountId - The id of the account to update
    * @param {string} name - The new name for the account
    * @return {Promise<HydratedDocument<Account>>} - The updated account
    */
-  static async updateOneByCredentialId(credentialId: Types.ObjectId | string, name: string): Promise<HydratedDocument<Account>> {
-    const credential = await CredentialCollection.findOne(credentialId);
-    const account = await AccountModel.findOne({_id: credential.account});
+  static async updateOne(accountId: Types.ObjectId | string, name: string): Promise<HydratedDocument<Account>> {
+    const account = await AccountModel.findOne({_id: accountId});
     account.name = name;
     await account.save();
     return account;
@@ -54,12 +42,10 @@ export default class AccountCollection {
   /**
    * Delete an account from the collection.
    *
-   * @param {string} credentialId - The id of the credential whose account to find
+   * @param {string} accountId - The id of the account to delete
    */
-  static async deleteOneByCredentialId(credentialId: Types.ObjectId | string): Promise<void> {
-    const credential = await CredentialCollection.findOne(credentialId);
-    await AccountModel.deleteOne({_id: credential.account});
-    await CredentialCollection.deleteMany(credential.account);
+  static async deleteOne(accountId: Types.ObjectId | string): Promise<void> {
+    await AccountModel.deleteOne({_id: accountId});
   }
 }
 
@@ -147,7 +133,7 @@ export class CredentialCollection {
    *
    * @param {string} account - The id of account whose credentials to delete
    */
-  static async deleteMany(account: Types.ObjectId): Promise<void> {
+  static async deleteMany(account: Types.ObjectId | string): Promise<void> {
     await CredentialModel.deleteMany({account});
   }
 }

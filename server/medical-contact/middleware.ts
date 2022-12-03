@@ -93,7 +93,7 @@ const isValidPhoneNumber = (req: Request, res: Response, next: NextFunction) => 
 const isValidMedicalContactModifier = async (req: Request, res: Response, next: NextFunction) => {
   const medicalContact = await MedicalContactCollection.findOne(req.params.medicalContactId);
   const ownerId = medicalContact.ownerId._id;
-  if (req.session.credentialId !== ownerId.toString()) {
+  if (req.session.accountId !== ownerId.toString()) {
     res.status(403).json({
       error: 'Cannot modify other users\' medical contacts.'
     });
