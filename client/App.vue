@@ -64,7 +64,7 @@ body {
   flex-direction: column;
 }
 
-#content > header {
+#content > header > * {
   padding: 2em;
 }
 
@@ -99,7 +99,13 @@ header > h6 {
 }
 
 a {
-  color: inherit;
+  text-decoration: none;
+  color: black;
+}
+
+a:hover {
+  color: var(--darkGray);
+  cursor: pointer;
 }
 
 button {
