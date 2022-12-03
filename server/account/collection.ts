@@ -1,6 +1,6 @@
-import type {HydratedDocument, Types} from 'mongoose';
-import type {Account, Credential} from './model';
-import {AccountModel, CredentialModel} from './model';
+import type { HydratedDocument, Types } from 'mongoose';
+import type { Account, Credential } from './model';
+import { AccountModel, CredentialModel } from './model';
 
 export default class AccountCollection {
   /**
@@ -10,7 +10,7 @@ export default class AccountCollection {
    * @return {Promise<HydratedDocument<Account>>} - The newly created account
    */
   static async addOne(name: string): Promise<HydratedDocument<Account>> {
-    const account = new AccountModel({name});
+    const account = new AccountModel({ name });
     await account.save();
     return account;
   }
@@ -22,7 +22,7 @@ export default class AccountCollection {
    * @return {Promise<HydratedDocument<Account>> | Promise<null>} - The account with the given accountId, if any
    */
   static async findOne(accountId: Types.ObjectId | string): Promise<HydratedDocument<Account>> {
-    return AccountModel.findOne({_id: accountId});
+    return AccountModel.findOne({ _id: accountId });
   }
 
   /**
@@ -33,7 +33,7 @@ export default class AccountCollection {
    * @return {Promise<HydratedDocument<Account>>} - The updated account
    */
   static async updateOne(accountId: Types.ObjectId | string, name: string): Promise<HydratedDocument<Account>> {
-    const account = await AccountModel.findOne({_id: accountId});
+    const account = await AccountModel.findOne({ _id: accountId });
     account.name = name;
     await account.save();
     return account;
@@ -45,7 +45,7 @@ export default class AccountCollection {
    * @param {string} accountId - The id of the account to delete
    */
   static async deleteOne(accountId: Types.ObjectId | string): Promise<void> {
-    await AccountModel.deleteOne({_id: accountId});
+    await AccountModel.deleteOne({ _id: accountId });
   }
 }
 
@@ -59,7 +59,7 @@ export class CredentialCollection {
    */
   static async addOne(account: Types.ObjectId, username: string, password: string): Promise<HydratedDocument<Credential>> {
     const dateJoined = new Date();
-    const credential = new CredentialModel({account, username, password, dateJoined});
+    const credential = new CredentialModel({ account, username, password, dateJoined });
     await credential.save();
     return credential;
   }
@@ -71,7 +71,7 @@ export class CredentialCollection {
    * @return {Promise<HydratedDocument<Credential>> | Promise<null>} - The credential with the given credentialId, if any
    */
   static async findOne(credentialId: Types.ObjectId | string): Promise<HydratedDocument<Credential>> {
-    return CredentialModel.findOne({_id: credentialId});
+    return CredentialModel.findOne({ _id: credentialId });
   }
 
   /**
@@ -81,7 +81,7 @@ export class CredentialCollection {
    * @return {Promise<HydratedDocument<Credential>> | Promise<null>} - The credential with the given username, if any
    */
   static async findOneByUsername(username: string): Promise<HydratedDocument<Credential>> {
-    return CredentialModel.findOne({username: new RegExp(`^${username.trim()}$`, 'i')});
+    return CredentialModel.findOne({ username: new RegExp(`^${username.trim()}$`, 'i') });
   }
 
   /**
@@ -105,8 +105,8 @@ export class CredentialCollection {
    * @param {Object} credentialDetails - An object with the credential's updated credentials
    * @return {Promise<HydratedDocument<Credential>>} - The updated credential
    */
-  static async updateOne(credentialId: Types.ObjectId | string, credentialDetails: {password?: string; username?: string}): Promise<HydratedDocument<Credential>> {
-    const credential = await CredentialModel.findOne({_id: credentialId});
+  static async updateOne(credentialId: Types.ObjectId | string, credentialDetails: { password?: string; username?: string }): Promise<HydratedDocument<Credential>> {
+    const credential = await CredentialModel.findOne({ _id: credentialId });
 
     if (credentialDetails.username) {
       credential.username = credentialDetails.username;
@@ -125,7 +125,7 @@ export class CredentialCollection {
    * @param {string} credentialId - The id of credential to delete
    */
   static async deleteOne(credentialId: Types.ObjectId | string): Promise<void> {
-    await CredentialModel.deleteOne({_id: credentialId});
+    await CredentialModel.deleteOne({ _id: credentialId });
   }
 
   /**
@@ -134,6 +134,6 @@ export class CredentialCollection {
    * @param {string} accountId - The id of account whose credentials to delete
    */
   static async deleteMany(accountId: Types.ObjectId | string): Promise<void> {
-    await CredentialModel.deleteMany({account: accountId});
+    await CredentialModel.deleteMany({ account: accountId });
   }
 }

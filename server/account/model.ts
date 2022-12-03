@@ -1,5 +1,5 @@
-import type {Types} from 'mongoose';
-import {Schema, model} from 'mongoose';
+import type { Types } from 'mongoose';
+import { Schema, model } from 'mongoose';
 
 export type Account = {
   _id: Types.ObjectId;

@@ -1,5 +1,5 @@
-import type {HydratedDocument} from 'mongoose';
-import type {Account, Credential} from './model';
+import type { HydratedDocument } from 'mongoose';
+import type { Account, Credential } from './model';
 
 export type AccountResponse = {
   _id: string;

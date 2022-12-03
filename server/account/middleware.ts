@@ -1,5 +1,5 @@
-import type {Request, Response, NextFunction} from 'express';
-import AccountCollection, {CredentialCollection} from './collection';
+import type { Request, Response, NextFunction } from 'express';
+import AccountCollection, { CredentialCollection } from './collection';
 
 /**
  * Checks if the current session (if any) still exists in the database
@@ -78,7 +78,7 @@ const isValidUsername = (required: boolean) => (req: Request, res: Response, nex
     next();
     return;
   }
-  
+
   const usernameRegex = /^\w+$/i;
   if (!req.body.username || !usernameRegex.test(req.body.username)) {
     res.status(400).json({
@@ -98,7 +98,7 @@ const isValidPassword = (required: boolean) => (req: Request, res: Response, nex
     next();
     return;
   }
-  
+
   const passwordRegex = /^\S+$/;
   if (!req.body.password || !passwordRegex.test(req.body.password)) {
     res.status(400).json({
@@ -114,12 +114,12 @@ const isValidPassword = (required: boolean) => (req: Request, res: Response, nex
  * Checks if a account with username and password in req.body exists
  */
 const isAccountExists = async (req: Request, res: Response, next: NextFunction) => {
-  const {username, password} = req.body as {username: string; password: string};
+  const { username, password } = req.body as { username: string; password: string };
 
   const credential = await CredentialCollection.findOneByUsernameAndPassword(username, password);
 
   if (!credential) {
-    res.status(401).json({error: 'Invalid account login credentials provided.'});
+    res.status(401).json({ error: 'Invalid account login credentials provided.' });
     return;
   }
 
@@ -132,7 +132,7 @@ const isAccountExists = async (req: Request, res: Response, next: NextFunction) 
 
 const isUsernameExists = async (req: Request, res: Response, next: NextFunction) => {
   const credential = await CredentialCollection.findOneByUsername(req.body.username);
-  
+
   if (!credential) {
     res.status(404).json({
       error: `An account with username ${req.body.username} does not exist.`
@@ -151,7 +151,7 @@ const isUsernameNotExists = (required: boolean) => async (req: Request, res: Res
     next();
     return;
   }
-  
+
   const credential = await CredentialCollection.findOneByUsername(req.body.username);
   if (credential) {
     res.status(409).json({

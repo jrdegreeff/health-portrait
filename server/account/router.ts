@@ -1,6 +1,6 @@
-import type {Request, Response} from 'express';
+import type { Request, Response } from 'express';
 import express from 'express';
-import AccountCollection, {CredentialCollection} from './collection';
+import AccountCollection, { CredentialCollection } from './collection';
 import * as accountValidator from './middleware';
 import * as util from './util';
 
@@ -180,7 +180,7 @@ router.delete(
  * @throws {409} - If username is already in use
  *
  */
- router.post(
+router.post(
   '/credentials',
   accountValidator.isLoggedIn,
   accountValidator.isValidUsername(true),
@@ -263,4 +263,4 @@ router.delete(
   }
 );
 
-export {router as accountRouter};
+export { router as accountRouter };
