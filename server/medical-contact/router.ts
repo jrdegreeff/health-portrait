@@ -1,10 +1,9 @@
-import type {NextFunction, Request, Response} from 'express';
+import type {Request, Response} from 'express';
 import express from 'express';
 import MedicalContactCollection from './collection';
 import * as accountValidator from '../account/middleware';
 import * as medicalContactValidator from '../medical-contact/middleware';
 import * as util from './util';
-import { MedicalContact } from './model';
 
 const router = express.Router();
 

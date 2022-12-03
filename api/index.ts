@@ -9,9 +9,8 @@ import dotenv from 'dotenv';
 import MongoStore from 'connect-mongo';
 import * as accountValidator from '../server/account/middleware';
 import {accountRouter} from '../server/account/router';
-import { medicalContactRouter } from "../server/medical-contact/router";
-
-import {insuranceCardRouter} from 'server/insurance/router';
+import {medicalContactRouter} from '../server/medical-contact/router';
+import {insuranceCardRouter} from '../server/insurance/router';
 
 // Load environmental variables
 dotenv.config({});

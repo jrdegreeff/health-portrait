@@ -1,10 +1,9 @@
-import type {NextFunction, Request, Response} from 'express';
+import type {Request, Response} from 'express';
 import express from 'express';
 import InsuranceCardCollection from './collection';
 import * as accountValidator from '../account/middleware';
 import * as insuranceCardValidator from '../insurance/middleware';
 import * as util from './util';
-import {InsuranceCard} from './model';
 
 const router = express.Router();
 

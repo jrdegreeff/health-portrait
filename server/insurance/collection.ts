@@ -1,7 +1,6 @@
 import type {HydratedDocument, Types} from 'mongoose';
 import type {InsuranceCard} from './model';
 import InsuranceCardModel from './model';
-import AccountCollection from '../account/collection';
 
 class InsuranceCardCollection {
   /**
