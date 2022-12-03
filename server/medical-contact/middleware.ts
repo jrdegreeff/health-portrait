@@ -25,7 +25,7 @@ const isMedicalContactExists = async (req: Request, res: Response, next: NextFun
  const isMedicalContactActive = async (req: Request, res: Response, next: NextFunction) => {
   const validFormat = Types.ObjectId.isValid(req.params.medicalContactId);
   const medicalContact = validFormat ? await MedicalContactCollection.findOne(req.params.medicalContactId) : '';
-  if (!medicalContact.active) {
+  if (!medicalContact || !medicalContact.active) {
     res.status(409).json({
       error: `Medical contact with medical contact ID ${req.params.medicalContactId} is already deactivated.`
     });

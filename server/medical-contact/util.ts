@@ -1,5 +1,4 @@
 import type {HydratedDocument} from 'mongoose';
-import { Account } from 'server/account/model';
 import type {MedicalContact, PopulatedMedicalContact} from './model';
 
 type MedicalContactResponse = {
