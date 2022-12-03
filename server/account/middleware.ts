@@ -185,7 +185,9 @@ const isUsernameSameAccount = async (req: Request, res: Response, next: NextFunc
   const credential1 = await CredentialCollection.findOne(req.session.credentialId);
   const credential2 = await CredentialCollection.findOneByUsername(req.body.username);
 
-  if (credential1.account !== credential2.account) {
+  console.log(credential1, credential2)
+
+  if (credential1.account.toString() !== credential2.account.toString()) {
     res.status(403).json({
       error: `Your account does not have any credential with username ${req.body.username}`
     });

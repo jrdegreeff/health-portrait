@@ -179,7 +179,7 @@ router.delete(
  */
  router.post(
   '/credentials',
-  accountValidator.isLoggedOut,
+  accountValidator.isLoggedIn,
   accountValidator.isValidUsername(true),
   accountValidator.isValidPassword(true),
   accountValidator.isUsernameNotExists(true),
@@ -187,7 +187,6 @@ router.delete(
     const credentialId = (req.session.credentialId as string) ?? ''; // Will not be an empty string since its validated in isLoggedIn
     const account = await AccountCollection.findOneByCredentialId(credentialId);
     const credential = await CredentialCollection.addOne(account._id, req.body.username, req.body.password);
-    // TODO: refresh?
     res.status(201).json({
       message: `The credential with username ${credential.username} was added successfully.`,
       account: await util.constructAccountResponse(account)
@@ -245,17 +244,16 @@ router.patch(
 router.delete(
   '/credentials',
   accountValidator.isLoggedIn,
-  accountValidator.isValidUsername,
+  accountValidator.isValidUsername(true),
   accountValidator.isUsernameExists,
   accountValidator.isUsernameSameAccount,
   async (req: Request, res: Response) => {
-    const credential = await CredentialCollection.findOneByUsername(req.params.username);
+    const credential = await CredentialCollection.findOneByUsername(req.body.username);
     const account = await AccountCollection.findOneByCredentialId(credential._id);
     await CredentialCollection.deleteOne(credential._id);
     if (credential._id == req.session.credentialId) {
       req.session.credentialId = undefined;
     }
-    // TODO: refresh?
     res.status(200).json({
       message: `The credential with username ${req.params.username} has been deleted successfully.`,
       account: await util.constructAccountResponse(account)
