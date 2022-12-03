@@ -74,7 +74,7 @@ export default class MedicalContactCollection {
    *
    * @param {string} owner - The id of owner of medical contacts
    */
-  static async deleteMany(owner: Types.ObjectId): Promise<void> {
+  static async deleteMany(owner: Types.ObjectId | string): Promise<void> {
     await MedicationModel.deleteMany({ owner });
   }
 
