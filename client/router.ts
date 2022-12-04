@@ -6,6 +6,7 @@ import LoginPage from './components/Login/LoginPage.vue';
 import EntryPage from './components/Entry/EntryPage.vue';
 import CreateEntryPage from './components/Entry/CreateEntryPage.vue';
 import EditEntryPage from './components/Entry/EditEntryPage.vue';
+import MedicationsPage from './components/Medications/MedicationsPage.vue'
 import NotFound from './NotFound.vue';
 
 Vue.use(VueRouter);
@@ -17,7 +18,8 @@ const routes = [
   {path: '/logs', name: 'Logs', component: EntryPage},
   {path: '/newLog', name: 'New Log', component: CreateEntryPage},
   {path: '/editLog/:entryId', name: 'Edit Log', component: EditEntryPage, props: true},
-  {path: '*', name: 'Not Found', component: NotFound}
+  {path: '/medications', name: 'Medications', component: MedicationsPage},
+  {path: '*', name: 'Not Found', component: NotFound},
 ];
 
 const router = new VueRouter({routes});
@@ -31,7 +33,7 @@ router.beforeEach((to, from, next) => {
     return;
   }
 
-  if (['Home', 'Account'].includes(to.name) && !JSON.parse(localStorage.vuex).username) {
+  if (['Home', 'Account', 'Medications'].includes(to.name) && !JSON.parse(localStorage.vuex).username) {
     next({name: 'Login'}); // Go to Login page if user navigates to Account and are not signed in
     return;
   }

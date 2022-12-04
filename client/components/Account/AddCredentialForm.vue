@@ -1,28 +1,27 @@
-<!-- Form for signing in (block style) -->
+<!-- Form for adding a credential to an account (block style) -->
 
 <script lang="ts">
 import BlockForm from '@/components/common/BlockForm.vue';
 
 export default {
-  name: 'LoginForm',
+  name: 'AddCredentialForm',
   mixins: [BlockForm],
   data() {
     return {
-      url: '/api/accounts/session',
+      url: '/api/accounts/credentials',
       method: 'POST',
       hasBody: true,
       setAccount: true,
-      setUsername: true,
       fields: [
         {id: 'username', label: 'Username', value: ''},
         {id: 'password', label: 'Password', value: ''}
       ],
-      title: 'Log in',
+      title: 'Create a user and add to the shared account',
       callback: () => {
         this.$store.commit('alert', {
-          message: 'You are now logged in!', status: 'success'
+          message: 'Successfully created the new user and added to your account!',
+          status: 'success'
         });
-        this.$router.push({name: 'Home'});
       }
     };
   }

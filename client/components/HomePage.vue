@@ -34,7 +34,7 @@
 export default {
   name: 'HomePage',
   mounted() {
-    this.$store.commit('setTitle', {title: 'Home', enableBack: false});
+    this.$store.commit('setHeader', {title: 'Home', enableBack: false});
   },
 };
 </script>

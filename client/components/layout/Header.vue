@@ -1,14 +1,23 @@
 <template>
   <header>
-    <h1
-      v-if="$store.state.enableBack"
-      @click="() => $router.go(-1)"
-      class="back"
-    >
-      ←
-    </h1>
-    <h1> {{ $store.state.title }} </h1>
-    <section>
+    <header class="title">
+      <h1
+        v-if="$store.state.enableBack"
+        @click="() => $router.go(-1)"
+        class="back"
+      >
+        ←
+      </h1>
+      <h1> {{ $store.state.title }} </h1>
+    </header>
+    <nav v-if="Object.keys($store.state.headerLinks).length">
+      <router-link
+        v-for="(name, link) in $store.state.headerLinks"
+        :to=link
+        :class="name === $store.state.activeLink ? 'active' : 'inactive'"
+      >{{name}}</router-link>
+    </nav>
+    <section class="alerts">
       <article
       v-for="(status, alert, index) in $store.state.alerts"
       :key="index"
@@ -31,14 +40,27 @@
   margin-right: 1rem;
 }
 
-header {
+.title {
   position: relative;
   display: flex;
   align-items: center;
   border-bottom: 1px black solid;
 }
 
-section {
+nav {
+  border-bottom: 1px black solid;
+}
+
+nav a {
+  margin-right: 2rem;
+  font-size: 1.5rem;
+}
+
+nav a.active {
+  border-bottom: 1px black solid;
+}
+
+.alerts {
   position: absolute;
   z-index: 99;
   top: 0;
@@ -48,14 +70,14 @@ section {
   text-align: center;
 }
 
-article {
+.alerts article {
   border-radius: 5px;
   padding: 0.5rem 1rem;
   margin: 0.5rem 0;
   color: white;
 }
 
-p {
+.alerts p {
   margin: 0;
 }
 

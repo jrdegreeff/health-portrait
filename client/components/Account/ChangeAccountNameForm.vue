@@ -1,23 +1,24 @@
-<!-- Form for changing password (block style) -->
+<!-- Form for changing account name (block style) -->
 
 <script lang="ts">
 import BlockForm from '@/components/common/BlockForm.vue';
 
 export default {
-  name: 'ChangePasswordForm',
+  name: 'ChangeAccountNameForm',
   mixins: [BlockForm],
   data() {
     return {
-      url: '/api/accounts/credentials',
+      url: '/api/accounts',
       method: 'PATCH',
       hasBody: true,
+      setAccount: true,
       fields: [
-        {id: 'password', label: 'Password', value: ''}
+        {id: 'name', label: 'Name', value: ''}
       ],
-      title: 'Change password',
+      title: 'Change shared account name',
       callback: () => {
         this.$store.commit('alert', {
-          message: 'Successfully changed password!',
+          message: 'Successfully changed account name!',
           status: 'success'
         });
       }
