@@ -18,15 +18,6 @@
         :key="name"
       >{{name}}</router-link>
     </nav>
-    <section class="alerts">
-      <article
-      v-for="(status, alert, index) in $store.state.alerts"
-      :key="index"
-      :class="status"
-      >
-        <p>{{ alert }}</p>
-      </article>
-    </section>
   </header>
 </template>
 
@@ -59,34 +50,5 @@ nav a {
 
 nav a.active {
   border-bottom: 1px black solid;
-}
-
-.alerts {
-  position: absolute;
-  z-index: 99;
-  top: 0;
-  left: 50%;
-  transform: translate(-50%, 0);
-  width: 50%;
-  text-align: center;
-}
-
-.alerts article {
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
-  margin: 0.5rem 0;
-  color: white;
-}
-
-.alerts p {
-  margin: 0;
-}
-
-.error {
-  background-color: rgba(166, 23, 33, 0.9);
-}
-
-.success {
-  background-color: rgba(45, 135, 87, 0.9);
 }
 </style>
