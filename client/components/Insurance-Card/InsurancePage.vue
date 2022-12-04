@@ -16,7 +16,7 @@
       </header>
       <InsuranceCard
         v-for="insurance in $store.state.insurances"
-        :key="insurance.id"
+        :key="insurance._id"
         :document="insurance"
       />
     </section>

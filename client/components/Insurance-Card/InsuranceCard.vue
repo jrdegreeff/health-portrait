@@ -8,7 +8,7 @@ export default {
     return {
       url: '/api/insurance-cards',
       fields: [
-      {id: 'purpose', label: 'Purpose', value: ''},
+        {id: 'purpose', label: 'Purpose', value: ''},
         {id: 'subscriber_name', label: 'Subscriber Name', value: ''},
         {id: 'member_id', label: 'Member ID', value: ''},
         {id: 'group_number', label: 'Group Number', value: ''},
