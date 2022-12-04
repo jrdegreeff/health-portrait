@@ -4,7 +4,7 @@ import HomePage from './components/HomePage.vue';
 import AccountPage from './components/Account/AccountPage.vue';
 import ContactPage from './components/Medical-Contact/ContactPage.vue';
 import LoginPage from './components/Login/LoginPage.vue';
-import MedicationsPage from './components/Medications/MedicationsPage.vue'
+import MedicationPage from './components/Medication/MedicationPage.vue'
 import NotFound from './NotFound.vue';
 
 Vue.use(VueRouter);
@@ -14,7 +14,7 @@ const routes = [
   {path: '/account', name: 'Account', component: AccountPage},
   {path: '/contacts', name: 'Contacts', component: ContactPage},
   {path: '/login', name: 'Login', component: LoginPage},
-  {path: '/medications', name: 'Medications', component: MedicationsPage},
+  {path: '/medications', name: 'Medications', component: MedicationPage},
   {path: '*', name: 'Not Found', component: NotFound},
 ];
 

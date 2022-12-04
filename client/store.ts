@@ -15,7 +15,8 @@ const store = new Vuex.Store({
     activeLink: undefined,
     account: null,
     username: null,
-    contacts: null,
+    contacts: [],
+    medications: [],
     alerts: {},
   },
   mutations: {
@@ -31,23 +32,48 @@ const store = new Vuex.Store({
     setUsername(state, username) {
       state.username = username || null;
     },
+    setContacts(state, contacts) {
+      state.medications = contacts || [];
+    },
+    setMedications(state, medications) {
+      state.medications = medications || [];
+    },
     alert(state, {message, status}) {
       Vue.set(state.alerts, message, status);
       setTimeout(() => {
         Vue.delete(state.alerts, message);
       }, 3000);
     },
-    async refreshContacts(state) {
-      /**
-       * Request the server for the currently available contacts.
-       */
-      const url = `/api/medical-contacts`;
-      const res = await fetch(url).then(async r => r.json());
-      state.contacts = res;
-    },
   },
   actions: {
-    
+    async loadAccount({commit, dispatch}, {account, username}) {
+      commit('setAccount', account);
+      commit('setUsername', username);
+
+      // Anything that needs to be refreshed on login/logout should be called here
+      await dispatch('refreshContacts');
+      await dispatch('refreshMedications');
+    },
+    async refreshCollection({state, commit}, {url, method}) {
+      if (state.account) {
+        const res = await fetch(url).then(async r => r.json());
+        commit(method, res);
+      } else {
+        commit(method, null);
+      }
+    },
+    async refreshContacts({dispatch}) {
+      await dispatch('refreshCollection', {
+        url: '/api/medical-contacts',
+        method: 'setContacts',
+      });
+    },
+    async refreshMedications({dispatch}) {
+      await dispatch('refreshCollection', {
+        url: '/api/medications',
+        method: 'setMedications',
+      });
+    },
   },
   // Store data across page refreshes, only discard on browser close
   plugins: [createPersistedState()]
