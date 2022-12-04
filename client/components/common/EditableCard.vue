@@ -10,16 +10,28 @@
         <label>{{ field.label }}:</label>
         <textarea v-if="editing && field.id === 'notes'" v-model="values[field.id]" />
         <input v-else-if="editing" v-model="values[field.id]" />
-        <span v-else>{{ values[field.id] }}</span>
-        <small v-if="editing && field.hint"> {{ field.hint }} </small>
+        <span v-else>
+          {{ values[field.id] }}
+        </span>
+        <small v-if="editing && field.hint">
+          {{ field.hint }}
+        </small>
       </div>
     </section>
 
     <div class="actions">
-      <button v-if="editing" @click="sendPatch">✅ save changes</button>
-      <button v-if="editing" @click="stopEditing">🚫 discard changes</button>
-      <button v-if="!editing" @click="startEditing">✏️ edit</button>
-      <button @click="sendDelete">🗑️ delete</button>
+      <button class="btn-secondary" v-if="editing" @click="sendPatch">
+        ✅ save changes
+      </button>
+      <button class="btn-secondary" v-if="editing" @click="stopEditing">
+        🚫 discard changes
+      </button>
+      <button class="btn-secondary" v-if="!editing" @click="startEditing">
+        ✏️ edit
+      </button>
+      <button class="btn-secondary" @click="sendDelete">
+        🗑️ delete
+      </button>
     </div>
   </article>
 </template>
@@ -87,5 +99,9 @@ export default {
 
 div {
   padding: 0.5rem;
+}
+
+button {
+  margin-right: 1rem;
 }
 </style>

@@ -127,7 +127,6 @@ button.btn-primary:hover {
 
 button.btn-secondary {
   background-color: var(--secondaryGray);
-  border-color: rgba(0,0,0,0); /* transparent border to maintain button size */
 }
 
 button.btn-secondary:hover {
