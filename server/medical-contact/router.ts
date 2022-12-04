@@ -50,13 +50,13 @@ router.post(
   '/',
   [
     accountValidator.isLoggedIn,
-    medicalContactValidator.isValidFirstName,
-    medicalContactValidator.isValidLastName,
-    medicalContactValidator.isValidPhoneNumber,
+    medicalContactValidator.isValidFirstName(true),
+    medicalContactValidator.isValidLastName(true),
+    medicalContactValidator.isValidPhoneNumber(true),
   ],
   async (req: Request, res: Response) => {
     const accountId = (req.session.accountId as string) ?? ''; // Will not be an empty string since its validated in isLoggedIn
-    const medicalContact = await MedicalContactCollection.addOne(accountId, req.body.title, req.body.first_name, req.body.last_name, req.body.hospital, req.body.specialty, req.body.phone_number, req.body.notes)
+    const medicalContact = await MedicalContactCollection.addOne(accountId, req.body);
     res.status(201).json({
       message: 'Your medical contact was created successfully.',
       medicalContact: util.constructMedicalContactResponse(medicalContact)
@@ -91,9 +91,9 @@ router.patch(
     accountValidator.isLoggedIn,
     medicalContactValidator.isMedicalContactExists,
     medicalContactValidator.isValidMedicalContactModifier,
-    medicalContactValidator.isValidFirstName,
-    medicalContactValidator.isValidLastName,
-    medicalContactValidator.isValidPhoneNumber
+    medicalContactValidator.isValidFirstName(false),
+    medicalContactValidator.isValidLastName(false),
+    medicalContactValidator.isValidPhoneNumber(false),
   ],
   async (req: Request, res: Response) => {
     const medicalContact = await MedicalContactCollection.updateOne(req.params.medicalContactId, req.body);

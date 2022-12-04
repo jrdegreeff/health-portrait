@@ -15,7 +15,7 @@ const store = new Vuex.Store({
     activeLink: undefined,
     account: null,
     username: null,
-    contacts: null, // All contacts created in the app
+    contacts: null,
     alerts: {},
   },
   mutations: {

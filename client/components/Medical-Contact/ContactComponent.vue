@@ -140,7 +140,6 @@
         <p>{{ alert }}</p>
       </article>
     </section>
-
   </article>
 </template>
   
@@ -174,7 +173,7 @@ export default {
   methods: {
     startEditing() {
       /**
-       * Enables edit mode on this freet.
+       * Enables edit mode on this contact.
        */
 
       this.editing = true; // Keeps track of if a contact is being edited
@@ -206,7 +205,6 @@ export default {
       const params = {
         method: 'DELETE',
         callback: () => {
-          this.$store.commit('refreshContacts');
           this.$store.commit('alert', {
             message: 'Successfully deleted contact!', status: 'success'
           });
@@ -218,6 +216,31 @@ export default {
       /**
        * Updates contact to have the submitted draft content.
        */
+
+      // if (this.title !== this.contact.title){
+      //   this.body.Object.assign({title: this.title})
+      // }
+      // if (this.first_name !== this.contact.first_name){
+      //   this.body.Object.assign({first_name: this.first_name})
+      // }
+      // if (this.last_name !== this.contact.last_name){
+      //   this.body.Object.assign({last_name: this.last_name})
+      // }
+      // if (this.hospital !== this.contact.hospital){
+      //   this.body.Object.assign({hospital: this.hospital})
+      // }
+      // if (this.specialty !== this.contact.specialty){
+      //   this.body.Object.assign({specialty: this.specialty})
+      // }
+      // if (this.phone_number !== this.contact.phone_number){
+      //   this.body.Object.assign({phone_number: this.phone_number})
+      // }
+      // if (this.notes !== this.contact.notes){
+      //   this.body.Object.assign({notes: this.notes})
+      // }
+
+      // console.log(this.body)
+
       const params = {
         method: 'PATCH',
         message: 'Successfully edited contact!',

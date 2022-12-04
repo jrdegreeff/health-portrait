@@ -9,7 +9,6 @@ export default {
       url: '/api/medical-contacts',
       method: 'POST',
       hasBody: true,
-      setUsername: false,
       fields: [
         {id: 'title', label: 'Title', value: ''},
         {id: 'first_name', label: 'First Name', value: ''},

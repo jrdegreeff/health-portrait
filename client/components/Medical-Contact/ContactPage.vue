@@ -3,16 +3,12 @@
 
 <template>
   <main>
-    <hr>
-    <section>
-      <header>
-        <h2>Health Book</h2>
-      </header>
+    <header>
       <!-- <button>
         Add contact
       </button> -->
       <CreateContactForm />
-    </section>
+    </header>
     <hr>
     <section>
       <ContactComponent

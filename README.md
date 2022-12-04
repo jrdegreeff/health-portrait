@@ -236,8 +236,8 @@ TODO: description
 - `title` _{string}_ - The medical contact's title 
 - `first_name` _{string}_ - The medical contact's first name
 - `last_name` _{string}_ - The medical contact's last name 
-- `hospital` _{string}_ - The medical contact's associated hospital  
-- `specialty` _{string}_ - The medical contact's specialty 
+- `hospital` _{string}_ - The medical contact's associated hospital (optional)
+- `specialty` _{string}_ - The medical contact's specialty (optional)
 - `phone_number` _{string}_ - The medical contact's phone number 
 - `notes` _{string}_ - Notes about the medical contact (optional)
 

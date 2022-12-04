@@ -29,7 +29,7 @@ router.beforeEach((to, from, next) => {
     return;
   }
 
-  if (['Home', 'Account', 'Medications'].includes(to.name) && !JSON.parse(localStorage.vuex).username) {
+  if (['Home', 'Account', 'Medications', 'Contacts'].includes(to.name) && !JSON.parse(localStorage.vuex).username) {
     next({name: 'Login'}); // Go to Login page if user navigates to Account and are not signed in
     return;
   }
