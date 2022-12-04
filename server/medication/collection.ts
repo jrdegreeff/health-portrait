@@ -64,9 +64,9 @@ export default class MedicalContactCollection {
    * @param {string} medicationId - The id of the medication record to delete
    */
   static async deleteOne(medicationId: string): Promise<void> {
-    const medicalContact = await MedicationModel.findOne({ _id: medicationId });
-    medicalContact.active = false;  // deleted actually just means deactivated
-    await medicalContact.save();
+    const medication = await MedicationModel.findOne({ _id: medicationId });
+    medication.active = false;  // deleted actually just means deactivated
+    await medication.save();
   }
 
   /**
