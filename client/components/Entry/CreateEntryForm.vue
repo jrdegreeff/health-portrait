@@ -20,7 +20,7 @@ export default {
             {id: 'date', label: 'Date', value: ''}
         ],
         callback: () => {
-            this.$router.push({name: 'Logs'}); // Goes to Logs page after creating new log
+            this.$router.push({path: '/logs/all'}); // Goes to Logs page after creating new log
             this.$store.commit('alert', {
               message: 'You\'ve created a new entry!', status: 'success'
             });

@@ -19,7 +19,7 @@ export default {
         },
     },
     mounted() {
-        this.$store.commit('setTitle', {title: 'Health Journal', enableBack: true});
+        this.$store.commit('setHeader', {title: 'Health Journal', enableBack: true});
     }
 }
 </script>

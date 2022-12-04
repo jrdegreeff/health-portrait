@@ -15,7 +15,7 @@ const routes = [
   {path: '/', name: 'Home', component: HomePage},
   {path: '/account', name: 'Account', component: AccountPage},
   {path: '/login', name: 'Login', component: LoginPage},
-  {path: '/logs', name: 'Logs', component: EntryPage},
+  {path: '/logs/:type', name: 'Logs', component: EntryPage, props: true},
   {path: '/newLog', name: 'New Log', component: CreateEntryPage},
   {path: '/editLog/:entryId', name: 'Edit Log', component: EditEntryPage, props: true},
   {path: '/medications', name: 'Medications', component: MedicationsPage},
