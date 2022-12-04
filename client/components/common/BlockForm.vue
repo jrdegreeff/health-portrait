@@ -106,7 +106,7 @@ export default {
         if (this.setUsername) {
           this.$store.commit('setUsername', JSON.parse(text).username);
         }
-        
+
         if (this.callback) {
           this.callback();
         }

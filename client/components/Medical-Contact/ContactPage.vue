@@ -3,18 +3,21 @@
 
 <template>
   <main>
-    <header>
+    <section>
       <!-- <button>
         Add contact
       </button> -->
       <CreateContactForm />
-    </header>
+    </section>
     <hr>
     <section>
-      <ContactComponent
+      <header>
+        <h2>Current Contacts</h2>
+      </header>
+      <ContactCard
         v-for="contact in $store.state.contacts"
-        :key="contact.id"
-        :contact="contact"
+        :key="contact._id"
+        :document="contact"
       />
     </section>
   </main>
@@ -22,26 +25,25 @@
   
 <script>
   import CreateContactForm from '@/components/Medical-Contact/CreateContactForm.vue';
-  import ContactComponent from '@/components/Medical-Contact/ContactComponent.vue';
+  import ContactCard from '@/components/Medical-Contact/ContactCard.vue';
   
   export default {
     name: 'ContactPage',
     components: {
       CreateContactForm, 
-      ContactComponent
+      ContactCard
     },
     mounted() {
       this.$store.commit("setHeader", {
-      title: "Health Book",
-      enableBack: true,
-      headerLinks: {
-        "/contacts": "Contacts",
-        "/medications": "Medications",
-        "/insurance": "Insurance",
-      },
-      activeLink: "Contacts",
-    });
-      this.$store.commit('refreshContacts');
+        title: "Health Book",
+        enableBack: true,
+        headerLinks: {
+          "/contacts": "Contacts",
+          "/medications": "Medications",
+          "/insurance": "Insurance",
+        },
+        activeLink: "Contacts",
+      });
     },
   };
 </script>

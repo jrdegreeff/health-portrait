@@ -15,12 +15,12 @@ export default {
         {id: 'last_name', label: 'Last Name', value: ''},
         {id: 'hospital', label: 'Hospital', value: ''},
         {id: 'specialty', label: 'Specialty', value: ''},
-        {id: 'phone_number', label: 'Phone Number', value: ''},
+        {id: 'phone_number', label: 'Phone Number', value: '', hint: 'Format: 123-456-7890'},
         {id: 'notes', label: 'Notes', value: ''},
       ],
       title: 'Create contact',
-      callback: () => {
-        this.$store.commit('refreshContacts');
+      callback: async () => {
+        await this.$store.dispatch('refreshContacts');
         this.$store.commit('alert', {
           message: 'Successfully created the contact!',
           status: 'success'
