@@ -38,13 +38,14 @@ const isMedicalContactActive = async (req: Request, res: Response, next: NextFun
  * Checks if a first name in req.body is valid, that is, it matches the name regex
  */
 const isValidFirstName = (required: boolean) => (req: Request, res: Response, next: NextFunction) => {
-  if (!required && req.body.username === undefined) {
+  if (!required && req.body.first_name === undefined) {
     next();
     return;
   }
 
+  console.log(req.body);
   const nameRegex = /^(?!\s*$).+/i;
-  if (req.body.first_name || !nameRegex.test(req.body.first_name)) {
+  if (!req.body.first_name || !nameRegex.test(req.body.first_name)) {
     res.status(400).json({
       error: 'First name must be a nonempty alphanumeric string.'
     });
@@ -58,13 +59,13 @@ const isValidFirstName = (required: boolean) => (req: Request, res: Response, ne
  * Checks if a last name in req.body is valid, that is, it matches the name regex
  */
 const isValidLastName = (required: boolean) => (req: Request, res: Response, next: NextFunction) => {
-  if (!required && req.body.username === undefined) {
+  if (!required && req.body.last_name === undefined) {
     next();
     return;
   }
 
   const nameRegex = /^(?!\s*$).+/i;
-  if (req.body.first_name || !nameRegex.test(req.body.first_name)) {
+  if (!req.body.last_name || !nameRegex.test(req.body.last_name)) {
     res.status(400).json({
       error: 'Last name must be a nonempty alphanumeric string.'
     });
@@ -79,13 +80,13 @@ const isValidLastName = (required: boolean) => (req: Request, res: Response, nex
  * Phone regex found here: https://stackoverflow.com/a/16699507
  */
 const isValidPhoneNumber = (required: boolean) => (req: Request, res: Response, next: NextFunction) => {
-  if (!required && req.body.username === undefined) {
+  if (!required && req.body.phone_number === undefined) {
     next();
     return;
   }
 
   const phoneRegex = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/;
-  if (req.body.phone_number || !phoneRegex.test(req.body.phone_number)) {
+  if (!req.body.phone_number || !phoneRegex.test(req.body.phone_number)) {
     res.status(400).json({
       error: 'Phone number must be in a valid format i.e. (123-456-7890).'
     });
