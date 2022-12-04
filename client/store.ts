@@ -15,6 +15,7 @@ const store = new Vuex.Store({
     activeLink: undefined,
     account: null,
     username: null,
+    insurances: null,
     alerts: {},
   },
   mutations: {
@@ -23,6 +24,14 @@ const store = new Vuex.Store({
       state.enableBack = enableBack;
       state.headerLinks = headerLinks || {};
       state.activeLink = activeLink;
+    },
+    async refreshInsurances(state) {
+      /**
+       * Request the server for the currently available insurances.
+       */
+      const url = `/api/insurance-cards`;
+      const res = await fetch(url).then(async r => r.json());
+      state.insurances = res;
     },
     setAccount(state, account) {
       state.account = account || null;
