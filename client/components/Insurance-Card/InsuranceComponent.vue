@@ -1,10 +1,24 @@
-<!-- Reusable component representing a single contact and its actions -->
+<!-- Reusable component representing a single insurance card and its actions -->
 
 <template>
   <article
     class="insurance"
   >
     <section>
+      <div>
+        <label> Purpose: </label>
+        <input
+          v-if="editing"
+          v-model="purpose"
+        >
+        <p
+          v-else
+        >
+          {{ insurance.purpose }}
+        </p>
+        </label>
+      </div>
+
       <div>
         <label> Subscriber Name: </label>
         <input
@@ -71,20 +85,6 @@
           v-else
         >
           {{ insurance.plan_type }}
-        </p>
-        </label>
-      </div>
-  
-      <div>
-        <label> Purpose: </label>
-        <input
-          v-if="editing"
-          v-model="purpose"
-        >
-        <p
-          v-else
-        >
-          {{ insurance.purpose }}
         </p>
         </label>
       </div>
