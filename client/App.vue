@@ -21,8 +21,7 @@ export default {
     fetch('/api/accounts/session', {
       credentials: 'same-origin' // Sends express-session credentials with request
     }).then(res => res.json()).then(async res => {
-      await this.$store.commit('setAccount', res.account);
-      await this.$store.commit('setUsername', res.username);
+      await this.$store.dispatch('loadAccount', res);
     });
 
     // Clear alerts on page refresh
@@ -164,10 +163,18 @@ label {
   margin-right: 1rem;
 }
 
-input {
+input, textarea {
   border-radius: 0.5rem;
   border: 1px solid black;
   padding: 0.5rem;
   margin: 0.5rem;
+}
+
+textarea {
+  display: block;
+}
+
+small {
+  color: #aaaaaa;
 }
 </style>

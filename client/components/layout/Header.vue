@@ -15,6 +15,7 @@
         v-for="(name, link) in $store.state.headerLinks"
         :to=link
         :class="name === $store.state.activeLink ? 'active' : 'inactive'"
+        :key="name"
       >{{name}}</router-link>
     </nav>
     <section class="alerts">

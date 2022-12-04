@@ -38,7 +38,7 @@ export default class MedicalContactCollection {
    * @return {Promise<HydratedDocument<Medication>[]>} - An array of all of the medications sorted in alphabetical order by medication name
    */
   static async findAllByOwner(owner: string): Promise<Array<HydratedDocument<Medication>>> {
-    return MedicationModel.find({ owner }).sort({ name: 1 });
+    return MedicationModel.find({ owner, active: true }).sort({ name: 1 });
   }
 
   /**
@@ -52,7 +52,7 @@ export default class MedicalContactCollection {
     const medication = await MedicationModel.findOne({ _id: medicationId });
 
     // @ts-ignore
-    Object.keys(details).forEach(k => details[k] && (medication[k] = details[k]));
+    Object.keys(details).forEach(k => medication[k] = details[k]);
 
     await medication.save();
     return medication;
@@ -65,7 +65,7 @@ export default class MedicalContactCollection {
    */
   static async deleteOne(medicationId: string): Promise<void> {
     const medicalContact = await MedicationModel.findOne({ _id: medicationId });
-    medicalContact.active = false; // deleted actually just means deactivated
+    medicalContact.active = false;  // deleted actually just means deactivated
     await medicalContact.save();
   }
 

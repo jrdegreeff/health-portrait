@@ -12,6 +12,7 @@ import {accountRouter} from '../server/account/router';
 import {entryRouter} from '../server/entry/router';
 import {medicalContactRouter} from '../server/medical-contact/router';
 import {insuranceCardRouter} from '../server/insurance/router';
+import {medicationRouter} from '../server/medication/router';
 
 // Load environmental variables
 dotenv.config({});
@@ -77,6 +78,7 @@ app.use('/api/accounts', accountRouter);
 app.use('/api/entries', entryRouter);
 app.use('/api/medical-contacts', medicalContactRouter);
 app.use('/api/insurance-cards', insuranceCardRouter);
+app.use('/api/medications', medicationRouter);
 
 const isProduction = process.env.NODE_ENV === 'production';
 const vuePath = path.resolve(__dirname, '..', 'client', isProduction ? 'dist' : 'public');
