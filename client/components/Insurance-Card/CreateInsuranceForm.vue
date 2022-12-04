@@ -19,8 +19,8 @@ export default {
         {id: 'notes', label: 'Notes', value: ''},
       ],
       title: 'Add new insurance card',
-      callback: () => {
-        this.$store.commit('refreshInsurances');
+      callback: async () => {
+        await this.$store.dispatch('refreshInsurances');
         this.$store.commit('alert', {
           message: 'Successfully added the new insurance card!',
           status: 'success'

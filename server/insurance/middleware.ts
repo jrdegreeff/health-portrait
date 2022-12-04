@@ -21,15 +21,18 @@ const isInsuranceCardExists = async (req: Request, res: Response, next: NextFunc
 /**
  * Checks if a subscriber name in req.body is valid, that is, is a nonempty string
  */
-const isValidSubscriberName = (req: Request, res: Response, next: NextFunction) => {
+const isValidSubscriberName = (required: boolean) => (req: Request, res: Response, next: NextFunction) => {
+  if (!required && req.body.subscriber_name === undefined) {
+    next();
+    return;
+  }
+
   const nameRegex = /^(?!\s*$).+/i;
-  if (req.body.subscriber_name) {
-    if (!nameRegex.test(req.body.subscriber_name)) {
-      res.status(400).json({
-        error: 'Subscriber name must be a nonempty alphanumeric string.'
-      });
-      return;
-    }
+  if (!req.body.subscriber_name || !nameRegex.test(req.body.subscriber_name)) {
+    res.status(400).json({
+      error: 'Subscriber name must be a nonempty alphanumeric string.'
+    });
+    return;
   }
 
   next();
@@ -38,15 +41,18 @@ const isValidSubscriberName = (req: Request, res: Response, next: NextFunction) 
 /**
  * Checks if a purpose in req.body is valid, that is, is a nonempty string
  */
-const isValidPurpose = (req: Request, res: Response, next: NextFunction) => {
+const isValidPurpose = (required: boolean) => (req: Request, res: Response, next: NextFunction) => {
+  if (!required && req.body.purpose === undefined) {
+    next();
+    return;
+  }
+
   const purposeRegex = /^(?!\s*$).+/i;
-  if (req.body.purpose) {
-    if (!purposeRegex.test(req.body.purpose)) {
-      res.status(400).json({
-        error: 'Purpose must be a nonempty alphanumeric string.'
-      });
-      return;
-    }
+  if (!req.body.purpose || !purposeRegex.test(req.body.purpose)) {
+    res.status(400).json({
+      error: 'Purpose must be a nonempty alphanumeric string.'
+    });
+    return;
   }
 
   next();

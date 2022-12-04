@@ -3,35 +3,38 @@
 
 <template>
   <main>
-    <header>
+    <section>
       <!-- <button>
           Add contact
         </button> -->
       <CreateInsuranceForm />
-    </header>
+    </section>
     <hr>
     <section>
-      <InsuranceComponent
+      <header>
+        <h2>Current Insurance Cards</h2>
+      </header>
+      <InsuranceCard
         v-for="insurance in $store.state.insurances"
         :key="insurance.id"
-        :insurance="insurance"
+        :document="insurance"
       />
     </section>
   </main>
 </template>
     
-  <script>
-    import CreateInsuranceForm from '@/components/Insurance-Card/CreateInsuranceForm.vue';
-    import InsuranceComponent from '@/components/Insurance-Card/InsuranceComponent.vue';
-    
-    export default {
-      name: 'ContactPage',
-      components: {
-        CreateInsuranceForm, 
-        InsuranceComponent
-      },
-      mounted() {
-        this.$store.commit("setHeader", {
+<script>
+  import CreateInsuranceForm from '@/components/Insurance-Card/CreateInsuranceForm.vue';
+  import InsuranceCard from '@/components/Insurance-Card/InsuranceCard.vue';
+  
+  export default {
+    name: 'InsurancePage',
+    components: {
+      CreateInsuranceForm, 
+      InsuranceCard
+    },
+    mounted() {
+      this.$store.commit("setHeader", {
         title: "Health Book",
         enableBack: true,
         headerLinks: {
@@ -41,7 +44,6 @@
         },
         activeLink: "Insurance",
       });
-        this.$store.commit('refreshInsurances');
-      },
-    };
-  </script>
+    },
+  };
+</script>
