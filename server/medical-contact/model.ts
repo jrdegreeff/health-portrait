@@ -64,13 +64,11 @@ const MedicalContactSchema = new Schema<MedicalContact>({
   // The medical contact's hospital
   hospital: {
     type: String,
-    required: false,
     default: ''
   },
   // The medical contact's specialty
   specialty: {
     type: String,
-    required: false,
     default: ''
   },
   // The medical contact's phone number
@@ -81,7 +79,6 @@ const MedicalContactSchema = new Schema<MedicalContact>({
   // Notes about the medical contact
   notes: {
     type: String,
-    required: false,
     default: ''
   },
 });

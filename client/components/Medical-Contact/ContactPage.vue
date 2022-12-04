@@ -11,12 +11,9 @@
     </section>
     <hr>
     <section>
-<<<<<<< HEAD
-=======
       <header>
         <h2>Current Contacts</h2>
       </header>
->>>>>>> 31b16dcf0e4c1bfe6dbcfb6611787cf2c8e42f80
       <ContactCard
         v-for="contact in $store.state.contacts"
         :key="contact._id"

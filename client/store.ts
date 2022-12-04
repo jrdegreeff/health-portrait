@@ -42,7 +42,7 @@ const store = new Vuex.Store({
       state.username = username || null;
     },
     setContacts(state, contacts) {
-      state.medications = contacts || [];
+      state.contacts = contacts || [];
     },
     setMedications(state, medications) {
       state.medications = medications || [];
