@@ -30,10 +30,10 @@ router.get(
  *
  * @name POST /api/medication
  * 
- * @param {string} name - The username of the user
- * @param {string} generic_name - The username of the user
- * @param {string} dose - The username of the user
- * @param {string} notes - The username of the user
+ * @param {string} name - The medication's name
+ * @param {string} generic_name - The medication's generic compound name
+ * @param {string} dose - The medication's dose
+ * @param {string} notes - Notes about the medication
  * 
  * @return {MedicationResponse} - The created medical contact
  * 
@@ -60,10 +60,10 @@ router.post(
  *
  * @name PATCH /api/medication/:medicationId
  *
- * @param {string} name - The username of the user
- * @param {string} generic_name - The username of the user
- * @param {string} dose - The username of the user
- * @param {string} notes - The username of the user
+ * @param {string} name - The medication's name
+ * @param {string} generic_name - The medication's generic compound name
+ * @param {string} dose - The medication's dose
+ * @param {string} notes - Notes about the medication
  * 
  * @return {MedicalContactResponse} - the updated medical contact
  * 
