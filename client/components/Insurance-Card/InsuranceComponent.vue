@@ -197,7 +197,7 @@
         this.purpose = this.insurance.purpose,
         this.notes = this.insurance.notes;
       },
-      deleteContact() {
+      deleteInsurance() {
         /**
          * Deletes this insurance.
          */

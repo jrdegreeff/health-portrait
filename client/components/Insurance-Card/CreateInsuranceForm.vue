@@ -23,7 +23,7 @@ export default {
       callback: () => {
         this.$store.commit('refreshInsurances');
         this.$store.commit('alert', {
-          message: 'Successfully created the contact!',
+          message: 'Successfully added the new insurance card!',
           status: 'success'
         });
       }
