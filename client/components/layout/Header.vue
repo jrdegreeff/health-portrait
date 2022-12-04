@@ -11,15 +11,24 @@
       <h1> {{ $store.state.title }} </h1>
     </header>
     <nav v-if="Object.keys($store.state.headerLinks).length">
-      <router-link
-        v-for="(name, link) in $store.state.headerLinks"
-        :to=link
-        :class="name === $store.state.activeLink ? 'active' : 'inactive'"
+      <NavLink
+        v-for="(name, to) in $store.state.headerLinks"
         :key="name"
-      >{{name}}</router-link>
+        :name="name"
+        :to="to"
+      />
     </nav>
   </header>
 </template>
+
+<script lang="ts">
+import NavLink from '@/components/common/NavLink.vue';
+
+export default {
+  name: 'Header',
+  components: {NavLink},
+};
+</script>
 
 <style scoped>
 .back {
@@ -43,12 +52,12 @@ nav {
   border-bottom: 1px black solid;
 }
 
-nav a {
+a {
   margin-right: 2rem;
   font-size: 1.5rem;
 }
 
-nav a.active {
+a.active {
   border-bottom: 1px black solid;
 }
 </style>
