@@ -63,8 +63,8 @@ export default {
                         message: 'Successfully deleted entry!', status: 'success'
                     });
                 }
-        };
-        this.request(params);
+            };
+            this.request(params);
         },
         async request(params) {
             const options = {
