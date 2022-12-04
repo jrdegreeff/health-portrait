@@ -73,7 +73,7 @@ router.post(
  * @throws {400} - If the name, generic_name, or dose is empty or a stream of empty spaces
  */
 router.patch(
-  '/:medicalContactId',
+  '/:medicationId',
   accountValidator.isLoggedIn,
   medicationValidator.isMedicationExists,
   medicationValidator.isMedicationOwner,
@@ -100,7 +100,7 @@ router.patch(
  * @throws {409} - If the medicationId is already deactivated
  */
 router.delete(
-  '/:medicalContactId',
+  '/:medicationId',
   accountValidator.isLoggedIn,
   medicationValidator.isMedicationExists,
   medicationValidator.isMedicationOwner,
@@ -114,4 +114,4 @@ router.delete(
 );
 
 
-export { router as medicalContactRouter };
+export { router as medicationRouter };
