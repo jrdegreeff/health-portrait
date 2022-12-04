@@ -31,7 +31,7 @@ export default {
     LoginForm
   },
   mounted() {
-    this.$store.commit('setTitle', {title: 'Log In', enableBack: false});
+    this.$store.commit('setHeader', {title: 'Log In', enableBack: false});
   },
 };
 </script>

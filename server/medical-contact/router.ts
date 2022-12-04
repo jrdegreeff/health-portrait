@@ -1,10 +1,9 @@
-import type {NextFunction, Request, Response} from 'express';
+import type {Request, Response} from 'express';
 import express from 'express';
 import MedicalContactCollection from './collection';
 import * as accountValidator from '../account/middleware';
 import * as medicalContactValidator from '../medical-contact/middleware';
 import * as util from './util';
-import {MedicalContact} from './model';
 
 const router = express.Router();
 
@@ -20,7 +19,7 @@ const router = express.Router();
 router.get(
   '/',
   [
-    accountValidator.isAccountLoggedIn
+    accountValidator.isLoggedIn
   ],
   async (req: Request, res: Response) => {
     const medicalContacts = await MedicalContactCollection.findAllByOwnerId(req.session.accountId as string);
@@ -50,17 +49,14 @@ router.get(
 router.post(
   '/',
   [
-    accountValidator.isAccountLoggedIn,
+    accountValidator.isLoggedIn,
     medicalContactValidator.isValidFirstName,
     medicalContactValidator.isValidLastName,
-    medicalContactValidator.isValidPhoneNumber
+    medicalContactValidator.isValidPhoneNumber,
   ],
   async (req: Request, res: Response) => {
-    const accountId = (req.session.accountId as string) ?? ''; // Will not be an empty string since its validated in isAccountLoggedIn
-    const notes = (req.body.notes as string) ?? ''; // Since notes are optional, if not given, then just use an empty string
-    const specialty = (req.body.specialty as string) ?? ''; // Since specialty is optional, if not given, then just use an empty string
-    const hospital = (req.body.hospital as string) ?? ''; // Since hospital is optional, if not given, then just use an empty string
-    const medicalContact = await MedicalContactCollection.addOne(accountId, req.body.title, req.body.first_name, req.body.last_name, hospital, specialty, req.body.phone_number, notes);
+    const accountId = (req.session.accountId as string) ?? ''; // Will not be an empty string since its validated in isLoggedIn
+    const medicalContact = await MedicalContactCollection.addOne(accountId, req.body.title, req.body.first_name, req.body.last_name, req.body.hospital, req.body.specialty, req.body.phone_number, req.body.notes)
     res.status(201).json({
       message: 'Your medical contact was created successfully.',
       medicalContact: util.constructMedicalContactResponse(medicalContact)
@@ -92,7 +88,7 @@ router.post(
 router.patch(
   '/:medicalContactId',
   [
-    accountValidator.isAccountLoggedIn,
+    accountValidator.isLoggedIn,
     medicalContactValidator.isMedicalContactExists,
     medicalContactValidator.isValidMedicalContactModifier,
     medicalContactValidator.isValidFirstName,
@@ -122,7 +118,7 @@ router.patch(
 router.delete(
   '/:medicalContactId',
   [
-    accountValidator.isAccountLoggedIn,
+    accountValidator.isLoggedIn,
     medicalContactValidator.isMedicalContactExists,
     medicalContactValidator.isValidMedicalContactModifier,
     medicalContactValidator.isMedicalContactActive

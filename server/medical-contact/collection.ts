@@ -1,7 +1,6 @@
 import type {HydratedDocument, Types} from 'mongoose';
 import type {MedicalContact} from './model';
 import MedicalContactModel from './model';
-import AccountCollection from '../account/collection';
 
 class MedicalContactCollection {
   /**

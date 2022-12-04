@@ -4,6 +4,7 @@ import HomePage from './components/HomePage.vue';
 import AccountPage from './components/Account/AccountPage.vue';
 import ContactPage from './components/Medical-Contact/ContactPage.vue';
 import LoginPage from './components/Login/LoginPage.vue';
+import MedicationsPage from './components/Medications/MedicationsPage.vue'
 import NotFound from './NotFound.vue';
 
 Vue.use(VueRouter);
@@ -13,7 +14,8 @@ const routes = [
   {path: '/account', name: 'Account', component: AccountPage},
   {path: '/contacts', name: 'Contacts', component: ContactPage},
   {path: '/login', name: 'Login', component: LoginPage},
-  {path: '*', name: 'Not Found', component: NotFound}
+  {path: '/medications', name: 'Medications', component: MedicationsPage},
+  {path: '*', name: 'Not Found', component: NotFound},
 ];
 
 const router = new VueRouter({routes});
@@ -27,7 +29,7 @@ router.beforeEach((to, from, next) => {
     return;
   }
 
-  if (['Home', 'Account'].includes(to.name) && !JSON.parse(localStorage.vuex).username) {
+  if (['Home', 'Account', 'Medications'].includes(to.name) && !JSON.parse(localStorage.vuex).username) {
     next({name: 'Login'}); // Go to Login page if user navigates to Account and are not signed in
     return;
   }

@@ -65,6 +65,7 @@ export default {
       url: '', // Url to submit form to
       method: 'GET', // Form request method
       hasBody: false, // Whether or not form request has a body
+      setAccount: false, // Whether or not stored account info should be updated after form submission
       setUsername: false, // Whether or not stored username should be updated after form submission
       callback: null // Function to run after successful form submission
     };
@@ -97,10 +98,14 @@ export default {
           throw new Error(res.error);
         }
 
+        const text = await r.text();
+
+        if (this.setAccount) {
+          this.$store.commit('setAccount', JSON.parse(text).account);
+        }
+        
         if (this.setUsername) {
-          const text = await r.text();
-          const res = text ? JSON.parse(text) : {user: null};
-          await this.$store.commit('setUsername', res.account ? res.account.username : null);
+          this.$store.commit('setUsername', JSON.parse(text).username);
         }
 
         if (this.callback) {
