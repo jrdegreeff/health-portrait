@@ -57,7 +57,10 @@ router.post(
   ],
   async (req: Request, res: Response) => {
     const accountId = (req.session.accountId as string) ?? ''; // Will not be an empty string since its validated in isAccountLoggedIn
-    const medicalContact = await MedicalContactCollection.addOne(accountId, req.body.title, req.body.first_name, req.body.last_name, req.body.hospital, req.body.specialty, req.body.phone_number, req.body.notes);
+    const notes = (req.body.notes as string) ?? ''; // Since notes are optional, if not given, then just use an empty string
+    const specialty = (req.body.specialty as string) ?? ''; // Since specialty is optional, if not given, then just use an empty string
+    const hospital = (req.body.hospital as string) ?? ''; // Since hospital is optional, if not given, then just use an empty string
+    const medicalContact = await MedicalContactCollection.addOne(accountId, req.body.title, req.body.first_name, req.body.last_name, hospital, specialty, req.body.phone_number, notes);
     res.status(201).json({
       message: 'Your medical contact was created successfully.',
       medicalContact: util.constructMedicalContactResponse(medicalContact)

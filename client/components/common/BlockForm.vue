@@ -4,47 +4,52 @@
 <template>
   <form @submit.prevent="submit">
     <fieldset>
-    <legend>{{ title }}</legend>
-    <article
-      v-if="fields.length"
-    >
-      <div
-        v-for="field in fields"
-        :key="field.id"
+      <legend>{{ title }}</legend>
+      <article
+        v-if="fields.length"
       >
-        <span>
-          <label
-            v-if="!field.hidden"
-            :for="field.id"
-          >
-            {{ field.label }}:
-          </label>
-          <input
-            v-if="field.hidden"
-            type=hidden
-            :name="field.id"
-            :value="field.value"
-          >
-          <textarea
-            v-else-if="field.id === 'content'"
-            :name="field.id"
-            :value="field.value"
-            @input="field.value = $event.target.value"
-          />
-          <input
-            v-else
-            :type="field.id === 'password' ? 'password' : 'text'"
-            :name="field.id"
-            :value="field.value"
-            @input="field.value = $event.target.value"
-          >
-        </span>
-      </div>
-    </article>
-    <p v-else>{{ content }}</p>
-    <button class="btn-primary" type="submit">
-      {{ title }}
-    </button>
+        <div
+          v-for="field in fields"
+          :key="field.id"
+        >
+          <span>
+            <label
+              v-if="!field.hidden"
+              :for="field.id"
+            >
+              {{ field.label }}:
+            </label>
+            <input
+              v-if="field.hidden"
+              type="hidden"
+              :name="field.id"
+              :value="field.value"
+            >
+            <textarea
+              v-else-if="field.id === 'notes'"
+              :name="field.id"
+              :value="field.value"
+              @input="field.value = $event.target.value"
+            />
+            <input
+              v-else
+              :type="field.id === 'password' ? 'password' : 'text'"
+              :name="field.id"
+              :value="field.value"
+              @input="field.value = $event.target.value"
+            >
+          </span>
+        </div>
+      </article>
+      <p v-else>
+        {{ content }}
+      </p>
+      <button
+        class="btn-primary"
+        type="submit"
+      >
+        {{ title }}
+      </button>
     </fieldset>
   </form>
 </template>

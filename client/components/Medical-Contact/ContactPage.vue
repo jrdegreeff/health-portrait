@@ -4,9 +4,11 @@
 <template>
   <main>
     <section>
-      <button>
-        Contacts
-      </button>
+      <router-link to="/contacts">
+        <button>
+          Contacts
+        </button>
+      </router-link>
       <button>
         Medications
       </button>
@@ -19,9 +21,9 @@
       <header>
         <h2>Health Book</h2>
       </header>
-      <button>
+      <!-- <button>
         Add contact
-      </button>
+      </button> -->
       <CreateContactForm />
     </section>
     <hr>

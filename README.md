@@ -226,7 +226,7 @@ TODO: description
 - `hospital` _{string}_ - The medical contact's associated hospital  
 - `specialty` _{string}_ - The medical contact's specialty 
 - `phone_number` _{string}_ - The medical contact's phone number 
-- `notes` _{string}_ - Notes about the medical contact
+- `notes` _{string}_ - Notes about the medical contact (optional)
 
 **Returns**
 
