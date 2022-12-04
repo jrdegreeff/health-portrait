@@ -204,7 +204,6 @@
         const params = {
           method: 'DELETE',
           callback: () => {
-            this.$store.commit('refreshInsurances');
             this.$store.commit('alert', {
               message: 'Successfully deleted insurance!', status: 'success'
             });

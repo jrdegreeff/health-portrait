@@ -9,7 +9,6 @@ export default {
       url: '/api/insurance-cards',
       method: 'POST',
       hasBody: true,
-      setUsername: false,
       fields: [
         {id: 'subscriber_name', label: 'Subscriber Name', value: ''},
         {id: 'member_id', label: 'Member ID', value: ''},
