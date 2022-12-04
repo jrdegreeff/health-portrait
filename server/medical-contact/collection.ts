@@ -51,7 +51,7 @@ class MedicalContactCollection {
    */
   static async findAllByOwnerId(ownerId: string): Promise<Array<HydratedDocument<MedicalContact>>> {
     // Const owner = await AccountCollection.findOneByAccountId(ownerId);
-    return MedicalContactModel.find({ownerId}).sort({last_name: 1});
+    return MedicalContactModel.find({ownerId, active: true}).sort({last_name: 1});
   }
 
   /**

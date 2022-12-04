@@ -3,19 +3,6 @@
 
 <template>
   <main>
-    <section>
-      <router-link to="/contacts">
-        <button>
-          Contacts
-        </button>
-      </router-link>
-      <button>
-        Medications
-      </button>
-      <button>
-        Insurance
-      </button>
-    </section>
     <hr>
     <section>
       <header>
@@ -34,7 +21,6 @@
         :contact="contact"
       />
     </section>
-    <hr>
   </main>
 </template>
   
@@ -49,7 +35,16 @@
       ContactComponent
     },
     mounted() {
-      this.$store.commit('setTitle', {title: 'Health Book', enableBack: true});
+      this.$store.commit("setHeader", {
+      title: "Health Book",
+      enableBack: true,
+      headerLinks: {
+        "/contacts": "Contacts",
+        "/medications": "Medications",
+        "/insurance": "Insurance",
+      },
+      activeLink: "Contacts",
+    });
       this.$store.commit('refreshContacts');
     },
   };

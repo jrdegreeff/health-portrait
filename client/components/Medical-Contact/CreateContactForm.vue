@@ -21,6 +21,7 @@ export default {
       ],
       title: 'Create contact',
       callback: () => {
+        this.$store.commit('refreshContacts');
         this.$store.commit('alert', {
           message: 'Successfully created the contact!',
           status: 'success'

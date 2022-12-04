@@ -38,6 +38,7 @@
               :value="field.value"
               @input="field.value = $event.target.value"
             >
+            <small v-if="field.id === 'phone_number'"> Format: 123-456-7890 </small>
           </span>
         </div>
       </article>
@@ -120,3 +121,13 @@ export default {
   }
 };
 </script>
+
+<style>
+small {
+  color: #AAAAAA;
+}
+
+textarea {
+  display: block;
+}
+</style>
