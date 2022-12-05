@@ -7,25 +7,13 @@ class InsuranceCardCollection {
    * Add a new insurance card
    *
    * @param {string} ownerId - The id of the owner of the insurance card
-   * @param {string} subscriber_name - The subscriber name of the insurance card
-   * @param {string} member_id - The member id of the insurance card
-   * @param {string} group_number - The group number of the insurance card
-   * @param {string} plan_number - The plan number of the insurance card
-   * @param {string} plan_type - The plan type of the insurance card
-   * @param {string} purpose - The purpose of the insurance card
-   * @param {string} notes - Notes about the insurance card
+   * @param {string} cardDetails - the details about the insurance card
    * @return {Promise<HydratedDocument<InsuranceCard>>} - The newly created insurance card
    */
-  static async addOne(ownerId: Types.ObjectId | string, subscriber_name: string, member_id: string, group_number: string, plan_number: string, plan_type: string, purpose: string, notes: string): Promise<HydratedDocument<InsuranceCard>> {
+  static async addOne(ownerId: Types.ObjectId | string, cardDetails: {subscriber_name?: string; member_id?: string; group_number?: string; plan_number?: string; plan_type?: string; purpose?: string; notes?: string}): Promise<HydratedDocument<InsuranceCard>> {
     const insuranceCard = new InsuranceCardModel({
       ownerId,
-      subscriber_name,
-      member_id,
-      group_number,
-      plan_number,
-      plan_type,
-      purpose,
-      notes
+      ...cardDetails,
     });
     await insuranceCard.save(); // Saves user to MongoDB
     return insuranceCard;
@@ -48,7 +36,6 @@ class InsuranceCardCollection {
    * @return {Promise<HydratedDocument<InsuranceCard>[]>} - An array of all of the insurance cards sorted in alphabetical order by purpose
    */
   static async findAllByOwnerId(ownerId: string): Promise<Array<HydratedDocument<InsuranceCard>>> {
-    // Const owner = await AccountCollection.findOneByAccountId(ownerId);
     return InsuranceCardModel.find({ownerId}).sort({purpose: 1});
   }
 
