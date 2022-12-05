@@ -10,8 +10,7 @@ export default {
     return {
       url: '/api/accounts',
       method: 'DELETE',
-      setAccount: true,
-      setUsername: true,
+      loadAccount: true,
       title: 'Delete account',
       fields: [],
       content: 'Deleting your account is permanent and irreversible. Proceed only if you understand these consequences.',

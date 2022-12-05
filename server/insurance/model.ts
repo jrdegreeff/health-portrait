@@ -47,22 +47,22 @@ const InsuranceCardSchema = new Schema<InsuranceCard>({
   // The insurance card's member ID
   member_id: {
     type: String,
-    required: true
+    default: ''
   },
   // The insurance card's group number
   group_number: {
     type: String,
-    required: true
+    default: ''
   },
   // The insurance card's plan number
   plan_number: {
     type: String,
-    required: true
+    default: ''
   },
   // The insurance card's plan type
   plan_type: {
     type: String,
-    required: true
+    default: ''
   },
   // The insurance card's purpose
   purpose: {
@@ -72,7 +72,7 @@ const InsuranceCardSchema = new Schema<InsuranceCard>({
   // Notes about the insurance card
   notes: {
     type: String,
-    required: true
+    default: ''
   }
 });
 

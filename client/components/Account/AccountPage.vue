@@ -5,12 +5,12 @@
   <main>
     <section>
       <header>
-        <h2>Shared account settings for {{ $store.state.account.name }}</h2>
+        <h2>Shared account settings for {{ $store.state.account && $store.state.account.name }}</h2>
       </header>
       <fieldset>
         <legend>Users with access to shared account</legend>
         <ul>
-          <li v-for="username in $store.state.account.credentials"
+          <li v-for="username in $store.state.account ? $store.state.account.credentials : []"
               :key="username">
             <button class="btn-tertiary"
                     @click="() => deleteCredential(username)">

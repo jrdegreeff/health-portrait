@@ -163,12 +163,12 @@ TODO: description
 **Body**
 
 - `subscriber_name` _{string}_ - The insurance card's subscriber
-- `member_id` _{string}_ - The insurance card's member ID
-- `group_number` _{string}_ - The insurance card's group number
-- `plan_number` _{string}_ - The insurance card's plan number
-- `plan_type` _{string}_ - The insurance card's plan type 
+- `member_id` _{string}_ - The insurance card's member ID (optional)
+- `group_number` _{string}_ - The insurance card's group number (optional)
+- `plan_number` _{string}_ - The insurance card's plan number (optional)
+- `plan_type` _{string}_ - The insurance card's plan type (optional)
 - `purpose` _{string}_ - The insurance card's purpose 
-- `notes` _{string}_ - Notes about the insurance card 
+- `notes` _{string}_ - Notes about the insurance card (optional)
 
 **Returns**
 
@@ -236,10 +236,10 @@ TODO: description
 - `title` _{string}_ - The medical contact's title 
 - `first_name` _{string}_ - The medical contact's first name
 - `last_name` _{string}_ - The medical contact's last name 
-- `hospital` _{string}_ - The medical contact's associated hospital  
-- `specialty` _{string}_ - The medical contact's specialty 
+- `hospital` _{string}_ - The medical contact's associated hospital (optional)
+- `specialty` _{string}_ - The medical contact's specialty (optional)
 - `phone_number` _{string}_ - The medical contact's phone number 
-- `notes` _{string}_ - Notes about the medical contact
+- `notes` _{string}_ - Notes about the medical contact (optional)
 
 **Returns**
 

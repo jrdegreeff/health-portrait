@@ -7,27 +7,15 @@ class MedicalContactCollection {
    * Add a new medical contact
    *
    * @param {string} ownerId - The id of the owner of the medical contact
-   * @param {string} title - The username of the user
-   * @param {string} first_name - The username of the user
-   * @param {string} last_name - The username of the user
-   * @param {string} hospital - The username of the user
-   * @param {string} specialty - The username of the user
-   * @param {string} phone_number - The username of the user
-   * @param {string} notes - The username of the user
+   * @param {string} contactDetails - An object with the medical contact's details
    * @return {Promise<HydratedDocument<MedicalContact>>} - The newly created medical contact
    */
-  static async addOne(ownerId: Types.ObjectId | string, title: string, first_name: string, last_name: string, hospital: string, specialty: string, phone_number: string, notes: string): Promise<HydratedDocument<MedicalContact>> {
+  static async addOne(ownerId: Types.ObjectId | string, contactDetails: {title?: string; first_name?: string; last_name?: string; hospital?: string; specialty?: string; phone_number?: string; notes?: string}): Promise<HydratedDocument<MedicalContact>> {
     const active = true; // Since medical contact was just created, it is active
     const medicalContact = new MedicalContactModel({
       ownerId,
       active,
-      title,
-      first_name,
-      last_name,
-      hospital,
-      specialty,
-      phone_number,
-      notes
+      ...contactDetails,
     });
     await medicalContact.save(); // Saves user to MongoDB
     return medicalContact;
@@ -50,8 +38,7 @@ class MedicalContactCollection {
    * @return {Promise<HydratedDocument<MedicalContact>[]>} - An array of all of the medical contacts sorted in alphabetical order by last name
    */
   static async findAllByOwnerId(ownerId: string): Promise<Array<HydratedDocument<MedicalContact>>> {
-    //const owner = await AccountCollection.findOneByAccountId(ownerId);
-    return MedicalContactModel.find({ownerId: ownerId}).sort({last_name: 1});
+    return MedicalContactModel.find({ownerId, active: true}).sort({last_name: 1});
   }
 
   /**
@@ -61,8 +48,7 @@ class MedicalContactCollection {
    * @param {Object} contactDetails - An object with the medical contact's updated details
    * @return {Promise<HydratedDocument<MedicalContact>>} - The updated medical contact
    */
-  static async updateOne(medicalContactId: Types.ObjectId | string, contactDetails: {title?: string; first_name?: string, last_name?: string, hospital?: string, specialty?: string, phone_number?: string, notes?: string}): Promise<HydratedDocument<MedicalContact>> {
-
+  static async updateOne(medicalContactId: Types.ObjectId | string, contactDetails: {title?: string; first_name?: string; last_name?: string; hospital?: string; specialty?: string; phone_number?: string; notes?: string}): Promise<HydratedDocument<MedicalContact>> {
     const medicalContact = await MedicalContactModel.findOne({_id: medicalContactId});
 
     if (contactDetails.title) {
@@ -116,7 +102,6 @@ class MedicalContactCollection {
   static async deleteMany(ownerId: Types.ObjectId | string): Promise<void> {
     await MedicalContactModel.deleteMany({ownerId});
   }
-
 }
 
 export default MedicalContactCollection;

@@ -41,7 +41,6 @@ const MedicationSchema = new Schema<Medication>({
   // Notes about the medication
   notes: {
     type: String,
-    required: true,
     default: ""
   }
 });
