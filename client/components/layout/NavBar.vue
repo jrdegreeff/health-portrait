@@ -7,7 +7,7 @@
       </h2></header>
       <ul>
         <li>
-          <NavLink to="/" name="Logs"/>
+          <NavLink to="/logs/all" name="Logs"/>
         </li>
         <li>
           <NavLink to="/" name="Trends"/>
