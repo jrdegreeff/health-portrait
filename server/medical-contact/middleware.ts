@@ -37,15 +37,19 @@ const isMedicalContactActive = async (req: Request, res: Response, next: NextFun
 /**
  * Checks if a first name in req.body is valid, that is, it matches the name regex
  */
-const isValidFirstName = (req: Request, res: Response, next: NextFunction) => {
+const isValidFirstName = (required: boolean) => (req: Request, res: Response, next: NextFunction) => {
+  if (!required && req.body.first_name === undefined) {
+    next();
+    return;
+  }
+
+  console.log(req.body);
   const nameRegex = /^(?!\s*$).+/i;
-  if (req.body.first_name){
-    if (!nameRegex.test(req.body.first_name)) {
-      res.status(400).json({
-        error: 'First name must be a nonempty alphanumeric string.'
-      });
-      return;
-    }
+  if (!req.body.first_name || !nameRegex.test(req.body.first_name)) {
+    res.status(400).json({
+      error: 'First name must be a nonempty alphanumeric string.'
+    });
+    return;
   }
 
   next();
@@ -54,15 +58,18 @@ const isValidFirstName = (req: Request, res: Response, next: NextFunction) => {
 /**
  * Checks if a last name in req.body is valid, that is, it matches the name regex
  */
-const isValidLastName = (req: Request, res: Response, next: NextFunction) => {
+const isValidLastName = (required: boolean) => (req: Request, res: Response, next: NextFunction) => {
+  if (!required && req.body.last_name === undefined) {
+    next();
+    return;
+  }
+
   const nameRegex = /^(?!\s*$).+/i;
-  if (req.body.last_name) {
-    if (!nameRegex.test(req.body.last_name)) {
-      res.status(400).json({
-        error: 'Last name must be a nonempty alphanumeric string.'
-      });
-      return;
-    }
+  if (!req.body.last_name || !nameRegex.test(req.body.last_name)) {
+    res.status(400).json({
+      error: 'Last name must be a nonempty alphanumeric string.'
+    });
+    return;
   }
 
   next();
@@ -72,20 +79,22 @@ const isValidLastName = (req: Request, res: Response, next: NextFunction) => {
  * Checks if a phone number in req.body is valid, that is, it matches the phone number regex
  * Phone regex found here: https://stackoverflow.com/a/16699507
  */
-const isValidPhoneNumber = (req: Request, res: Response, next: NextFunction) => {
+const isValidPhoneNumber = (required: boolean) => (req: Request, res: Response, next: NextFunction) => {
+  if (!required && req.body.phone_number === undefined) {
+    next();
+    return;
+  }
+
   const phoneRegex = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/;
-  if (req.body.phone_number) {
-    if (!phoneRegex.test(req.body.phone_number)) {
-      res.status(400).json({
-        error: 'Must be a valid phone number.'
-      });
-      return;
-    }
+  if (!req.body.phone_number || !phoneRegex.test(req.body.phone_number)) {
+    res.status(400).json({
+      error: 'Phone number must be in a valid format i.e. (123-456-7890).'
+    });
+    return;
   }
 
   next();
 };
-
 
 /**
  * Checks if the current user is the owner of the medical contact whose medicalContactId is in req.params
@@ -102,7 +111,6 @@ const isValidMedicalContactModifier = async (req: Request, res: Response, next: 
 
   next();
 };
-
 
 export {
   isMedicalContactExists,
