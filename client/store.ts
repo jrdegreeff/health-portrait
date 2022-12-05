@@ -16,8 +16,8 @@ const store = new Vuex.Store({
     account: null,
     username: null,
     entries: [],
-    insurances: [],
     contacts: [],
+    insurances: [],
     medications: [],
     alerts: {},
   },
@@ -33,6 +33,9 @@ const store = new Vuex.Store({
     },
     setUsername(state, username) {
       state.username = username || null;
+    },
+    setEntries(state, entries) {
+      state.entries = entries || [];
     },
     setContacts(state, contacts) {
       state.contacts = contacts || [];
@@ -56,6 +59,7 @@ const store = new Vuex.Store({
       commit('setUsername', username);
 
       // Anything that needs to be refreshed on login/logout should be called here
+      await dispatch('refreshCollection');
       await dispatch('refreshContacts');
       await dispatch('refreshMedications');
       await dispatch('refreshInsurances');
@@ -68,13 +72,11 @@ const store = new Vuex.Store({
         commit(method, null);
       }
     },
-    async refreshEntries(state) {
-      /**
-       * Request the server for the currently available entries.
-       */
-      const url = '/api/entries';
-      const res = await fetch(url).then(async r => r.json());
-      state.entries = res;
+    async refreshEntries({dispatch}) {
+      await dispatch('refreshCollection', {
+        url: '/api/entries',
+        method: 'setEntries',
+      });
     },
     async refreshContacts({dispatch}) {
       await dispatch('refreshCollection', {

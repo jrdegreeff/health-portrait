@@ -21,7 +21,6 @@ const routes = [
   {path: '/logs/:type', name: 'Logs', component: EntryPage, props: true},
   {path: '/newLog', name: 'New Log', component: CreateEntryPage},
   {path: '/editLog/:entryId', name: 'Edit Log', component: EditEntryPage, props: true},
-  {path: '/medications', name: 'Medications', component: MedicationPage},
   {path: '/insurance', name: 'Insurance', component: InsurancePage},
   {path: '/medications', name: 'Medications', component: MedicationPage},
   {path: '*', name: 'Not Found', component: NotFound},
@@ -38,8 +37,8 @@ router.beforeEach((to, from, next) => {
     return;
   }
 
-  if (['Home', 'Account', 'Medications', 'Contacts', 'Insurance'].includes(to.name) && !JSON.parse(localStorage.vuex).username) {
-    next({name: 'Login'}); // Go to Login page if user navigates to Account and are not signed in
+  if (to.name !== 'Login' && !JSON.parse(localStorage.vuex).username) {
+    next({name: 'Login'}); // Go to Login page if user navigates to any other page and are not signed in
     return;
   }
   

@@ -76,7 +76,7 @@ export default {
                     const res = await r.json();
                     throw new Error(res.error);
                 }
-                this.$store.commit('refreshEntries');
+                this.$store.dispatch('refreshEntries');
                 params.callback();
             } catch (e) {
                 this.$set(this.alerts, e, 'error');
@@ -95,10 +95,6 @@ export default {
 
 td {
     margin: 1rem 2rem;
-}
-
-a {
-    text-decoration: none;
 }
 
 .entryNote {

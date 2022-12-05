@@ -1,26 +1,21 @@
 <template>
     <main>
-        <section v-if="$store.state.username">
-            <button class="btn-secondary">
-                <router-link to="/newLog">Add Log ➕</router-link>
-            </button>
+        <button class="btn-secondary">
+            <router-link to="/newLog">Add Log ➕</router-link>
+        </button>
 
-            <table class="entries" v-if="filteredEntries">
-                <!-- <tr>
-                    <th>Type</th>
-                    <th>Title</th>
-                    <th>Date</th>
-                </tr> -->
-                <EntryComponent 
-                    v-for="entry in filteredEntries" 
-                    :key="entry._id"
-                    :entry="entry"
-                />
-            </table>
-        </section>
-        <section v-else>
-            <h2>Please log in to your account first!</h2>
-        </section>
+        <table class="entries" v-if="filteredEntries">
+            <!-- <tr>
+                <th>Type</th>
+                <th>Title</th>
+                <th>Date</th>
+            </tr> -->
+            <EntryComponent 
+                v-for="entry in filteredEntries" 
+                :key="entry._id"
+                :entry="entry"
+            />
+        </table>
     </main>
 </template>
 
@@ -66,9 +61,6 @@ export default {
             },
             activeLink: this.activeType,
         });
-        if (this.$store.state.username) {
-            this.$store.commit('refreshEntries');
-        }
     }
 }
 </script>
@@ -79,9 +71,5 @@ export default {
     border-bottom: 0px;
     border-spacing: 0px;
     margin-top: 2rem;
-}
-
-a {
-    text-decoration: none;
 }
 </style>
