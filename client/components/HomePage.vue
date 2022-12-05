@@ -29,11 +29,10 @@
         title: "Health Portrait",
         enableBack: false,
         headerLinks: {
-          "/": "Home",
           "/logs/all": "Health Journal",
           "/contacts": "Health Book",
         },
-        activeLink: "Home",
+        activeLink: "",
       });
     },
   };
