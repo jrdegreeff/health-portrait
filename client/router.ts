@@ -5,6 +5,7 @@ import AccountPage from './components/Account/AccountPage.vue';
 import LoginPage from './components/Login/LoginPage.vue';
 import MedicationsPage from './components/Medications/MedicationsPage.vue'
 import NotFound from './NotFound.vue';
+import TrendsPage from './components/Trends/TrendsPage.vue';
 
 Vue.use(VueRouter);
 
@@ -13,6 +14,7 @@ const routes = [
   {path: '/account', name: 'Account', component: AccountPage},
   {path: '/login', name: 'Login', component: LoginPage},
   {path: '/medications', name: 'Medications', component: MedicationsPage},
+  {path: '/trends', name: 'Trends', component: TrendsPage},
   {path: '*', name: 'Not Found', component: NotFound},
 ];
 

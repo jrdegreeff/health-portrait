@@ -10,7 +10,7 @@
           <router-link to="/">Logs</router-link>
         </li>
         <li>
-          <router-link to="/">Trends</router-link>
+          <router-link to="/trends">Trends</router-link>
         </li>
       </ul>
       </section>
