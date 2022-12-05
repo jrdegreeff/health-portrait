@@ -21,6 +21,7 @@ export default {
         ],
         callback: () => {
             this.$router.push({path: '/logs/all'}); // Goes to Logs page after creating new log
+            this.$store.dispatch('refreshEntries');
             this.$store.commit('alert', {
               message: 'You\'ve created a new entry!', status: 'success'
             });
