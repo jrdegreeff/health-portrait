@@ -371,6 +371,8 @@ TODO: description
 **Body**
 - `type` _{string}_ - The type of the log entry
 - `detail` _{string}_ - The detail of the log entry
+- `condition` _{string}_ - The condition of the log entry
+- `scale` _{string}_ - The scale of the log entry
 - `notes` _{string}_ - The log entry's notes (optional)
 - `date` _{Date}_ - The date associated with the log entry
 
@@ -380,13 +382,15 @@ TODO: description
 
 **Throws** 
 - `401` if the user is not logged in
-- `400` if the `type` or `detail` is empty or a stream of empty spaces, or if given `type` is not in specified set of valid types, or if `date` is empty/an invalid timestamp
+- `400` if the `type`, `detail`, or `condition` is empty or a stream of empty spaces, or if given `type`, `condition`, or `scale` is not in specified set of valid inputs, or if `date` is empty/an invalid timestamp
 
 #### `PATCH /api/entries/:entryId` - Editing an entry in the log
 
 **Body**
 - `type` _{string}_ - The type of the log entry (optional)
 - `detail` _{string}_ - The detail of the log entry (optional)
+- `condition` _{string}_ - The condition of the log entry
+- `scale` _{string}_ - The scale of the log entry
 - `notes` _{string}_ - The log entry's notes (optional)
 - `date` _{Date}_ - The date associated with the log entry (optional)
 
@@ -398,7 +402,7 @@ TODO: description
 - `401` if the user is not logged in
 - `404` if the `entryId` is invalid
 - `403` if the user is not the owner of the entry
-- `404` if given `type` is non-empty and not in specified set of valid types
+- `400` if the `type`, `detail`, or `condition` is empty or a stream of empty spaces, or if given `type`, `condition`, or `scale` is not in specified set of valid inputs, or if `date` is empty/an invalid timestamp
 
 #### `DELETE /api/entries/:entryId` - Delete an entry in the log
 
