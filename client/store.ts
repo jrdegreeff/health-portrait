@@ -27,14 +27,6 @@ const store = new Vuex.Store({
       state.headerLinks = headerLinks || {};
       state.activeLink = activeLink;
     },
-    async refreshInsurances(state) {
-      /**
-       * Request the server for the currently available insurances.
-       */
-      const url = `/api/insurance-cards`;
-      const res = await fetch(url).then(async r => r.json());
-      state.insurances = res;
-    },
     setAccount(state, account) {
       state.account = account || null;
     },

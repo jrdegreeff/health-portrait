@@ -30,7 +30,7 @@ const isValidSubscriberName = (required: boolean) => (req: Request, res: Respons
   const nameRegex = /^(?!\s*$).+/i;
   if (!req.body.subscriber_name || !nameRegex.test(req.body.subscriber_name)) {
     res.status(400).json({
-      error: 'Subscriber name must be a nonempty alphanumeric string.'
+      error: 'Subscriber name must be a nonempty string.'
     });
     return;
   }
@@ -50,7 +50,7 @@ const isValidPurpose = (required: boolean) => (req: Request, res: Response, next
   const purposeRegex = /^(?!\s*$).+/i;
   if (!req.body.purpose || !purposeRegex.test(req.body.purpose)) {
     res.status(400).json({
-      error: 'Purpose must be a nonempty alphanumeric string.'
+      error: 'Purpose must be a nonempty string.'
     });
     return;
   }
