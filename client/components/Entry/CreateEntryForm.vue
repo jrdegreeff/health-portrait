@@ -1,6 +1,5 @@
 <script lang="ts">
 import BlockForm from '@/components/common/BlockForm.vue';
-// import EntryForm from '@/components/Entry/EntryForm.vue';
 
 export default {
   name: 'CreateEntryForm',
@@ -20,7 +19,7 @@ export default {
             {id: 'date', label: 'Date', value: ''}
         ],
         callback: () => {
-            this.$router.push({path: '/logs/all'}); // Goes to Logs page after creating new log
+            this.$router.go(-1);
             this.$store.dispatch('refreshEntries');
             this.$store.commit('alert', {
               message: 'You\'ve created a new entry!', status: 'success'
