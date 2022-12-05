@@ -59,7 +59,7 @@ const store = new Vuex.Store({
       commit('setUsername', username);
 
       // Anything that needs to be refreshed on login/logout should be called here
-      await dispatch('refreshCollection');
+      await dispatch('refreshEntries');
       await dispatch('refreshContacts');
       await dispatch('refreshMedications');
       await dispatch('refreshInsurances');
