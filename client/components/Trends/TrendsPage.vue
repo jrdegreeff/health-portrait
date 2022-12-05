@@ -9,7 +9,6 @@
       </header>
       <section v-if="$store.state.entries.length">
         <div v-for="detail in [...new Set($store.state.entries.map(entry => entry.detail))]" :key="detail">
-        <!-- <div v-for="detail in ['Tylenol']" :key="detail"> -->
           <hr />
           <TrendsVisualization :entries="$store.state.entries.filter(entry => entry.detail === detail).reverse()" :detail="detail" />
         </div>
