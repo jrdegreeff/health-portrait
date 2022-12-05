@@ -18,8 +18,8 @@
         </small>
       </div>
     </section>
-
-    <div class="actions">
+    <hr>
+    <section class="actions">
       <button class="btn-secondary" v-if="editing" @click="sendPatch">
         ✅ save changes
       </button>
@@ -32,7 +32,7 @@
       <button class="btn-secondary" @click="sendDelete">
         🗑️ delete
       </button>
-    </div>
+    </section>
   </article>
 </template>
 
@@ -65,8 +65,9 @@ export default {
       await this.deleteCallback();
     },
     async sendPatch() {
-      const modified = this.fields.reduce(((o, f) => this.document[f.id] === this.values[f.id] ? o : {...o, [f.id]: this.values[f.id]}), {});
-      await this.request({ method: "PATCH", body: JSON.stringify(modified)});
+      const modified = Object.fromEntries(this.fields.filter(f => this.document[f.id] !== this.values[f.id])
+                                                     .map(f => [f.id, this.values[f.id]]));
+      await this.request({ method: "PATCH", body: JSON.stringify(modified) });
       await this.patchCallback();
     },
     async request(params) {
@@ -78,6 +79,7 @@ export default {
       try {
         const r = await fetch(`${this.url}/${this.document._id}`, options);
         if (!r.ok) {
+          const res = await r.json();
           throw new Error(res.error);
         }
         this.editing = false;

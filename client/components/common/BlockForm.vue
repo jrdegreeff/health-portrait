@@ -76,22 +76,18 @@ export default {
         credentials: 'same-origin' // Sends express-session credentials with request
       };
       if (this.hasBody) {
-        options.body = JSON.stringify(Object.fromEntries(
-          this.fields.map(field => {
-            const {id, value} = field;
-            field.value = '';
-            return [id, value];
-          })
-        ));
+        const fields = Object.fromEntries(this.fields.map(f => [f.id, f.value]));
+        options.body = JSON.stringify(fields);
       }
 
       try {
         const r = await fetch(this.url, options);
         if (!r.ok) {
-          // If response is not okay, we throw an error and enter the catch block
           const res = await r.json();
           throw new Error(res.error);
         }
+
+        this.fields.forEach(f => f.value = '');
 
         const text = await r.text();
 

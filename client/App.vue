@@ -1,8 +1,9 @@
 <template>
   <div id="app">
-    <NavBar/>
+    <NavBar />
     <div id="content">
-      <Header/>
+      <AlertBox />
+      <Header />
       <!-- https://stackoverflow.com/questions/40404787/best-practice-for-reacting-to-params-changes-with-vue-router -->
       <router-view :key="$route.fullPath" />
     </div>
@@ -11,11 +12,12 @@
 
 <script lang="ts">
 import NavBar from '@/components/layout/NavBar.vue';
+import AlertBox from '@/components/layout/AlertBox.vue';
 import Header from '@/components/layout/Header.vue';
 
 export default {
   name: 'App',
-  components: {NavBar, Header},
+  components: {NavBar, AlertBox, Header},
   beforeCreate() {
     // Sync stored username to current session
     fetch('/api/accounts/session', {
