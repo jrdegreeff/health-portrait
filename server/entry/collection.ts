@@ -25,7 +25,7 @@ class EntryCollection {
   static async findAllByOwnerId(ownerId: Types.ObjectId | string): Promise<HydratedDocument<Entry>[]> {
     return EntryModel.find({owner: ownerId}).sort({date: -1}).populate([]);
   }
-  
+
   static async updateOne(entryId: Types.ObjectId | string, entryDetails: {type?: string; detail?: string; 
     condition?: string, scale?: number, notes?: string, date?: Date}): Promise<HydratedDocument<Entry>> {
     const entry = await EntryModel.findOne({_id: entryId});
