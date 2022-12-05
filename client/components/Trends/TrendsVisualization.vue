@@ -1,8 +1,7 @@
 <!-- Component for building a graph -->
 
 <template>
-  <!--  -->
-  <div style="width: 800px;"><canvas id="graph"></canvas></div>
+  <canvas :id="`graph-${detail}`"></canvas>
 </template>
 
 <script>
@@ -10,43 +9,65 @@ import { Chart } from 'chart.js/auto'
 
 export default {
   name: 'TrendsVisualization',
+  props: {
+    detail: {
+      type: String,
+      required: true
+    }, 
+    entries: {
+      type: Array,
+      required: true
+    }
+  },
   mounted() {
     this.chart();
   },
   methods: {
     async chart() {
-      // will add custom labels later
-      // const happiness = [{entries.date, entries.scale} for entry in entries if entry.title === title && entries.condition === happiness]
-      const happiness = [
-        { date: '2022/11/01', scale: 1 },
-        { date: '2022/11/02', scale: 2 },
-        { date: '2022/11/03', scale: 4 },
-        { date: '2022/11/04', scale: 3 },
-        { date: '2022/11/05', scale: 5 },
-      ];
-      // const pain = [{entries.date, entries.scale} for entry in entries if entry.title === title && entries.condition === "pain"]
-      const pain = [
-        { date: '2022/11/01', scale: 5 },
-        { date: '2022/11/02', scale: 4 },
-        { date: '2022/11/03', scale: 2 },
-        { date: '2022/11/04', scale: 3 },
-        { date: '2022/11/05', scale: 1 },
-      ];
-      // const cognition = [{entries.date, entries.scale} for entry in entries if entry.title === title && entries.condition === "cognition"]
-      const cognition = [
-        { date: '2022/11/01', scale: 3 },
-        { date: '2022/11/02', scale: 4 },
-        { date: '2022/11/03', scale: 5 },
-        { date: '2022/11/04', scale: 4 },
-        { date: '2022/11/05', scale: 5 },
-      ];
+      // const happiness = this.entries.map(e => {
+      //   return e.condition === "happiness" ? {date: e.date, scale: e.scale} : {};
+      // });
+      const happiness = this.entries.filter(e => e.condition === "happiness").map(e => {
+        return {x: e.date, y: e.scale};
+      });
+      // const pain = this.entries.map(e => {
+      //   return e.condition === "pain" ? {date: e.date, scale: e.scale} : {};
+      // });
+      const pain = this.entries.filter(e => e.condition === "pain").map(e => {
+        return {x: e.date, y: e.scale};
+      });
+      // const cognition = this.entries.map(e => {
+      //   return e.condition === "cognition" ? {date: e.date, scale: e.scale} : {};
+      // });
+      const cognition = this.entries.filter(e => e.condition === "cognition").map(e => {
+        return {x: e.date, y: e.scale};
+      });
+
+      console.log(this.entries);
 
       new Chart(
-        document.getElementById('graph'),
+        document.getElementById(`graph-${this.detail}`),
         {
           type: 'line',
           options: {
+            animation : false,
+            scales : {
+              y : {
+                min: 1,
+                max: 5,
+                ticks: {
+                  callback: function(val, index) {
+                    // Hide every 2nd tick label
+                    return index % 2 === 0 ? this.getLabelForValue(val) : '';
+                  }
+                }
+              }
+            },
             plugins: {
+              title: {
+                display: true,
+                text: this.detail,
+              },
               legend: {
                 display: true
               },
@@ -56,19 +77,25 @@ export default {
             }
           },
           data: {
-            labels: happiness.map(row => row.date),
+            labels: this.entries.map(row => row.date),
             datasets: [
               {
                 label: 'Cognition',
-                data: cognition.map(row => row.scale)
+                data: cognition
+                // data: cognition.map(row => row.scale),
+                // labels: cognition.map(row => row.date)
               },
               {
                 label: 'Pain',
-                data: pain.map(row => row.scale)
+                data: pain
+                // data: pain.map(row => row.scale),
+                // labels: pain.map(row => row.date)
               },
               {
                 label: 'Happiness',
-                data: happiness.map(row => row.scale)
+                data: happiness
+                // data: happiness.map(row => row.scale),
+                // labels: happiness.map(row => row.date)
               }
             ]
           }
@@ -78,3 +105,9 @@ export default {
   }
 };
 </script>
+<style>
+canvas {
+  width: 50% !important;
+  height: 70% !important;
+}
+</style>
