@@ -11,23 +11,24 @@
       <h1> {{ $store.state.title }} </h1>
     </header>
     <nav v-if="Object.keys($store.state.headerLinks).length">
-      <router-link
-        v-for="(name, link) in $store.state.headerLinks"
-        :to=link
-        :class="name === $store.state.activeLink ? 'active' : 'inactive'"
-      >{{name}}</router-link>
+      <NavLink
+        v-for="(name, to) in $store.state.headerLinks"
+        :key="name"
+        :name="name"
+        :to="to"
+      />
     </nav>
-    <section class="alerts">
-      <article
-      v-for="(status, alert, index) in $store.state.alerts"
-      :key="index"
-      :class="status"
-      >
-        <p>{{ alert }}</p>
-      </article>
-    </section>
   </header>
 </template>
+
+<script lang="ts">
+import NavLink from '@/components/common/NavLink.vue';
+
+export default {
+  name: 'Header',
+  components: {NavLink},
+};
+</script>
 
 <style scoped>
 .back {
@@ -51,41 +52,12 @@ nav {
   border-bottom: 1px black solid;
 }
 
-nav a {
+a {
   margin-right: 2rem;
   font-size: 1.5rem;
 }
 
-nav a.active {
+a.active {
   border-bottom: 1px black solid;
-}
-
-.alerts {
-  position: absolute;
-  z-index: 99;
-  top: 0;
-  left: 50%;
-  transform: translate(-50%, 0);
-  width: 50%;
-  text-align: center;
-}
-
-.alerts article {
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
-  margin: 0.5rem 0;
-  color: white;
-}
-
-.alerts p {
-  margin: 0;
-}
-
-.error {
-  background-color: rgba(166, 23, 33, 0.9);
-}
-
-.success {
-  background-color: rgba(45, 135, 87, 0.9);
 }
 </style>

@@ -4,47 +4,46 @@
 <template>
   <form @submit.prevent="submit">
     <fieldset>
-    <legend>{{ title }}</legend>
-    <article
-      v-if="fields.length"
-    >
-      <div
-        v-for="field in fields"
-        :key="field.id"
-      >
-        <span>
-          <label
-            v-if="!field.hidden"
-            :for="field.id"
-          >
-            {{ field.label }}:
-          </label>
-          <input
-            v-if="field.hidden"
-            type=hidden
-            :name="field.id"
-            :value="field.value"
-          >
-          <textarea
-            v-else-if="field.id === 'content'"
-            :name="field.id"
-            :value="field.value"
-            @input="field.value = $event.target.value"
-          />
-          <input
-            v-else
-            :type="field.id === 'password' ? 'password' : 'text'"
-            :name="field.id"
-            :value="field.value"
-            @input="field.value = $event.target.value"
-          >
-        </span>
-      </div>
-    </article>
-    <p v-else>{{ content }}</p>
-    <button class="btn-primary" type="submit">
-      {{ title }}
-    </button>
+      <legend>{{ title }}</legend>
+      <article v-if="fields.length">
+        <div
+          v-for="field in fields"
+          :key="field.id"
+        >
+          <span>
+            <label
+              v-if="!field.hidden"
+              :for="field.id"
+            >
+              {{ field.label }}:
+            </label>
+            <input
+              v-if="field.hidden"
+              type=hidden
+              :name="field.id"
+              :value="field.value"
+            >
+            <textarea
+              v-else-if="field.id === 'notes'"
+              :name="field.id"
+              :value="field.value"
+              @input="field.value = $event.target.value"
+            />
+            <input
+              v-else
+              :type="field.id === 'password' ? 'password' : 'text'"
+              :name="field.id"
+              :value="field.value"
+              @input="field.value = $event.target.value"
+            >
+            <small v-if="field.hint"> {{ field.hint }} </small>
+          </span>
+        </div>
+      </article>
+      <p v-else>{{ content }}</p>
+      <button class="btn-primary" type="submit">
+        {{ title }}
+      </button>
     </fieldset>
   </form>
 </template>
@@ -60,9 +59,10 @@ export default {
       url: '', // Url to submit form to
       method: 'GET', // Form request method
       hasBody: false, // Whether or not form request has a body
+      loadAccount: false, // Whether or not to reload all store data associated with the account
       setAccount: false, // Whether or not stored account info should be updated after form submission
       setUsername: false, // Whether or not stored username should be updated after form submission
-      callback: null // Function to run after successful form submission
+      callback: null, // Function to run after successful form submission
     };
   },
   methods: {
@@ -76,24 +76,24 @@ export default {
         credentials: 'same-origin' // Sends express-session credentials with request
       };
       if (this.hasBody) {
-        options.body = JSON.stringify(Object.fromEntries(
-          this.fields.map(field => {
-            const {id, value} = field;
-            field.value = '';
-            return [id, value];
-          })
-        ));
+        const fields = Object.fromEntries(this.fields.map(f => [f.id, f.value]));
+        options.body = JSON.stringify(fields);
       }
 
       try {
         const r = await fetch(this.url, options);
         if (!r.ok) {
-          // If response is not okay, we throw an error and enter the catch block
           const res = await r.json();
           throw new Error(res.error);
         }
 
+        this.fields.forEach(f => f.value = '');
+
         const text = await r.text();
+
+        if (this.loadAccount) {
+          await this.$store.dispatch('loadAccount', JSON.parse(text));
+        }
 
         if (this.setAccount) {
           this.$store.commit('setAccount', JSON.parse(text).account);
@@ -107,9 +107,7 @@ export default {
           this.callback();
         }
       } catch (e) {
-        this.$store.commit('alert', {
-          message: e, status: 'error'
-        });
+        this.$store.commit('alert', { message: e, status: 'error' });
       }
     }
   }

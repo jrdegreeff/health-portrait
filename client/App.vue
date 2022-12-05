@@ -1,8 +1,9 @@
 <template>
   <div id="app">
-    <NavBar/>
+    <NavBar />
     <div id="content">
-      <Header/>
+      <AlertBox />
+      <Header />
       <!-- https://stackoverflow.com/questions/40404787/best-practice-for-reacting-to-params-changes-with-vue-router -->
       <router-view :key="$route.fullPath" />
     </div>
@@ -11,18 +12,18 @@
 
 <script lang="ts">
 import NavBar from '@/components/layout/NavBar.vue';
+import AlertBox from '@/components/layout/AlertBox.vue';
 import Header from '@/components/layout/Header.vue';
 
 export default {
   name: 'App',
-  components: {NavBar, Header},
+  components: {NavBar, AlertBox, Header},
   beforeCreate() {
     // Sync stored username to current session
     fetch('/api/accounts/session', {
       credentials: 'same-origin' // Sends express-session credentials with request
     }).then(res => res.json()).then(async res => {
-      await this.$store.commit('setAccount', res.account);
-      await this.$store.commit('setUsername', res.username);
+      await this.$store.dispatch('loadAccount', res);
     });
 
     // Clear alerts on page refresh
@@ -128,7 +129,6 @@ button.btn-primary:hover {
 
 button.btn-secondary {
   background-color: var(--secondaryGray);
-  border-color: rgba(0,0,0,0); /* transparent border to maintain button size */
 }
 
 button.btn-secondary:hover {
@@ -164,10 +164,18 @@ label {
   margin-right: 1rem;
 }
 
-input {
+input, textarea {
   border-radius: 0.5rem;
   border: 1px solid black;
   padding: 0.5rem;
   margin: 0.5rem;
+}
+
+textarea {
+  display: block;
+}
+
+small {
+  color: #aaaaaa;
 }
 </style>

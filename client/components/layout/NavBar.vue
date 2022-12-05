@@ -3,11 +3,11 @@
     <nav>
       <section>
       <header><h2>
-        <router-link to="/">Health Journal</router-link>
+        <NavLink to="/" name="Health Journal"/>
       </h2></header>
       <ul>
         <li>
-          <router-link to="/">Logs</router-link>
+          <NavLink to="/" name="Logs"/>
         </li>
         <li>
           <router-link to="/trends">Trends</router-link>
@@ -17,30 +17,39 @@
       <hr/>
       <section>
       <header><h2>
-        <router-link to="/">Health Book</router-link>
+        <NavLink to="/" name="Health Book"/>
       </h2></header>
       <ul>
         <li>
-          <router-link to="/contacts">Contacts</router-link>
+          <NavLink to="/contacts" name="Contacts"/>
         </li>
         <li>
-          <router-link to="/medications">Medications</router-link>
+          <NavLink to="/medications" name="Medications"/>
         </li>
         <li>
-          <router-link to="/insurance">Insurance</router-link>
+          <NavLink to="/insurance" name="Insurance"/>
         </li>
       </ul>
       </section>
       <hr/>
       <section>
       <header><h2>
-        <router-link to="/account">My Account</router-link>
+        <NavLink to="/account" name="My Account"/>
       </h2></header>
       </section>
     </nav>
     <div/>
   </article>
 </template>
+
+<script lang="ts">
+import NavLink from '@/components/common/NavLink.vue';
+
+export default {
+  name: 'NavBar',
+  components: {NavLink},
+};
+</script>
 
 <style scoped>
 article {
@@ -54,6 +63,10 @@ nav {
   flex-direction: column;
   justify-content: center;
   white-space: nowrap;
+}
+
+a.active {
+  border-bottom: 1px black solid;
 }
 
 h2 {
