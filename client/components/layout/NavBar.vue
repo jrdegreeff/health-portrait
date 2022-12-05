@@ -2,22 +2,29 @@
   <article>
     <nav>
       <section>
+        <header><h2>
+          <NavLink to="/" name="Home"/>
+        </h2></header>
+
+      </section>
+      <hr/>
+      <section>
       <header><h2>
-        <NavLink to="/" name="Health Journal"/>
+        <NavLink to="/logs/all" name="Health Journal"/>
       </h2></header>
       <ul>
         <li>
           <NavLink to="/logs/all" name="Logs"/>
         </li>
         <li>
-          <router-link to="/trends">Trends</router-link>
+          <NavLink to="/trends" name="Trends"/>
         </li>
       </ul>
       </section>
       <hr/>
       <section>
       <header><h2>
-        <NavLink to="/" name="Health Book"/>
+        <NavLink to="/contacts" name="Health Book"/>
       </h2></header>
       <ul>
         <li>
