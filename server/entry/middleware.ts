@@ -18,8 +18,8 @@ const isValidEntry = async (req: Request, res: Response, next: NextFunction) => 
 
 const isValidEntryDetail = async (req: Request, res: Response, next: NextFunction) => {
     const {type, detail} = req.body as {type: string, detail: string};
-    const emptyRegex = /^\w+$/i;
-    if (!emptyRegex.test(type) || !emptyRegex.test(detail)) {
+    const nonEmptyRegex = /^(?!\s*$).+/i;
+    if (!type || !nonEmptyRegex.test(type) || !detail || !nonEmptyRegex.test(detail)) {
         res.status(400).json({
             error: 'Entry type/detail must be at least one character long.'
         });

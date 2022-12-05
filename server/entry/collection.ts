@@ -67,6 +67,11 @@ class EntryCollection {
     const entry = await EntryModel.deleteOne({_id: entryId});
     return entry !== null;
   }
+
+  static async deleteMany(ownerId: Types.ObjectId | string): Promise<boolean> {
+    const entries = await EntryModel.deleteMany({owner: ownerId});
+    return entries !== null;
+  }
 }
 
 export default EntryCollection;
