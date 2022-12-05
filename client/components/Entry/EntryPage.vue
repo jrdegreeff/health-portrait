@@ -32,21 +32,12 @@ export default {
       }
     },
     computed: {
-        activeType: function() {
+        activeType() {
             const type = this.type;
             return type.charAt(0).toUpperCase() + type.slice(1);
         },
-        filteredEntries: function() {
-            const entries = this.$store.state.entries;
-            if (this.type === "medication") {
-                return entries.filter((entry) => {return entry.type === "medication"});
-            } else if (this.type === "appointment") {
-                return entries.filter((entry) => {return entry.type === "appointment"});
-            } else if (this.type === "other") {
-                return entries.filter((entry) => {return entry.type === "other"});
-            } else {
-                return entries;
-            }
+        filteredEntries() {
+            return this.type === "all" ? this.$store.state.entries : this.$store.state.entries.filter(e => e.type === this.type);
         }
     },
     mounted() {
