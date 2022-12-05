@@ -7,23 +7,18 @@
       <header>
         <h2>Trends for {{ $store.state.account.name }}</h2>
       </header>
-      <!-- <fieldset>
-        <legend>Users with access to shared account</legend> -->
-        <!-- <ul>
-          <li v-for="username in $store.state.account.credentials"
-              :key="username">
-            <button class="btn-tertiary"
-              @click="() => deleteCredential(username)">
-              Revoke Access
-            </button>
-            <span>
-              @{{username}}
-            </span>
-          </li>
-        </ul> -->
-      <!-- </fieldset> -->
+      <section v-if="$store.state.entries.length">
+        <!-- for each distinct title in the entries -->
+        <div v-for="title in [...new Set($store.state.entries.map(entry => entry.title))]">
+          <!-- create a graph using data pulled with that title -->
+          <TrendsVisualization :key="title" :entries="$store.state.entries" :title="title" />
+        </div>
+      </section>
+      <article v-else>
+        <h3>No trends found.</h3>
+      </article>
 
-      <TrendsVisualization />
+      <!-- <TrendsVisualization /> -->
       
     </section>
     <hr/>

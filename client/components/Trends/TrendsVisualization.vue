@@ -1,7 +1,8 @@
 <!-- Component for building a graph -->
 
 <template>
-  <div style="width: 800px;"><canvas id="acquisitions"></canvas></div>
+  <!--  -->
+  <div style="width: 800px;"><canvas id="graph"></canvas></div>
 </template>
 
 <script>
@@ -14,6 +15,8 @@ export default {
   },
   methods: {
     async chart() {
+      // will add custom labels later
+      // const happiness = [{entries.date, entries.scale} for entry in entries if entry.title === title && entries.condition === happiness]
       const happiness = [
         { date: '2022/11/01', scale: 1 },
         { date: '2022/11/02', scale: 2 },
@@ -21,6 +24,7 @@ export default {
         { date: '2022/11/04', scale: 3 },
         { date: '2022/11/05', scale: 5 },
       ];
+      // const pain = [{entries.date, entries.scale} for entry in entries if entry.title === title && entries.condition === "pain"]
       const pain = [
         { date: '2022/11/01', scale: 5 },
         { date: '2022/11/02', scale: 4 },
@@ -28,6 +32,7 @@ export default {
         { date: '2022/11/04', scale: 3 },
         { date: '2022/11/05', scale: 1 },
       ];
+      // const cognition = [{entries.date, entries.scale} for entry in entries if entry.title === title && entries.condition === "cognition"]
       const cognition = [
         { date: '2022/11/01', scale: 3 },
         { date: '2022/11/02', scale: 4 },
@@ -37,11 +42,10 @@ export default {
       ];
 
       new Chart(
-        document.getElementById('acquisitions'),
+        document.getElementById('graph'),
         {
           type: 'line',
           options: {
-            // animation: false,
             plugins: {
               legend: {
                 display: true

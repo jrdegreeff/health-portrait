@@ -28,6 +28,26 @@ router.get(
 );
 
 /**
+ * Get all distinct titles of entries of the account
+ *
+ * @name GET /api/entries/titles
+ *
+ * @return {EntryResponse[]} - a list of distinct titles for entires by the logged in account sorted in descending order by date
+ * @throws {401} if the account is not logged in
+ */
+ router.get(
+  '/titles',
+  [
+    accountValidator.isLoggedIn
+  ],
+  async (req: Request, res: Response) => {
+    const entries = await EntryCollection.findAllDistinctTitles(req.session.accountId);
+    const response = entries.map(util.constructEntryResponse);
+    res.status(200).json(response);
+  }
+);
+
+/**
  * Create an entry.
  *
  * @name POST /api/entries
