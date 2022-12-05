@@ -1,4 +1,5 @@
 <script lang="ts">
+import moment from 'moment';
 import BlockForm from '@/components/common/BlockForm.vue';
 
 export default {
@@ -16,7 +17,7 @@ export default {
             {id: 'condition', label: 'Condition', value: ''},
             {id: 'scale', label: 'Scale', value: ''},
             {id: 'notes', label: 'Notes', value: ''},
-            {id: 'date', label: 'Date', value: ''}
+            {id: 'date', label: 'Date', value: moment(Date()).format('YYYY/MM/DD')}
         ],
         callback: () => {
             this.$router.go(-1);
@@ -26,6 +27,6 @@ export default {
             });
         }
     };
-  }
+  },
 };
 </script>
