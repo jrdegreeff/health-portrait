@@ -2,39 +2,59 @@
   <main>
     <section>
       <header>
-        <h1>Hello World</h1>
+        <h1> The Future of Healthcare </h1>
       </header>
-      <p>Some example paragraph text</p>
+      <p>
+        Keep track of important health information with Health Book. 
+        <br>
+        Keep track of day-to-day fluctuations of your health with Health Journal. 
+        <br>
+        Take control of your own health, and let your loved ones help you. 
+      </p>
     </section>
-    <hr/>
     <section>
-      <button class="btn-primary">Primary Button</button>
-      <button class="btn-secondary">Secondary Button</button>
-      <button class="btn-tertiary">Tertiary Button</button>
+      <img src = "wold_care.svg" alt="World in Hands SVG"/>
     </section>
-    <hr/>
-    <section>
-      <fieldset>
-        <legend>An Example Form</legend>
-        <span>
-          <label for="fName">First Name:</label>
-          <input type="text" name="fName" placeholder="Daniel">
-        </span>
-        <span>
-          <label for="lName">Last Name:</label>
-          <input type="text" name="lName" placeholder="Jackson">
-        </span>
-      </fieldset>
-    </section>
-    <hr/>
   </main>
 </template>
 
 <script lang="ts">
-export default {
-  name: 'HomePage',
-  mounted() {
-    this.$store.commit('setHeader', {title: 'Home', enableBack: false});
-  },
-};
+  
+  export default {
+    name: 'HomePage',
+    components: {
+    },
+    mounted() {
+      this.$store.commit("setHeader", {
+        title: "Health Portrait",
+        enableBack: false,
+        headerLinks: {
+          "/": "Home",
+          "/logs/all": "Health Journal",
+          "/contacts": "Health Book",
+        },
+        activeLink: "Home",
+      });
+    },
+  };
 </script>
+
+<style scoped>
+h1 {
+  text-align: center;
+}
+
+p {
+  padding-top: 20px;
+  line-height: 40px;
+  text-align: center;
+}
+
+img {
+  display: block;
+  margin: auto;
+  padding-top: 10px;
+  height: 200px;
+}
+
+</style>
