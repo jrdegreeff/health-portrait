@@ -4,6 +4,7 @@ import HomePage from './components/HomePage.vue';
 import AccountPage from './components/Account/AccountPage.vue';
 import ContactPage from './components/Medical-Contact/ContactPage.vue';
 import LoginPage from './components/Login/LoginPage.vue';
+import InsurancePage from './components/Insurance-Card/InsurancePage.vue'
 import MedicationPage from './components/Medication/MedicationPage.vue'
 import NotFound from './NotFound.vue';
 import TrendsPage from './components/Trends/TrendsPage.vue';
@@ -15,6 +16,7 @@ const routes = [
   {path: '/account', name: 'Account', component: AccountPage},
   {path: '/contacts', name: 'Contacts', component: ContactPage},
   {path: '/login', name: 'Login', component: LoginPage},
+  {path: '/insurance', name: 'Insurance', component: InsurancePage},
   {path: '/medications', name: 'Medications', component: MedicationPage},
   {path: '/trends', name: 'Trends', component: TrendsPage},
   {path: '*', name: 'Not Found', component: NotFound},
@@ -31,7 +33,7 @@ router.beforeEach((to, from, next) => {
     return;
   }
 
-  if (['Home', 'Account', 'Medications', 'Contacts'].includes(to.name) && !JSON.parse(localStorage.vuex).username) {
+  if (['Home', 'Account', 'Medications', 'Contacts', 'Insurance'].includes(to.name) && !JSON.parse(localStorage.vuex).username) {
     next({name: 'Login'}); // Go to Login page if user navigates to Account and are not signed in
     return;
   }

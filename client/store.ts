@@ -15,6 +15,7 @@ const store = new Vuex.Store({
     activeLink: undefined,
     account: null,
     username: null,
+    insurances: [],
     contacts: [],
     medications: [],
     alerts: {},
@@ -38,6 +39,9 @@ const store = new Vuex.Store({
     setMedications(state, medications) {
       state.medications = medications || [];
     },
+    setInsurances(state, insurances) {
+      state.insurances = insurances || [];
+    },
     alert(state, {message, status}) {
       Vue.set(state.alerts, message, status);
       setTimeout(() => {
@@ -53,6 +57,7 @@ const store = new Vuex.Store({
       // Anything that needs to be refreshed on login/logout should be called here
       await dispatch('refreshContacts');
       await dispatch('refreshMedications');
+      await dispatch('refreshInsurances');
     },
     async refreshCollection({state, commit}, {url, method}) {
       if (state.account) {
@@ -72,6 +77,12 @@ const store = new Vuex.Store({
       await dispatch('refreshCollection', {
         url: '/api/medications',
         method: 'setMedications',
+      });
+    },
+    async refreshInsurances({dispatch}) {
+      await dispatch('refreshCollection', {
+        url: '/api/insurance-cards',
+        method: 'setInsurances',
       });
     },
   },
