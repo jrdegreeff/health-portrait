@@ -31,23 +31,9 @@ export default {
   },
   methods: {
     setDefaultFieldVals() {
-      const pairs = Object.entries(this.entry);
-      pairs.forEach((arr) => {
-        const key = arr[0];
-        const value = arr[1];
-        if (key === "type") {
-          this.fields[0].value = value;
-        } else if (key === "detail") {
-          this.fields[1].value = value;
-        } else if (key === "condition") {
-          this.fields[2].value = value;
-        } else if (key === "scale") {
-          this.fields[3].value = value;
-        } else if (key === "notes") {
-          this.fields[4].value = value;
-        } else if (key === "date") {
-          this.fields[5].value = value;
-        }
+      Object.entries(this.entry).forEach(([id, value]) => {
+        const field = this.fields.find(f => f.id === id);
+        field && (field.value = value);
       });
     },
   },

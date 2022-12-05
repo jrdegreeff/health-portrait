@@ -12,11 +12,11 @@ export default {
         hasBody: true,
         title: 'Create new entry',
         fields: [
-            {id: 'type', label: 'Type', value: ''}, 
-            {id: 'detail', label: 'Detail', value: ''}, 
-            {id: 'condition', label: 'Condition', value: ''}, 
-            {id: 'scale', label: 'Scale', value: ''}, 
-            {id: 'notes', label: 'Notes', value: ''}, 
+            {id: 'type', label: 'Type', value: ''},
+            {id: 'detail', label: 'Detail', value: ''},
+            {id: 'condition', label: 'Condition', value: ''},
+            {id: 'scale', label: 'Scale', value: ''},
+            {id: 'notes', label: 'Notes', value: ''},
             {id: 'date', label: 'Date', value: ''}
         ],
         callback: () => {
