@@ -10,6 +10,7 @@ import EditEntryPage from './components/Entry/EditEntryPage.vue';
 import InsurancePage from './components/Insurance-Card/InsurancePage.vue'
 import MedicationPage from './components/Medication/MedicationPage.vue'
 import NotFound from './NotFound.vue';
+import TrendsPage from './components/Trends/TrendsPage.vue';
 
 Vue.use(VueRouter);
 
@@ -23,6 +24,7 @@ const routes = [
   {path: '/editLog/:entryId', name: 'Edit Log', component: EditEntryPage, props: true},
   {path: '/insurance', name: 'Insurance', component: InsurancePage},
   {path: '/medications', name: 'Medications', component: MedicationPage},
+  {path: '/trends', name: 'Trends', component: TrendsPage},
   {path: '*', name: 'Not Found', component: NotFound},
 ];
 
