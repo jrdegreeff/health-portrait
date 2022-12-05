@@ -1,6 +1,7 @@
 import type { Request, Response } from 'express';
 import express from 'express';
 import AccountCollection, { CredentialCollection } from './collection';
+import EntryCollection from '../entry/collection';
 import InsuranceCardCollection from '../insurance/collection';
 import MedicalContactCollection from '../medical-contact/collection';
 import MedicationCollection from '../medication/collection';
@@ -160,6 +161,7 @@ router.delete(
   async (req: Request, res: Response) => {
     await AccountCollection.deleteOne(req.session.accountId);
     await CredentialCollection.deleteMany(req.session.accountId);
+    await EntryCollection.deleteMany(req.session.accountId);
     await InsuranceCardCollection.deleteMany(req.session.accountId);
     await MedicalContactCollection.deleteMany(req.session.accountId);
     await MedicationCollection.deleteMany(req.session.accountId);
