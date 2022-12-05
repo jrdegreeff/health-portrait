@@ -49,12 +49,12 @@ router.post(
   '/',
   [
     accountValidator.isLoggedIn,
-    insuranceCardValidator.isValidSubscriberName,
-    insuranceCardValidator.isValidPurpose
+    insuranceCardValidator.isValidSubscriberName(true),
+    insuranceCardValidator.isValidPurpose(true),
   ],
   async (req: Request, res: Response) => {
     const accountId = (req.session.accountId as string) ?? ''; // Will not be an empty string since its validated in isLoggedIn
-    const insuranceCard = await InsuranceCardCollection.addOne(accountId, req.body.subscriber_name, req.body.member_id, req.body.group_number, req.body.plan_number, req.body.plan_type, req.body.purpose, req.body.notes);
+    const insuranceCard = await InsuranceCardCollection.addOne(accountId, req.body);
     res.status(201).json({
       message: 'Your insurance card was created successfully.',
       insuranceCard: util.constructInsuranceCardResponse(insuranceCard)
@@ -88,8 +88,8 @@ router.patch(
     accountValidator.isLoggedIn,
     insuranceCardValidator.isInsuranceCardExists,
     insuranceCardValidator.isValidInsuranceCardModifier,
-    insuranceCardValidator.isValidSubscriberName,
-    insuranceCardValidator.isValidPurpose
+    insuranceCardValidator.isValidSubscriberName(false),
+    insuranceCardValidator.isValidPurpose(false),
   ],
   async (req: Request, res: Response) => {
     const insuranceCard = await InsuranceCardCollection.updateOne(req.params.insuranceCardId, req.body);
