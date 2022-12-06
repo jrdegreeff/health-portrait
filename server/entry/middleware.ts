@@ -27,7 +27,7 @@ const isValidEntryDetail = async (req: Request, res: Response, next: NextFunctio
     }
 
     const specifiedTypes = ["appointment", "medication", "other"];
-    if (!specifiedTypes.includes(type)) {
+    if (!specifiedTypes.includes(type.toLowerCase())) {
         res.status(400).json({
             error: 'Entry type must be either "appointment", "medication", or "other".'
         });
@@ -40,7 +40,7 @@ const isValidEntryDetail = async (req: Request, res: Response, next: NextFunctio
 const isValidEntryCondition = async (req: Request, res: Response, next: NextFunction) => {
     const condition = req.body.condition;
     const specifiedConditions = ["pain", "cognition", "happiness"];
-    if (!specifiedConditions.includes(condition)) {
+    if (!specifiedConditions.includes(condition.toLowerCase())) {
         res.status(400).json({
             error: 'Condition must be either "pain", "cognition", or "happiness".'
         });
