@@ -4,26 +4,26 @@
             <td>{{entry.type}}</td>
             <td>{{entry.detail}}</td>
             <td>{{entry.condition}}</td>
-            <td>{{entry.scale}}</td>
+            <td class="tdCentered">{{entry.scale}}</td>
             <td>{{entry.date}}</td>
-            <td v-if="!expanded">
-                <button class="btn-secondary" @click="toggleExpand">
-                    View More
-                </button>
-            </td>
-            <td v-else>
-                <button class="btn-secondary" @click="toggleExpand">
-                    View Less
-                </button>
-            </td>
             <td>
                 <button class="btn-secondary">
-                    <router-link :to="link">Edit ✏️</router-link>
+                    <router-link :to="link">✏️ edit</router-link>
                 </button>
             </td>
             <td>
                 <button class="btn-secondary" @click="deleteEntry">
-                    Delete 🗑️
+                    🗑️ delete
+                </button>
+            </td>
+            <td v-if="!expanded">
+                <button class="btn-secondary" @click="toggleExpand">
+                    more
+                </button>
+            </td>
+            <td v-else>
+                <button class="btn-secondary" @click="toggleExpand">
+                    less
                 </button>
             </td>
         </tr>
@@ -94,7 +94,13 @@ export default {
 }
 
 td {
-    margin: 1rem 2rem;
+    margin: 1rem 1rem;
+    width: 8rem;
+}
+
+.tdCentered {
+    text-align: center;
+    width: 4rem;
 }
 
 .entryNote {

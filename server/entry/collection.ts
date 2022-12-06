@@ -7,9 +7,9 @@ class EntryCollection {
     condition: string, scale: number, notes: string, date: Date): Promise<HydratedDocument<Entry>> {
       const entry = new EntryModel({
         owner: ownerId,
-        type,
+        type: type.toLowerCase(),
         detail,
-        condition,
+        condition: condition.toLowerCase(),
         scale,
         notes,
         date
@@ -30,7 +30,7 @@ class EntryCollection {
     condition?: string, scale?: number, notes?: string, date?: Date}): Promise<HydratedDocument<Entry>> {
     const entry = await EntryModel.findOne({_id: entryId});
     if (entryDetails.type) {
-      entry.type = entryDetails.type;
+      entry.type = entryDetails.type.toLowerCase();
     }
 
     if (entryDetails.detail) {
@@ -38,7 +38,7 @@ class EntryCollection {
     }
 
     if (entryDetails.condition) {
-      entry.condition = entryDetails.condition;
+      entry.condition = entryDetails.condition.toLowerCase();
     }
 
     if (entryDetails.scale) {

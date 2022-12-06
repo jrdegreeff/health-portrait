@@ -1,7 +1,7 @@
 <template>
     <main>
         <button class="btn-secondary">
-            <router-link to="/newLog">Add Log ➕</router-link>
+            <router-link to="/newLog">➕ add</router-link>
         </button>
 
         <table class="entries" v-if="filteredEntries">
@@ -19,7 +19,7 @@
     </main>
 </template>
 
-<script>
+<script lang="ts">
 import EntryComponent from '@/components/Entry/EntryComponent.vue';
 
 export default {
