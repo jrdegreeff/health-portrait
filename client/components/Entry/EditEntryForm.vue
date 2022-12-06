@@ -17,10 +17,11 @@ export default {
       hasBody: true,
       title: 'Edit entry',
       callback: () => {
-          this.$router.push({path: '/logs/all'}); // Goes to Logs page after creating new log
-          this.$store.commit('alert', {
-            message: 'You\'ve saved changes to the entry!', status: 'success'
-          });
+        this.$router.go(-1);
+        this.$store.dispatch('refreshEntries');
+        this.$store.commit('alert', {
+          message: 'You\'ve saved changes to the entry!', status: 'success'
+        });
       }
     };
   },
