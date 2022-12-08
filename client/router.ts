@@ -34,12 +34,12 @@ const router = new VueRouter({routes});
  * Navigation guards to prevent user from accessing wrong pages.
  */
 router.beforeEach((to, from, next) => {
-  if (to.name === 'Login' && JSON.parse(localStorage.vuex).username) {
+  if (to.name === 'Login' && localStorage.vuex && JSON.parse(localStorage.vuex).username) {
     next({name: 'Account'}); // Go to Account page if user navigates to Login and are signed in
     return;
   }
 
-  if (to.name !== 'Login' && !JSON.parse(localStorage.vuex).username) {
+  if (to.name !== 'Login' && !(localStorage.vuex && JSON.parse(localStorage.vuex).username)) {
     next({name: 'Login'}); // Go to Login page if user navigates to any other page and are not signed in
     return;
   }

@@ -1,7 +1,5 @@
 # Health Portrait
 
-TODO: description
-
 ## Running Locally
 
 - Run `npm run serve`, which compiles the frontend for hot-reloading with webpack and serves it at port `8080`.
