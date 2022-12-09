@@ -7,10 +7,11 @@
       <header>
         <h2>Trends for {{ $store.state.account.name }}</h2>
       </header>
-      <section v-if="$store.state.entries.length">
-        <div v-for="detail in [...new Set($store.state.entries.map(entry => entry.detail))]" :key="detail">
+      <p>Click on the <b>Cognition</b>, <b>Pain</b>, or <b>Happiness</b> labels at the top of each chart to show/hide trend lines.</p>
+      <section v-if="filteredEntries">
+        <div v-for="detail in [...new Set(filteredEntries.map(entry => entry.detail))]" :key="detail">
           <hr />
-          <TrendsVisualization :entries="$store.state.entries.filter(entry => entry.detail === detail).reverse()" :detail="detail" />
+          <TrendsVisualization :entries="filteredEntries.filter(entry => entry.detail === detail).reverse()" :detail="detail" />
         </div>
       </section>
       <article v-else>
@@ -30,10 +31,33 @@
     components: {
       TrendsVisualization
     },
-    mounted() {
-      this.$store.commit('setHeader', {title: 'Trends', enableBack: true});
+    props: {
+      type: {
+        type: String,
+        required: true
+      }
     },
-    methods: {
+    computed: {
+      activeType() {
+        const type = this.type;
+        return type.charAt(0).toUpperCase() + type.slice(1);
+      },
+      filteredEntries() {
+        return this.type === "all" ? this.$store.state.entries : this.$store.state.entries.filter(e => e.type === this.type);
+      }
+    },
+    mounted() {
+      this.$store.commit('setHeader', {
+        title: 'Trends', 
+        enableBack: true, 
+        headerLinks: {
+          "/trends/all": "All",
+          "/trends/medication": "Medication",
+          "/trends/appointment": "Appointment",
+          "/trends/other": "Other",
+        },
+        activeLink: this.activeType,
+      });
     }
   };
 </script>

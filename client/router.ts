@@ -24,7 +24,7 @@ const routes = [
   {path: '/editLog/:entryId', name: 'Edit Log', component: EditEntryPage, props: true},
   {path: '/insurance', name: 'Insurance', component: InsurancePage},
   {path: '/medications', name: 'Medications', component: MedicationPage},
-  {path: '/trends', name: 'Trends', component: TrendsPage},
+  {path: '/trends/:type', name: 'Trends', component: TrendsPage, props: true},
   {path: '*', name: 'Not Found', component: NotFound},
 ];
 

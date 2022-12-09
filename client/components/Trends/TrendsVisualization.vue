@@ -1,7 +1,9 @@
 <!-- Component for building a graph -->
 
 <template>
-  <canvas :id="`graph-${detail}`"></canvas>
+  <div class="chart-wrap">
+    <canvas :id="`graph-${detail}`"></canvas>
+  </div>
 </template>
 
 <script>
@@ -40,6 +42,8 @@ export default {
           type: 'line',
           options: {
             animation : false,
+            pointRadius : 10,
+            pointHoverRadius : 14,
             scales : {
               y : {
                 min: 1,
@@ -55,7 +59,7 @@ export default {
             plugins: {
               title: {
                 display: true,
-                text: this.detail,
+                text: this.detail
               },
               legend: {
                 display: true
@@ -70,15 +74,21 @@ export default {
             datasets: [
               {
                 label: 'Cognition',
-                data: cognition
+                data: cognition, 
+                borderColor: '#008067',
+                backgroundColor: '#008067'
               },
               {
                 label: 'Pain',
-                data: pain
+                data: pain,
+                borderColor: '#A94103',
+                backgroundColor: '#A94103'
               },
               {
                 label: 'Happiness',
-                data: happiness
+                data: happiness,
+                borderColor: '#6B06C4',
+                backgroundColor: '#6B06C4'
               }
             ]
           }
@@ -89,8 +99,13 @@ export default {
 };
 </script>
 <style>
+.chart-wrap {
+  width: calc(100vw - 60em) !important;
+  min-width: 20em !important;
+}
+
 canvas {
-  width: 50% !important;
-  height: 70% !important;
+  width: 100% !important;
+  height: 100% !important;
 }
 </style>
