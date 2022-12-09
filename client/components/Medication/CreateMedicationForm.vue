@@ -13,7 +13,7 @@ export default {
         {id: 'name', label: 'Medication Name', value: ''},
         {id: 'generic_name', label: 'Generic Name', value: ''},
         {id: 'dose', label: 'Dose', value: ''},
-        {id: 'notes', label: 'Notes', value: ''},
+        {id: 'notes', label: 'Notes', value: '', type: 'textarea'},
       ],
       title: 'Add medication',
       callback: async () => {

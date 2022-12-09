@@ -6,39 +6,27 @@
     <fieldset>
       <legend>{{ title }}</legend>
       <article v-if="fields.length">
-        <div
-          v-for="field in fields"
-          :key="field.id"
+        <span
+          v-for="{id, label, value, type, hint, required} in fields"
+          :key="id"
         >
-          <span>
-            <label
-              v-if="!field.hidden"
-              :for="field.id"
-            >
-              {{ field.label }}:
-            </label>
-            <input
-              v-if="field.hidden"
-              type=hidden
-              :name="field.id"
-              :value="field.value"
-            >
-            <textarea
-              v-else-if="field.id === 'notes'"
-              :name="field.id"
-              :value="field.value"
-              @input="field.value = $event.target.value"
-            />
-            <input
-              v-else
-              :type="field.id === 'password' ? 'password' : 'text'"
-              :name="field.id"
-              :value="field.value"
-              @input="field.value = $event.target.value"
-            >
-            <small v-if="field.hint"> {{ field.hint }} </small>
-          </span>
-        </div>
+          <label v-if="type !== 'hidden'" :for="id">
+            {{ label }}:
+            <small v-if="!required"> (optional) </small>
+          </label>
+          <textarea
+            v-if="type === 'textarea'"
+            :name="id"
+            v-model="values[id]"
+          />
+          <input
+            v-else
+            :type="type || 'text'"
+            :name="id"
+            v-model="values[id]"
+          >
+          <small v-if="hint"> {{ hint }} </small>
+        </span>
       </article>
       <p v-else>{{ content }}</p>
       <button class="btn-primary" type="submit">
@@ -52,10 +40,8 @@
 export default {
   name: 'BlockForm',
   data() {
-    /**
-     * Options for submitting this form.
-     */
     return {
+      values: {}, // The values of the form
       url: '', // Url to submit form to
       method: 'GET', // Form request method
       hasBody: false, // Whether or not form request has a body
@@ -64,6 +50,9 @@ export default {
       setUsername: false, // Whether or not stored username should be updated after form submission
       callback: null, // Function to run after successful form submission
     };
+  },
+  created() {
+    this.values = Object.fromEntries(this.fields.map(f => [f.id, f.value]));
   },
   methods: {
     async submit() {
@@ -76,7 +65,7 @@ export default {
         credentials: 'same-origin' // Sends express-session credentials with request
       };
       if (this.hasBody) {
-        const fields = Object.fromEntries(this.fields.map(f => [f.id, f.value]));
+        const fields = Object.fromEntries(this.fields.map(f => [f.id, this.values[f.id]]));
         options.body = JSON.stringify(fields);
       }
 
@@ -113,3 +102,15 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+article {
+  display: flex;
+  flex-direction: column;
+}
+
+span {
+  display: flex;
+  align-items: center;
+}
+</style>

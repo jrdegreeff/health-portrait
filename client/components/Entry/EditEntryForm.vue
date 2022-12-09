@@ -6,8 +6,8 @@ export default {
   mixins: [CreateEntryForm],
   props: {
     entryId: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
   },
   data() {
@@ -25,21 +25,8 @@ export default {
       }
     };
   },
-  computed: {
-    entry: function() {
-      return this.$store.state.entries.find((entry) => entry._id === this.entryId);
-    },
-  },
-  methods: {
-    setDefaultFieldVals() {
-      Object.entries(this.entry).forEach(([id, value]) => {
-        const field = this.fields.find(f => f.id === id);
-        field && (field.value = value);
-      });
-    },
-  },
-  mounted() {
-    this.setDefaultFieldVals();
+  created() {
+    this.values = this.$store.state.entries.find(e => e._id === this.entryId);
   },
 };
 

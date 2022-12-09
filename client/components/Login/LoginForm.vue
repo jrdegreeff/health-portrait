@@ -14,7 +14,7 @@ export default {
       loadAccount: true,
       fields: [
         {id: 'username', label: 'Username', value: ''},
-        {id: 'password', label: 'Password', value: ''}
+        {id: 'password', label: 'Password', value: '', type: 'password'}
       ],
       title: 'Log in',
       callback: () => {

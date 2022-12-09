@@ -16,7 +16,7 @@ export default {
         {id: 'hospital', label: 'Hospital', value: ''},
         {id: 'specialty', label: 'Specialty', value: ''},
         {id: 'phone_number', label: 'Phone Number', value: '', hint: 'Format: 123-456-7890'},
-        {id: 'notes', label: 'Notes', value: ''},
+        {id: 'notes', label: 'Notes', value: '', type: 'textarea'},
       ],
       title: 'Create contact',
       callback: async () => {

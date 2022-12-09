@@ -14,7 +14,7 @@ export default {
         {id: 'group_number', label: 'Group Number', value: ''},
         {id: 'plan_number', label: 'Plan Number', value: ''},
         {id: 'plan_type', label: 'Plan Type', value: ''},
-        {id: 'notes', label: 'Notes', value: ''},
+        {id: 'notes', label: 'Notes', value: '', type: 'textarea'},
       ],
       deleteCallback: async () => {
         this.$store.commit('alert', {

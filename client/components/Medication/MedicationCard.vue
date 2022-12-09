@@ -11,7 +11,7 @@ export default {
         {id: 'name', label: 'Medication Name'},
         {id: 'generic_name', label: 'Generic Name'},
         {id: 'dose', label: 'Dose'},
-        {id: 'notes', label: 'Notes'},
+        {id: 'notes', label: 'Notes', type: 'textarea'},
       ],
       deleteCallback: async () => {
         this.$store.commit('alert', {

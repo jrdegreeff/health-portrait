@@ -14,7 +14,7 @@ export default {
       setAccount: true,
       fields: [
         {id: 'username', label: 'Username', value: ''},
-        {id: 'password', label: 'Password', value: ''}
+        {id: 'password', label: 'Password', value: '', type: 'password'}
       ],
       title: 'Create a user and add to the shared account',
       callback: () => {

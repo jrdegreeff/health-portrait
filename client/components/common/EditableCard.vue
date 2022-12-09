@@ -1,25 +1,31 @@
 <!-- Reusable component representing a single editable object -->
 
 <template>
-  <article class="card">
-    <section>
-      <div
-        v-for="field in fields"
-        :key="field.id"
+  <section>
+    <article>
+      <span
+        v-for="{id, label, type, hint, required} in fields"
+        :key="id"
       >
-        <label>{{ field.label }}:</label>
-        <textarea v-if="editing && field.id === 'notes'" v-model="values[field.id]" />
-        <input v-else-if="editing" v-model="values[field.id]" />
-        <span v-else>
-          {{ values[field.id] }}
-        </span>
-        <small v-if="editing && field.hint">
-          {{ field.hint }}
-        </small>
-      </div>
-    </section>
+        <label>
+          {{ label }}:
+          <small v-if="editing && !required"> (optional) </small>
+        </label>
+        <textarea
+          v-if="editing && type === 'textarea'"
+          v-model="values[id]"
+        />
+        <input
+          v-else-if="editing"
+          :type="type || 'text'"
+          v-model="values[id]"
+        />
+        <span v-else> {{ values[id] }} </span>
+        <small v-if="editing && hint"> {{ hint }} </small>
+      </span>
+    </article>
     <hr>
-    <section class="actions">
+    <div class="actions">
       <button class="btn-secondary" v-if="editing" @click="sendPatch">
         ✅ save changes
       </button>
@@ -32,8 +38,8 @@
       <button class="btn-secondary" @click="sendDelete">
         🗑️ delete
       </button>
-    </section>
-  </article>
+    </div>
+  </section>
 </template>
 
 <script>
@@ -92,15 +98,22 @@ export default {
 </script>
 
 <style scoped>
-.card {
+section {
   border: 1px solid #111;
   padding: 20px;
   position: relative;
   margin-bottom: -1px;
 }
 
-div {
+article {
+  display: flex;
+  flex-direction: column;
+}
+
+span {
   padding: 0.5rem;
+  display: flex;
+  align-items: center;
 }
 
 button {

@@ -43,6 +43,8 @@ export default {
   --secondaryGray: #d9d9d9aa;
   --lightSecondaryGray: #e3e3e3aa;
   --darkGray: #4f4f4f;
+  --warning: #A61721;
+  --success: #2D8757;
 }
 
 body {
@@ -169,10 +171,6 @@ input, textarea {
   border: 1px solid black;
   padding: 0.5rem;
   margin: 0.5rem;
-}
-
-textarea {
-  display: block;
 }
 
 small {

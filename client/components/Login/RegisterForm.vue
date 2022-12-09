@@ -15,7 +15,7 @@ export default {
       fields: [
         {id: 'name', label: 'Name', value: ''},
         {id: 'username', label: 'Username', value: ''},
-        {id: 'password', label: 'Password', value: ''}
+        {id: 'password', label: 'Password', value: '', type: 'password'}
       ],
       title: 'Create account',
       callback: () => {

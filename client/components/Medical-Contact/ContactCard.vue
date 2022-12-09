@@ -14,7 +14,7 @@ export default {
         {id: 'hospital', label: 'Hospital'},
         {id: 'specialty', label: 'Specialty'},
         {id: 'phone_number', label: 'Phone Number', hint: 'Format: 123-456-7890'},
-        {id: 'notes', label: 'Notes'},
+        {id: 'notes', label: 'Notes', type: 'textarea'},
       ],
       deleteCallback: async () => {
         this.$store.commit('alert', {
