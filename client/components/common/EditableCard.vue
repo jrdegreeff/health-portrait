@@ -2,26 +2,39 @@
 
 <template>
   <section>
-    <article>
+    <article v-if="editing">
       <span
-        v-for="{id, label, type, hint, required} in fields"
+        v-for="{id, label, type, hint, optional} in fields"
         :key="id"
       >
-        <label>
+        <label v-if="type !== 'hidden'" :for="id">
           {{ label }}:
-          <small v-if="editing && !required"> (optional) </small>
+          <small v-if="optional"> (optional) </small>
         </label>
         <textarea
-          v-if="editing && type === 'textarea'"
+          v-if="type === 'textarea'"
+          :class="errors[id] ? 'error' : ''"
           v-model="values[id]"
+          @change="() => validate(id)"
         />
         <input
-          v-else-if="editing"
+          v-else
+          :class="errors[id] ? 'error' : ''"
           :type="type || 'text'"
           v-model="values[id]"
-        />
-        <span v-else> {{ values[id] }} </span>
-        <small v-if="editing && hint"> {{ hint }} </small>
+          @change="() => validate(id)"
+        >
+        <small v-if="hint"> {{ hint }} </small>
+        <small v-if="errors[id]" class="error"> {{ errors[id] }} </small>
+      </span>
+    </article>
+    <article v-else>
+      <span
+        v-for="{id, label, type, hint, optional} in fields"
+        :key="id"
+      >
+        <label> {{ label }}: </label>
+        {{ values[id] }}
       </span>
     </article>
     <hr>
@@ -53,11 +66,23 @@ export default {
   },
   data() {
     return {
+      url: '', // URL to submit patch and delete requests to (supplied by specific card)
+      fields: [], // Card fields to be rendered (supplied by specific card)
       values: Object.assign({}, this.document), // The values to display (editable)
+      validators: {}, // Functions to run for client-side validation
+      errors: {}, // Errors from validators
       editing: false, // Whether or not this contact is in edit mode
+      deleteCallback: null, // Function to be called when delete request is successful (supplied by specific card)
+      patchCallback: null, // Function to be called when patch request is successful (supplied by specific card)
     };
   },
+  created() {
+    this.validators = Object.fromEntries(this.fields.map(f => [f.id, f.optional ? (v => '') : (v => v ? '' : 'required field')]));
+  },
   methods: {
+    validate(id) {
+      this.$set(this.errors, id, this.validators[id](this.values[id]));
+    },
     startEditing() {
       this.editing = true;
       this.values = Object.assign({}, this.document);
@@ -67,14 +92,20 @@ export default {
       this.values = Object.assign({}, this.document);
     },
     async sendDelete() {
-      await this.request({ method: "DELETE" });
-      await this.deleteCallback();
+      if (await this.request({ method: "DELETE" })) {
+        await this.deleteCallback();
+      }
     },
     async sendPatch() {
+      // run client-side validation before sending to server
+      this.fields.forEach(f => this.validate(f.id));
+      if(Object.values(this.errors).some(x => x)) return;
+
       const modified = Object.fromEntries(this.fields.filter(f => this.document[f.id] !== this.values[f.id])
                                                      .map(f => [f.id, this.values[f.id]]));
-      await this.request({ method: "PATCH", body: JSON.stringify(modified) });
-      await this.patchCallback();
+      if (await this.request({ method: "PATCH", body: JSON.stringify(modified) })) {
+        await this.patchCallback();
+      }
     },
     async request(params) {
       const options = {
@@ -84,13 +115,15 @@ export default {
       };
       try {
         const r = await fetch(`${this.url}/${this.document._id}`, options);
-        if (!r.ok) {
-          const res = await r.json();
-          throw new Error(res.error);
-        }
+        
+        // display error message and abort on failure
+        if(!r.ok) throw new Error((await r.json()).error);
+
         this.editing = false;
+        return true;
       } catch (e) {
         this.$store.commit('alert', { message: e, status: 'error' });
+        return false;
       }
     },
   },

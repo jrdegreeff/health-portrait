@@ -43,7 +43,7 @@ export default {
   --secondaryGray: #d9d9d9aa;
   --lightSecondaryGray: #e3e3e3aa;
   --darkGray: #4f4f4f;
-  --warning: #A61721;
+  --error: #A61721;
   --success: #2D8757;
 }
 
@@ -173,7 +173,15 @@ input, textarea {
   margin: 0.5rem;
 }
 
+input.error, textarea.error {
+  border-color: var(--error);
+}
+
 small {
   color: #aaaaaa;
+}
+
+small.error {
+  color: var(--error);
 }
 </style>

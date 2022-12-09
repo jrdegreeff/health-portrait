@@ -13,10 +13,10 @@ export default {
         {id: 'title', label: 'Title', value: ''},
         {id: 'first_name', label: 'First Name', value: ''},
         {id: 'last_name', label: 'Last Name', value: ''},
-        {id: 'hospital', label: 'Hospital', value: ''},
-        {id: 'specialty', label: 'Specialty', value: ''},
+        {id: 'hospital', label: 'Hospital', value: '', optional: true},
+        {id: 'specialty', label: 'Specialty', value: '', optional: true},
         {id: 'phone_number', label: 'Phone Number', value: '', hint: 'Format: 123-456-7890'},
-        {id: 'notes', label: 'Notes', value: '', type: 'textarea'},
+        {id: 'notes', label: 'Notes', value: '', type: 'textarea', optional: true},
       ],
       title: 'Create contact',
       callback: async () => {

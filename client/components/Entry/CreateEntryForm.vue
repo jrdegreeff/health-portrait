@@ -16,7 +16,7 @@ export default {
         {id: 'detail', label: 'Detail', value: ''},
         {id: 'condition', label: 'Condition', value: ''},
         {id: 'scale', label: 'Scale', value: '', type: 'number'},
-        {id: 'notes', label: 'Notes', value: '', type: 'textarea'},
+        {id: 'notes', label: 'Notes', value: '', type: 'textarea', optional: true},
         {id: 'date', label: 'Date', value: moment().format('YYYY-MM-DD'), type: 'date'}
       ],
       callback: () => {

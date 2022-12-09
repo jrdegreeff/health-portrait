@@ -12,11 +12,11 @@ export default {
       fields: [
         {id: 'purpose', label: 'Purpose', value: ''},
         {id: 'subscriber_name', label: 'Subscriber Name', value: ''},
-        {id: 'member_id', label: 'Member ID', value: ''},
-        {id: 'group_number', label: 'Group Number', value: ''},
-        {id: 'plan_number', label: 'Plan Number', value: ''},
-        {id: 'plan_type', label: 'Plan Type', value: ''},
-        {id: 'notes', label: 'Notes', value: '', type: 'textarea'},
+        {id: 'member_id', label: 'Member ID', value: '', optional: true},
+        {id: 'group_number', label: 'Group Number', value: '', optional: true},
+        {id: 'plan_number', label: 'Plan Number', value: '', optional: true},
+        {id: 'plan_type', label: 'Plan Type', value: '', optional: true},
+        {id: 'notes', label: 'Notes', value: '', type: 'textarea', optional: true},
       ],
       title: 'Add new insurance card',
       callback: async () => {

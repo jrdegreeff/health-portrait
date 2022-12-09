@@ -11,10 +11,10 @@ export default {
         {id: 'title', label: 'Title'},
         {id: 'first_name', label: 'First Name'},
         {id: 'last_name', label: 'Last Name'},
-        {id: 'hospital', label: 'Hospital'},
-        {id: 'specialty', label: 'Specialty'},
+        {id: 'hospital', label: 'Hospital', optional: true},
+        {id: 'specialty', label: 'Specialty', optional: true},
         {id: 'phone_number', label: 'Phone Number', hint: 'Format: 123-456-7890'},
-        {id: 'notes', label: 'Notes', type: 'textarea'},
+        {id: 'notes', label: 'Notes', type: 'textarea', optional: true},
       ],
       deleteCallback: async () => {
         this.$store.commit('alert', {

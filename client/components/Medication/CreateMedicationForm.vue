@@ -11,9 +11,9 @@ export default {
       hasBody: true,
       fields: [
         {id: 'name', label: 'Medication Name', value: ''},
-        {id: 'generic_name', label: 'Generic Name', value: ''},
+        {id: 'generic_name', label: 'Generic Name', value: '', optional: true},
         {id: 'dose', label: 'Dose', value: ''},
-        {id: 'notes', label: 'Notes', value: '', type: 'textarea'},
+        {id: 'notes', label: 'Notes', value: '', type: 'textarea', optional: true},
       ],
       title: 'Add medication',
       callback: async () => {

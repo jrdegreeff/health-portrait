@@ -9,9 +9,9 @@ export default {
       url: '/api/medications',
       fields: [
         {id: 'name', label: 'Medication Name'},
-        {id: 'generic_name', label: 'Generic Name'},
+        {id: 'generic_name', label: 'Generic Name', optional: true},
         {id: 'dose', label: 'Dose'},
-        {id: 'notes', label: 'Notes', type: 'textarea'},
+        {id: 'notes', label: 'Notes', type: 'textarea', optional: true},
       ],
       deleteCallback: async () => {
         this.$store.commit('alert', {
