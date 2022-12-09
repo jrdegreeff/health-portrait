@@ -42,7 +42,7 @@ export default {
     },
     mounted() {
         this.$store.commit('setHeader', {
-            title: 'Health Journal', 
+            title: `${this.$store.state.account.name}'s Health Journal`,
             enableBack: false,
             headerLinks: {
                 "/logs/all": "All",

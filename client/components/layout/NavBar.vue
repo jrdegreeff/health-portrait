@@ -5,7 +5,6 @@
         <header><h2>
           <NavLink to="/" name="Home"/>
         </h2></header>
-
       </section>
       <hr/>
       <section>
@@ -71,6 +70,7 @@ nav {
   justify-content: center;
   white-space: nowrap;
 }
+
 
 a.active {
   border-bottom: 1px black solid;

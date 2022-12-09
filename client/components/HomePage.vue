@@ -2,7 +2,7 @@
   <main>
     <section>
       <header>
-        <h1> The Future of Healthcare </h1>
+        <h1> Welcome @{{ $store.state.username }}  to The Future of Healthcare </h1>
       </header>
       <p>
         Keep track of important health information with Health Book. 
@@ -26,9 +26,10 @@
     },
     mounted() {
       this.$store.commit("setHeader", {
-        title: "Health Portrait",
+        title: `${this.$store.state.account.name}'s Health Portrait`,
         enableBack: false,
         headerLinks: {
+          "/account": "My Account",
           "/logs/all": "Health Journal",
           "/contacts": "Health Book",
         },
