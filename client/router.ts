@@ -17,7 +17,6 @@ const routes = [
   {path: '/login', name: 'Login', component: LoginPage},
   {path: '/medications', name: 'Medications', component: MedicationPage},
   {path: '/insurance', name: 'Insurance', component: InsurancePage},
-  {path: '/medications', name: 'Medications', component: MedicationPage},
   {path: '*', name: 'Not Found', component: NotFound},
 ];
 
