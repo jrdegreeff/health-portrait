@@ -1,10 +1,11 @@
-<script lang="ts">
+<script>
 import BlockForm from '@/components/common/BlockForm.vue';
 
 export default {
   name: 'CreateContactForm',
   mixins: [BlockForm],
   data() {
+    const phoneRegex = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/;
     return {
       url: '/api/medical-contacts',
       method: 'POST',
@@ -18,6 +19,9 @@ export default {
         {id: 'phone_number', label: 'Phone Number', value: '', hint: 'Format: 123-456-7890'},
         {id: 'notes', label: 'Notes', value: '', type: 'textarea', optional: true},
       ],
+      validators: {
+        phone_number: v => phoneRegex.test(v) ? '' : 'invalid format'
+      },
       title: 'Create contact',
       callback: async () => {
         await this.$store.dispatch('refreshContacts');

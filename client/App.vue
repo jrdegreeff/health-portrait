@@ -166,6 +166,10 @@ label {
   margin-right: 1rem;
 }
 
+label + small {
+  margin-left: -0.5rem;
+}
+
 input, textarea {
   border-radius: 0.5rem;
   border: 1px solid black;
@@ -179,6 +183,7 @@ input.error, textarea.error {
 
 small {
   color: #aaaaaa;
+  margin-right: 1rem;
 }
 
 small.error {

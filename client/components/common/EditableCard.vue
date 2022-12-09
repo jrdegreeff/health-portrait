@@ -7,10 +7,8 @@
         v-for="{id, label, type, hint, optional} in fields"
         :key="id"
       >
-        <label v-if="type !== 'hidden'" :for="id">
-          {{ label }}:
-          <small v-if="optional"> (optional) </small>
-        </label>
+        <label v-if="type !== 'hidden'" :for="id"> {{ label }}: </label>
+        <small v-if="optional"> (optional) </small>
         <textarea
           v-if="type === 'textarea'"
           :class="errors[id] ? 'error' : ''"
@@ -69,7 +67,7 @@ export default {
       url: '', // URL to submit patch and delete requests to (supplied by specific card)
       fields: [], // Card fields to be rendered (supplied by specific card)
       values: Object.assign({}, this.document), // The values to display (editable)
-      validators: {}, // Functions to run for client-side validation
+      validators: {}, // Functions to run for client-side validation (supplied by specific card)
       errors: {}, // Errors from validators
       editing: false, // Whether or not this contact is in edit mode
       deleteCallback: null, // Function to be called when delete request is successful (supplied by specific card)
@@ -77,7 +75,10 @@ export default {
     };
   },
   created() {
-    this.validators = Object.fromEntries(this.fields.map(f => [f.id, f.optional ? (v => '') : (v => v ? '' : 'required field')]));
+    this.fields.forEach(f => {
+      const validators = [f.optional ? (v => '') : (v => v ? '' : 'required field'), this.validators[f.id] || (v => '')];
+      this.$set(this.validators, f.id, v => validators.map(validator => validator(v)).find(x => x));
+    });
   },
   methods: {
     validate(id) {

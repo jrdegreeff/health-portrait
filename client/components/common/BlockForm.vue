@@ -10,10 +10,8 @@
           v-for="{id, label, type, hint, optional} in fields"
           :key="id"
         >
-          <label v-if="type !== 'hidden'" :for="id">
-            {{ label }}:
-            <small v-if="optional"> (optional) </small>
-          </label>
+        <label v-if="type !== 'hidden'" :for="id"> {{ label }}: </label>
+        <small v-if="optional"> (optional) </small>
           <textarea
             v-if="type === 'textarea'"
             :class="errors[id] ? 'error' : ''"
@@ -51,7 +49,7 @@ export default {
       fields: [], // Form fields to be rendered (supplied by specific form)
       content: '', // Text to display when no fields (supplied by specific form)
       values: {}, // The values of the form
-      validators: {}, // Functions to run for client-side validation
+      validators: {}, // Functions to run for client-side validation (supplied by specific form)
       errors: {}, // Errors from validators
       loadAccount: false, // Whether or not to reload all store data associated with the account
       setAccount: false, // Whether or not stored account info should be updated after form submission
@@ -61,7 +59,10 @@ export default {
   },
   created() {
     this.values = Object.fromEntries(this.fields.map(f => [f.id, f.value]));
-    this.validators = Object.fromEntries(this.fields.map(f => [f.id, f.optional ? (v => '') : (v => v ? '' : 'required field')]));
+    this.fields.forEach(f => {
+      const validators = [f.optional ? (v => '') : (v => v ? '' : 'required field'), this.validators[f.id] || (v => '')];
+      this.$set(this.validators, f.id, v => validators.map(validator => validator(v)).find(x => x));
+    });
   },
   methods: {
     validate(id) {
