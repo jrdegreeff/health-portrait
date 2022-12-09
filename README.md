@@ -1,7 +1,5 @@
 # Health Portrait
 
-TODO: description
-
 ## Running Locally
 
 - Run `npm run serve`, which compiles the frontend for hot-reloading with webpack and serves it at port `8080`.
@@ -371,6 +369,8 @@ TODO: description
 **Body**
 - `type` _{string}_ - The type of the log entry
 - `detail` _{string}_ - The detail of the log entry
+- `condition` _{string}_ - The condition of the log entry
+- `scale` _{string}_ - The scale of the log entry
 - `notes` _{string}_ - The log entry's notes (optional)
 - `date` _{Date}_ - The date associated with the log entry
 
@@ -380,13 +380,15 @@ TODO: description
 
 **Throws** 
 - `401` if the user is not logged in
-- `400` if the `type` or `detail` is empty or a stream of empty spaces, or if given `type` is not in specified set of valid types, or if `date` is empty/an invalid timestamp
+- `400` if the `type`, `detail`, or `condition` is empty or a stream of empty spaces, or if given `type`, `condition`, or `scale` is not in specified set of valid inputs, or if `date` is empty/an invalid timestamp
 
 #### `PATCH /api/entries/:entryId` - Editing an entry in the log
 
 **Body**
 - `type` _{string}_ - The type of the log entry (optional)
 - `detail` _{string}_ - The detail of the log entry (optional)
+- `condition` _{string}_ - The condition of the log entry
+- `scale` _{string}_ - The scale of the log entry
 - `notes` _{string}_ - The log entry's notes (optional)
 - `date` _{Date}_ - The date associated with the log entry (optional)
 
@@ -398,7 +400,7 @@ TODO: description
 - `401` if the user is not logged in
 - `404` if the `entryId` is invalid
 - `403` if the user is not the owner of the entry
-- `404` if given `type` is non-empty and not in specified set of valid types
+- `400` if the `type`, `detail`, or `condition` is empty or a stream of empty spaces, or if given `type`, `condition`, or `scale` is not in specified set of valid inputs, or if `date` is empty/an invalid timestamp
 
 #### `DELETE /api/entries/:entryId` - Delete an entry in the log
 
@@ -409,63 +411,3 @@ TODO: description
 - `401` if the user is not logged in
 - `404` if the `entryId` is invalid
 - `403` if the user is not the owner of the entry
-
-
-### Trend
-
-#### `GET /api/trends` - Get all trends for a given user  
-**Returns**  
-- An array of trends created by user with given username (taken from session)  
-**Throws**  
-- `401` if the user is not logged in
-
-#### `GET /api/trends` - Get trend (set of points) that includes a given set of items (log entries)  
-**Body**  
-- `items` _{array<string>}_ - Set of items to be plotted in the trend  
-- `title` _{string}_ - The title of the graph  
-- `start_date` _{date}_ - Date from which to start plotting the trend graph  
-- `end_date` _{date}_ - Date at which to finish plotting the trend graph  
-**Returns**  
-- An array of points (one trend)  
-**Throws**  
-- `400` if the items, title, start_date, or end_date is empty/a stream of empty spaces  
-- `401` if the user is not logged in  
-
-#### `POST /api/trends` - Add a point to a trend  
-**Body**  
-- `item` _{string}_ - Log entry to be added to trend  
-- `title` _{string}_ - The title of the graph  
-- `date` _{date}_ - The date when the entry was logged
-- `value` _{int}_ - The value of the condition scale (1-5) from the first point  
-**Returns**  
-- A success message  
-- A object with the created point  
-**Throws**  
-- `400` If the item, title, date, or value content is empty/a stream of empty spaces  
-- `400` If the title is not one of "pain," "happiness," or "cognition"  
-- `400` If the value is not one of {1, 2, 3, 4, 5}
-- `401` if the user is not logged in  
-
-#### `PATCH /api/trends/:pointId` - Update an existing point's label  
-**Body**  
-- `value` _{int}_ - A new value of the condition scale (1-5)  
-- `date` _{date}_ - A new date  
-- `title` _{string}_ - A new title of the point  
-**Returns**  
-- A success message  
-- An object with the updated point  
-**Throws**  
-- `400` if the new point value, date, or title is empty  
-- `400` If the title is not one of "pain," "happiness," or "cognition"  
-- `400` If the value is not one of {1, 2, 3, 4, 5}  
-- `401` if the user is not logged in  
-- `402` if the user is not the creator of the point  
-- `404` if the pointId is invalid  
-
-#### `DELETE /api/trends/:pointId` - Delete an existing point  
-**Returns**  
-- A success message  
-**Throws**  
-- `401` if the user is not logged in  
-- `403` if the user is not the creator of the point  
-- `404` if the pointId is invalid  

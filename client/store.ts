@@ -15,8 +15,9 @@ const store = new Vuex.Store({
     activeLink: undefined,
     account: null,
     username: null,
-    insurances: [],
+    entries: [],
     contacts: [],
+    insurances: [],
     medications: [],
     alerts: {},
   },
@@ -32,6 +33,9 @@ const store = new Vuex.Store({
     },
     setUsername(state, username) {
       state.username = username || null;
+    },
+    setEntries(state, entries) {
+      state.entries = entries || [];
     },
     setContacts(state, contacts) {
       state.contacts = contacts || [];
@@ -55,6 +59,7 @@ const store = new Vuex.Store({
       commit('setUsername', username);
 
       // Anything that needs to be refreshed on login/logout should be called here
+      await dispatch('refreshEntries');
       await dispatch('refreshContacts');
       await dispatch('refreshMedications');
       await dispatch('refreshInsurances');
@@ -66,6 +71,12 @@ const store = new Vuex.Store({
       } else {
         commit(method, null);
       }
+    },
+    async refreshEntries({dispatch}) {
+      await dispatch('refreshCollection', {
+        url: '/api/entries',
+        method: 'setEntries',
+      });
     },
     async refreshContacts({dispatch}) {
       await dispatch('refreshCollection', {
