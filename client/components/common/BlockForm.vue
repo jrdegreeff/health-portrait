@@ -7,13 +7,28 @@
       <legend>{{ title }}</legend>
       <article v-if="fields.length">
         <span
-          v-for="{id, label, type, hint, optional} in fields"
+          v-for="{id, label, type, options, hint, optional} in fields"
           :key="id"
         >
         <label v-if="type !== 'hidden'" :for="id"> {{ label }}: </label>
         <small v-if="optional"> (optional) </small>
+          <select
+            v-if="type === 'select'"
+            :class="errors[id] ? 'error' : ''"
+            v-model="values[id]"
+            @change="() => validate(id)"
+          >
+            <option/>
+            <option
+              v-for="option in options"
+              :key="option"
+              :value="option"
+            >
+            {{ option }}
+            </option>
+          </select>
           <textarea
-            v-if="type === 'textarea'"
+            v-else-if="type === 'textarea'"
             :class="errors[id] ? 'error' : ''"
             v-model="values[id]"
             @change="() => validate(id)"

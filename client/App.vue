@@ -170,14 +170,14 @@ label + small {
   margin-left: -0.5rem;
 }
 
-input, textarea {
+input, textarea, select {
   border-radius: 0.5rem;
   border: 1px solid black;
   padding: 0.5rem;
   margin: 0.5rem;
 }
 
-input.error, textarea.error {
+input.error, textarea.error, select.error {
   border-color: var(--error);
 }
 
