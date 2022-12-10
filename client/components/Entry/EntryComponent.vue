@@ -48,7 +48,6 @@ export default {
         return {
             link: `/editLog/${this.entry._id}`, 
             expanded: false,
-            alerts: {} 
         };
     },
     methods: {     
@@ -72,15 +71,13 @@ export default {
             };
             try {
                 const r = await fetch(`/api/entries/${this.entry._id}`, options);
-                if (!r.ok) {
-                    const res = await r.json();
-                    throw new Error(res.error);
-                }
-                this.$store.dispatch('refreshEntries');
+                
+                if (!r.ok) throw new Error((await r.json()).error);
+
+                await this.$store.dispatch('refreshEntries');
                 params.callback();
             } catch (e) {
-                this.$set(this.alerts, e, 'error');
-                setTimeout(() => this.$delete(this.alerts, e), 3000);
+                this.$store.commit('alert', { message: e, status: 'error' });
             }
         }
     }

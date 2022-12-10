@@ -78,9 +78,8 @@ export default {
       try {
         const r = await fetch('/api/accounts/credentials', options);
         const res = await r.json();
-        if (!r.ok) {
-          throw new Error(res.error);
-        }
+        if (!r.ok) throw new Error(res.error);
+
         this.$store.commit('setAccount', res.account);
         if (!res.account) {
           this.$store.commit('setUsername', null);
@@ -90,9 +89,7 @@ export default {
           message: `Successfully removed ${username} from your account!`, status: 'success'
         });
       } catch (e) {
-        this.$store.commit('alert', {
-          message: e, status: 'error'
-        });
+        this.$store.commit('alert', { message: e, status: 'error' });
       }
     }
   },

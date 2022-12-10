@@ -19,12 +19,12 @@ export default {
         {id: 'notes', label: 'Notes', type: 'textarea', optional: true},
         {id: 'date', label: 'Date', type: 'date', default: moment().format('YYYY-MM-DD')}
       ],
-      callback: () => {
-        this.$router.go(-1);
-        this.$store.dispatch('refreshEntries');
+      callback: async () => {
         this.$store.commit('alert', {
           message: 'You\'ve created a new entry!', status: 'success'
         });
+        await this.$store.dispatch('refreshEntries');
+        this.$router.go(-1);
       }
     };
   },

@@ -2,52 +2,20 @@
 
 <template>
   <section>
-    <article v-if="editing">
-      <span
-        v-for="{id, label, type, options, hint, optional} in fields"
-        :key="id"
-      >
-        <label v-if="type !== 'hidden'" :for="id"> {{ label }}: </label>
-        <small v-if="optional"> (optional) </small>
-        <select
-          v-if="type === 'select'"
-          :class="errors[id] ? 'error' : ''"
-          v-model="values[id]"
-          @change="() => validate(id)"
-        >
-          <option/>
-          <option
-            v-for="option in options"
-            :key="option"
-            :value="option"
-          >
-          {{ option }}
-          </option>
-        </select>
-        <textarea
-          v-else-if="type === 'textarea'"
-          :class="errors[id] ? 'error' : ''"
-          v-model="values[id]"
-          @change="() => validate(id)"
-        />
-        <input
-          v-else
-          :class="errors[id] ? 'error' : ''"
-          :type="type || 'text'"
-          v-model="values[id]"
-          @change="() => validate(id)"
-        >
-        <small v-if="hint"> {{ hint }} </small>
-        <small v-if="errors[id]" class="error"> {{ errors[id] }} </small>
-      </span>
-    </article>
+    <BaseForm
+      v-if="editing"
+      :fields="fields"
+      :document="document"
+      :customValidators="validators"
+      @interface="registerForm"
+    />
     <article v-else>
       <span
         v-for="{id, label, type, hint, optional} in fields"
         :key="id"
       >
         <label> {{ label }}: </label>
-        {{ values[id] }}
+        {{ document[id] }}
       </span>
     </article>
     <hr>
@@ -69,8 +37,11 @@
 </template>
 
 <script>
+import BaseForm from '@/components/common/BaseForm.vue';
+
 export default {
-  name: "EditableCard",
+  name: 'EditableCard',
+  components: {BaseForm},
   props: {
     document: {
       type: Object,
@@ -81,23 +52,15 @@ export default {
     return {
       url: '', // URL to submit patch and delete requests to (supplied by specific card)
       fields: [], // Card fields to be rendered (supplied by specific card)
-      values: Object.assign({}, this.document), // The values to display (editable)
       validators: {}, // Functions to run for client-side validation (supplied by specific card)
-      errors: {}, // Errors from validators
       editing: false, // Whether or not this contact is in edit mode
       deleteCallback: null, // Function to be called when delete request is successful (supplied by specific card)
       patchCallback: null, // Function to be called when patch request is successful (supplied by specific card)
     };
   },
-  created() {
-    this.fields.forEach(f => {
-      const validators = [f.optional ? (v => '') : (v => v ? '' : 'required field'), this.validators[f.id] || (v => '')];
-      this.$set(this.validators, f.id, v => validators.map(validator => validator(v)).find(x => x));
-    });
-  },
   methods: {
-    validate(id) {
-      this.$set(this.errors, id, this.validators[id](this.values[id]));
+    registerForm(formInterface) {
+      this.form = formInterface;
     },
     startEditing() {
       this.editing = true;
@@ -108,25 +71,23 @@ export default {
       this.values = Object.assign({}, this.document);
     },
     async sendDelete() {
-      if (await this.request({ method: "DELETE" })) {
+      if (await this.request({ method: 'DELETE' })) {
         await this.deleteCallback();
       }
     },
     async sendPatch() {
       // run client-side validation before sending to server
-      this.fields.forEach(f => this.validate(f.id));
-      if(Object.values(this.errors).some(x => x)) return;
+      if(this.form.hasErrors()) return;
 
-      const modified = Object.fromEntries(this.fields.filter(f => this.document[f.id] !== this.values[f.id])
-                                                     .map(f => [f.id, this.values[f.id]]));
-      if (await this.request({ method: "PATCH", body: JSON.stringify(modified) })) {
+      if (await this.request({ method: 'PATCH', body: JSON.stringify(this.form.modified()) })) {
         await this.patchCallback();
+        this.editing = false;
       }
     },
     async request(params) {
       const options = {
         ...params,
-        headers: { "Content-Type": "application/json" },
+        headers: { 'Content-Type': 'application/json' },
         credentials: 'same-origin' // Sends express-session credentials with request
       };
       try {
@@ -135,7 +96,6 @@ export default {
         // display error message and abort on failure
         if(!r.ok) throw new Error((await r.json()).error);
 
-        this.editing = false;
         return true;
       } catch (e) {
         this.$store.commit('alert', { message: e, status: 'error' });
@@ -161,8 +121,6 @@ article {
 
 span {
   padding: 0.5rem;
-  display: flex;
-  align-items: center;
 }
 
 button {
