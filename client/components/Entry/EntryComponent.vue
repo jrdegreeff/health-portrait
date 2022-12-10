@@ -29,7 +29,8 @@
         </tr>
         <div v-if="expanded" class="entryNote">
             <p>
-                Note: {{entry.notes}}
+                Note: {{entry.notes}} 
+                <router-link v-if="medLink" :to="medLink">({{entry.detail}})</router-link>
             </p>
         </div>
     </article>
@@ -50,6 +51,14 @@ export default {
             expanded: false,
             alerts: {} 
         };
+    },
+    computed: {
+        medLink() {
+            if (this.entry.type === "medication") {
+                const med = this.$store.state.medications.find(med => med.name === this.entry.detail);
+                return med ? `/medications#${med._id}` : ''
+            }
+        }
     },
     methods: {     
         toggleExpand() {
