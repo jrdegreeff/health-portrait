@@ -8,15 +8,14 @@ export default {
     return {
       url: '/api/insurance-cards',
       method: 'POST',
-      hasBody: true,
       fields: [
-        {id: 'purpose', label: 'Purpose', value: ''},
-        {id: 'subscriber_name', label: 'Subscriber Name', value: ''},
-        {id: 'member_id', label: 'Member ID', value: ''},
-        {id: 'group_number', label: 'Group Number', value: ''},
-        {id: 'plan_number', label: 'Plan Number', value: ''},
-        {id: 'plan_type', label: 'Plan Type', value: ''},
-        {id: 'notes', label: 'Notes', value: ''},
+        {id: 'purpose', label: 'Purpose'},
+        {id: 'subscriber_name', label: 'Subscriber Name'},
+        {id: 'member_id', label: 'Member ID', optional: true},
+        {id: 'group_number', label: 'Group Number', optional: true},
+        {id: 'plan_number', label: 'Plan Number', optional: true},
+        {id: 'plan_type', label: 'Plan Type', optional: true},
+        {id: 'notes', label: 'Notes', type: 'textarea', optional: true},
       ],
       title: 'Add new insurance card',
       callback: async () => {

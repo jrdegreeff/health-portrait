@@ -68,32 +68,20 @@ export default {
   },
   methods: {
     async deleteCredential(username) {
-      const options = {
+      const res = await this.$helpers.fetch('/api/accounts/credentials', {
         method: 'DELETE',
-        headers: {'Content-Type': 'application/json'},
-        credentials: 'same-origin', // Sends express-session credentials with request
-        body: JSON.stringify({username})
-      };
+        body: JSON.stringify({ username })
+      });
+      if (!res) return;
 
-      try {
-        const r = await fetch('/api/accounts/credentials', options);
-        const res = await r.json();
-        if (!r.ok) {
-          throw new Error(res.error);
-        }
-        this.$store.commit('setAccount', res.account);
-        if (!res.account) {
-          this.$store.commit('setUsername', null);
-          this.$router.push({name: 'Login'});
-        }
-        this.$store.commit('alert', {
-          message: `Successfully removed ${username} from your account!`, status: 'success'
-        });
-      } catch (e) {
-        this.$store.commit('alert', {
-          message: e, status: 'error'
-        });
+      this.$store.commit('setAccount', res.account);
+      if (!res.account) {
+        this.$store.commit('setUsername', null);
+        this.$router.push({ name: 'Login' });
       }
+      this.$store.commit('alert', {
+        message: `Successfully removed ${username} from your account!`, status: 'success'
+      });
     }
   },
 };

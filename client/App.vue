@@ -18,13 +18,10 @@ import Header from '@/components/layout/Header.vue';
 export default {
   name: 'App',
   components: {NavBar, AlertBox, Header},
-  beforeCreate() {
-    // Sync stored username to current session
-    fetch('/api/accounts/session', {
-      credentials: 'same-origin' // Sends express-session credentials with request
-    }).then(res => res.json()).then(async res => {
-      await this.$store.dispatch('loadAccount', res);
-    });
+  async beforeCreate () {
+    // Sync stored account info to current session
+    const res = await this.$helpers.fetch('/api/accounts/session', {});
+    await this.$store.dispatch('loadAccount', res);
 
     // Clear alerts on page refresh
     this.$store.state.alerts = {};
@@ -43,6 +40,8 @@ export default {
   --secondaryGray: #d9d9d9aa;
   --lightSecondaryGray: #e3e3e3aa;
   --darkGray: #4f4f4f;
+  --error: #A61721;
+  --success: #2D8757;
 }
 
 body {
@@ -164,18 +163,27 @@ label {
   margin-right: 1rem;
 }
 
-input, textarea {
+label + small {
+  margin-left: -0.5rem;
+}
+
+input, textarea, select {
   border-radius: 0.5rem;
   border: 1px solid black;
   padding: 0.5rem;
   margin: 0.5rem;
 }
 
-textarea {
-  display: block;
+input.error, textarea.error, select.error {
+  border-color: var(--error);
 }
 
 small {
   color: #aaaaaa;
+  margin-right: 1rem;
+}
+
+small.error {
+  color: var(--error);
 }
 </style>

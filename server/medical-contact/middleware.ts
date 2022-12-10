@@ -43,7 +43,6 @@ const isValidFirstName = (required: boolean) => (req: Request, res: Response, ne
     return;
   }
 
-  console.log(req.body);
   const nameRegex = /^(?!\s*$).+/i;
   if (!req.body.first_name || !nameRegex.test(req.body.first_name)) {
     res.status(400).json({

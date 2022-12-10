@@ -63,10 +63,10 @@ const isValidEntryScale = async (req: Request, res: Response, next: NextFunction
 }
 
 const isValidEntryDate = async (req: Request, res: Response, next: NextFunction) => {
-    const dateRegex = /^[0-9]{4}\/(1[0-2]|0[1-9])\/(3[01]|[12][0-9]|0[1-9])$/;
+    const dateRegex = /^[0-9]{4}-(1[0-2]|0[1-9])-(3[01]|[12][0-9]|0[1-9])$/;
     if (!dateRegex.test(req.body.date)) {
         res.status(400).json({
-            error: 'Invalid format for entry date: must be YYYY/MM/DD.'
+            error: 'Invalid format for entry date: must be YYYY-MM-DD.'
         });
         return;
     }
