@@ -13,8 +13,8 @@ export default {
       hasBody: true,
       setAccount: true,
       fields: [
-        {id: 'username', label: 'Username', value: ''},
-        {id: 'password', label: 'Password', value: '', type: 'password'}
+        {id: 'username', label: 'Username'},
+        {id: 'password', label: 'Password', type: 'password'}
       ],
       title: 'Create a user and add to the shared account',
       callback: () => {

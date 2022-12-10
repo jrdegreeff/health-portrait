@@ -13,9 +13,9 @@ export default {
       hasBody: true,
       loadAccount: true,
       fields: [
-        {id: 'name', label: 'Name', value: ''},
-        {id: 'username', label: 'Username', value: ''},
-        {id: 'password', label: 'Password', value: '', type: 'password'}
+        {id: 'name', label: 'Name'},
+        {id: 'username', label: 'Username'},
+        {id: 'password', label: 'Password', type: 'password'}
       ],
       title: 'Create account',
       callback: () => {

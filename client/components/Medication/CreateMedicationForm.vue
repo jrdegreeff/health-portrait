@@ -10,10 +10,10 @@ export default {
       method: 'POST',
       hasBody: true,
       fields: [
-        {id: 'name', label: 'Medication Name', value: ''},
-        {id: 'generic_name', label: 'Generic Name', value: '', optional: true},
-        {id: 'dose', label: 'Dose', value: ''},
-        {id: 'notes', label: 'Notes', value: '', type: 'textarea', optional: true},
+        {id: 'name', label: 'Medication Name'},
+        {id: 'generic_name', label: 'Generic Name', optional: true},
+        {id: 'dose', label: 'Dose'},
+        {id: 'notes', label: 'Notes', type: 'textarea', optional: true},
       ],
       title: 'Add medication',
       callback: async () => {

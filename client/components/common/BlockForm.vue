@@ -73,7 +73,7 @@ export default {
     };
   },
   created() {
-    this.values = Object.fromEntries(this.fields.map(f => [f.id, f.value]));
+    this.values = Object.fromEntries(this.fields.map(f => [f.id, f.default]));
     this.fields.forEach(f => {
       const validators = [f.optional ? (v => '') : (v => v ? '' : 'required field'), this.validators[f.id] || (v => '')];
       this.$set(this.validators, f.id, v => validators.map(validator => validator(v)).find(x => x));

@@ -13,7 +13,7 @@ export default {
       hasBody: true,
       setAccount: true,
       fields: [
-        {id: 'name', label: 'Name', value: ''}
+        {id: 'name', label: 'Name'}
       ],
       title: 'Change shared account name',
       callback: () => {

@@ -14,7 +14,7 @@ export default {
       setAccount: true,
       setUsername: true,
       fields: [
-        {id: 'username', label: 'Username', value: ''}
+        {id: 'username', label: 'Username'}
       ],
       title: 'Change username',
       callback: () => {

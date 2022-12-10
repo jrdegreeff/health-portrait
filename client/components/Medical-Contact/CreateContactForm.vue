@@ -11,13 +11,13 @@ export default {
       method: 'POST',
       hasBody: true,
       fields: [
-        {id: 'title', label: 'Title', value: ''},
-        {id: 'first_name', label: 'First Name', value: ''},
-        {id: 'last_name', label: 'Last Name', value: ''},
-        {id: 'hospital', label: 'Hospital', value: '', optional: true},
-        {id: 'specialty', label: 'Specialty', value: '', optional: true},
-        {id: 'phone_number', label: 'Phone Number', value: '', hint: 'Format: 123-456-7890'},
-        {id: 'notes', label: 'Notes', value: '', type: 'textarea', optional: true},
+        {id: 'title', label: 'Title'},
+        {id: 'first_name', label: 'First Name'},
+        {id: 'last_name', label: 'Last Name'},
+        {id: 'hospital', label: 'Hospital', optional: true},
+        {id: 'specialty', label: 'Specialty', optional: true},
+        {id: 'phone_number', label: 'Phone Number', hint: 'Format: 123-456-7890'},
+        {id: 'notes', label: 'Notes', type: 'textarea', optional: true},
       ],
       validators: {
         phone_number: v => phoneRegex.test(v) ? '' : 'invalid format'

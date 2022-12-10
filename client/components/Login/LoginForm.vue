@@ -13,8 +13,8 @@ export default {
       hasBody: true,
       loadAccount: true,
       fields: [
-        {id: 'username', label: 'Username', value: ''},
-        {id: 'password', label: 'Password', value: '', type: 'password'}
+        {id: 'username', label: 'Username'},
+        {id: 'password', label: 'Password', type: 'password'}
       ],
       title: 'Log in',
       callback: () => {

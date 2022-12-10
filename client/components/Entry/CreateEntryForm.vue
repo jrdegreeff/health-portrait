@@ -12,12 +12,12 @@ export default {
       hasBody: true,
       title: 'Create new entry',
       fields: [
-        {id: 'type', label: 'Type', value: '', type: 'select', options: ['medication', 'appointment', 'other']},
-        {id: 'detail', label: 'Detail', value: ''},
-        {id: 'condition', label: 'Condition', value: '', type: 'select', options: ['pain', 'cognition', 'happiness']},
-        {id: 'scale', label: 'Scale', value: '', type: 'number'},
-        {id: 'notes', label: 'Notes', value: '', type: 'textarea', optional: true},
-        {id: 'date', label: 'Date', value: moment().format('YYYY-MM-DD'), type: 'date'}
+        {id: 'type', label: 'Type', type: 'select', options: ['medication', 'appointment', 'other']},
+        {id: 'detail', label: 'Detail'},
+        {id: 'condition', label: 'Condition', type: 'select', options: ['pain', 'cognition', 'happiness']},
+        {id: 'scale', label: 'Scale', type: 'number'},
+        {id: 'notes', label: 'Notes', type: 'textarea', optional: true},
+        {id: 'date', label: 'Date', type: 'date', default: moment().format('YYYY-MM-DD')}
       ],
       callback: () => {
         this.$router.go(-1);
