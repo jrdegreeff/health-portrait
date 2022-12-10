@@ -14,7 +14,7 @@
       <header>
         <h2>Current Contacts</h2>
         <div class="search-wrapper">
-          <label>Search by contact last name:</label>
+          <label>Search by contact name:</label>
           <input
             v-model="search"
             type="text"
@@ -51,7 +51,7 @@
       // Inspired by https://codepen.io/AndrewThian/pen/QdeOVa
       filteredContacts() {
         return this.contactList.filter(contact => {
-          return contact.last_name.toLowerCase().includes(this.search.toLowerCase())
+          return contact.last_name.toLowerCase().includes(this.search.toLowerCase()) || contact.first_name.toLowerCase().includes(this.search.toLowerCase())
         })
       }
     },
