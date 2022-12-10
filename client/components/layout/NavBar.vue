@@ -71,7 +71,6 @@ nav {
   white-space: nowrap;
 }
 
-
 a.active {
   border-bottom: 1px black solid;
 }

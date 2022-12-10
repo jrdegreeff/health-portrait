@@ -2,7 +2,7 @@
   <main>
     <section>
       <header>
-        <h1> Welcome @{{ $store.state.username }}  to The Future of Healthcare </h1>
+        <h1> Welcome @{{ $store.state.username }}, to The Future of Healthcare </h1>
       </header>
       <p>
         Keep track of important health information with Health Book. 
