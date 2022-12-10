@@ -50,33 +50,22 @@ export default {
     },
     async submit() {
       // run client-side validation before sending to server
-      if(this.form.hasErrors()) return;
+      if (this.form && this.form.hasErrors()) return;
 
-      const options = {
+      const res = await this.$helpers.fetch(this.url, {
         method: this.method,
-        headers: {'Content-Type': 'application/json'},
-        credentials: 'same-origin' // Sends express-session credentials with request
-      };
-      this.hasBody && (options.body = JSON.stringify(this.form.values()));
+        body: this.hasBody && this.form ? JSON.stringify(this.form.values()) : undefined,
+      });
+      if (!res) return;
 
-      try {
-        const r = await fetch(this.url, options);
+      // clear form on successful submission
+      this.form && this.form.clear();
 
-        // display error message and abort on failure
-        if(!r.ok) throw new Error((await r.json()).error);
+      this.loadAccount && await this.$store.dispatch('loadAccount', res);
+      this.setAccount && this.$store.commit('setAccount', res.account);
+      this.setUsername && this.$store.commit('setUsername', res.username);
 
-        // clear form on successful submission
-        this.form.clear();
-
-        const text = await r.text();
-        this.loadAccount && await this.$store.dispatch('loadAccount', JSON.parse(text));
-        this.setAccount && this.$store.commit('setAccount', JSON.parse(text).account);
-        this.setUsername && this.$store.commit('setUsername', JSON.parse(text).username);
-
-        this.callback && this.callback();
-      } catch (e) {
-        this.$store.commit('alert', { message: e, status: 'error' });
-      }
+      this.callback && this.callback();
     }
   }
 };

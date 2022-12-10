@@ -64,43 +64,30 @@ export default {
     },
     startEditing() {
       this.editing = true;
-      this.values = Object.assign({}, this.document);
     },
     stopEditing() {
       this.editing = false;
-      this.values = Object.assign({}, this.document);
     },
     async sendDelete() {
-      if (await this.request({ method: 'DELETE' })) {
-        await this.deleteCallback();
-      }
+      const res = await this.$helpers.fetch(`${this.url}/${this.document._id}`, {
+        method: 'DELETE'
+      });
+      if (!res) return;
+
+      await this.deleteCallback();
     },
     async sendPatch() {
       // run client-side validation before sending to server
-      if(this.form.hasErrors()) return;
+      if (this.form.hasErrors()) return;
 
-      if (await this.request({ method: 'PATCH', body: JSON.stringify(this.form.modified()) })) {
-        await this.patchCallback();
-        this.editing = false;
-      }
-    },
-    async request(params) {
-      const options = {
-        ...params,
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'same-origin' // Sends express-session credentials with request
-      };
-      try {
-        const r = await fetch(`${this.url}/${this.document._id}`, options);
-        
-        // display error message and abort on failure
-        if(!r.ok) throw new Error((await r.json()).error);
+      const res = await this.$helpers.fetch(`${this.url}/${this.document._id}`, {
+        method: 'PATCH',
+        body: JSON.stringify(this.form.modified())
+      });
+      if (!res) return;
 
-        return true;
-      } catch (e) {
-        this.$store.commit('alert', { message: e, status: 'error' });
-        return false;
-      }
+      await this.patchCallback();
+      this.stopEditing();
     },
   },
 };

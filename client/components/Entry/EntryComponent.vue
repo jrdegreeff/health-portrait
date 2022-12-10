@@ -66,19 +66,13 @@ export default {
             this.request(params);
         },
         async request(params) {
-            const options = {
-                method: params.method, headers: {'Content-Type': 'application/json'}
-            };
-            try {
-                const r = await fetch(`/api/entries/${this.entry._id}`, options);
-                
-                if (!r.ok) throw new Error((await r.json()).error);
+            const res = await this.$helpers.fetch(`/api/entries/${this.entry._id}`, {
+                method: params.method,
+            });
+            if (!res) return;
 
-                await this.$store.dispatch('refreshEntries');
-                params.callback();
-            } catch (e) {
-                this.$store.commit('alert', { message: e, status: 'error' });
-            }
+            await this.$store.dispatch('refreshEntries');
+            params.callback();
         }
     }
 }
