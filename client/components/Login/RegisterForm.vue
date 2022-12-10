@@ -10,7 +10,6 @@ export default {
     return {
       url: '/api/accounts',
       method: 'POST',
-      hasBody: true,
       loadAccount: true,
       fields: [
         {id: 'name', label: 'Name'},

@@ -10,7 +10,6 @@ export default {
     return {
       url: '/api/accounts/credentials',
       method: 'PATCH',
-      hasBody: true,
       setAccount: true,
       setUsername: true,
       fields: [

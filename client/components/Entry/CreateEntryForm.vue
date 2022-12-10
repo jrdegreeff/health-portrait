@@ -9,7 +9,6 @@ export default {
     return {
       url: '/api/entries',
       method: 'POST',
-      hasBody: true,
       title: 'Create new entry',
       fields: [
         {id: 'type', label: 'Type', type: 'select', options: ['medication', 'appointment', 'other']},

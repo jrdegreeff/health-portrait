@@ -29,7 +29,6 @@ export default {
     return {
       url: '', // URL to submit form to (supplied by specific form)
       method: 'GET', // Form request method
-      hasBody: false, // Whether or not form request has a body
       title: '', // Form title and submit button text (supplied by specific form)
       fields: [], // Form fields to be rendered (supplied by specific form)
       content: '', // Text to display when no fields (supplied by specific form)
@@ -54,7 +53,7 @@ export default {
 
       const res = await this.$helpers.fetch(this.url, {
         method: this.method,
-        body: this.hasBody && this.form ? JSON.stringify(this.form.values()) : undefined,
+        body: this.form ? JSON.stringify(this.form.values()) : undefined,
       });
       if (!res) return;
 

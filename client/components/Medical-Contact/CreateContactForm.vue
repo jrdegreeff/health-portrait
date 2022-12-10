@@ -9,7 +9,6 @@ export default {
     return {
       url: '/api/medical-contacts',
       method: 'POST',
-      hasBody: true,
       fields: [
         {id: 'title', label: 'Title'},
         {id: 'first_name', label: 'First Name'},

@@ -10,7 +10,6 @@ export default {
     return {
       url: '/api/accounts/session',
       method: 'POST',
-      hasBody: true,
       loadAccount: true,
       fields: [
         {id: 'username', label: 'Username'},

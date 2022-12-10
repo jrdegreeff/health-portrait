@@ -10,7 +10,6 @@ export default {
     return {
       url: '/api/accounts/credentials',
       method: 'POST',
-      hasBody: true,
       setAccount: true,
       fields: [
         {id: 'username', label: 'Username'},

@@ -10,7 +10,6 @@ export default {
     return {
       url: '/api/accounts',
       method: 'PATCH',
-      hasBody: true,
       setAccount: true,
       fields: [
         {id: 'name', label: 'Name'}

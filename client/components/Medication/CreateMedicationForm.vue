@@ -8,7 +8,6 @@ export default {
     return {
       url: '/api/medications',
       method: 'POST',
-      hasBody: true,
       fields: [
         {id: 'name', label: 'Medication Name'},
         {id: 'generic_name', label: 'Generic Name', optional: true},
