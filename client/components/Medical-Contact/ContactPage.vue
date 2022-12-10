@@ -57,7 +57,7 @@
     },
     mounted() {
       this.$store.commit("setHeader", {
-        title: "Health Book",
+        title: `${this.$store.state.account.name}'s Health Book`,
         enableBack: true,
         headerLinks: {
           "/contacts": "Contacts",

@@ -31,7 +31,7 @@
       TrendsVisualization
     },
     mounted() {
-      this.$store.commit('setHeader', {title: 'Trends', enableBack: true});
+      this.$store.commit('setHeader', {title: `${this.$store.state.account.name}'s Health Trends`, enableBack: true});
     },
     methods: {
     }
