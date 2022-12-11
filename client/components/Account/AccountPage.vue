@@ -12,7 +12,7 @@
         <ul>
           <li v-for="username in $store.state.account ? $store.state.account.credentials : []"
               :key="username">
-            <button class="btn-tertiary"
+            <button class="btn-secondary"
                     @click="() => deleteCredential(username)">
               Revoke Access
             </button>

@@ -83,7 +83,7 @@ export default {
 .entryLog {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--dark);
 }
 
 td {
@@ -100,7 +100,7 @@ td {
     position: relative;
     display: grid;
     grid-template-columns: 2fr 1fr;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--dark);
     padding: 1rem 2rem;
 }
 

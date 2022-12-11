@@ -1,6 +1,6 @@
 <template>
     <main>
-        <button class="btn-secondary">
+        <button class="btn-primary">
             <NavLink to="/newLog" name="➕ add"></NavLink>
         </button>
 
@@ -51,7 +51,6 @@ export default {
                 "/logs/appointment": "Appointment",
                 "/logs/other": "Other",
             },
-            activeLink: this.activeType,
         });
     }
 }
@@ -59,7 +58,7 @@ export default {
 
 <style scoped>
 .entries {
-    border: 1px solid black;
+    border: 1px solid var(--dark);
     border-bottom: 0px;
     border-spacing: 0px;
     margin-top: 2rem;
