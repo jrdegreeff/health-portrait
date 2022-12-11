@@ -1,5 +1,5 @@
 import type {HydratedDocument} from 'mongoose';
-import type {InsuranceCard, PopulatedInsuranceCard} from './model';
+import type {InsuranceCard} from './model';
 
 type InsuranceCardResponse = {
   _id: string;
@@ -20,11 +20,12 @@ type InsuranceCardResponse = {
  * @returns {InsuranceCardResponse} - The insurance card object formatted for the frontend
  */
 const constructInsuranceCardResponse = (insuranceCard: HydratedDocument<InsuranceCard>): InsuranceCardResponse => {
-  const insuranceCardCopy: PopulatedInsuranceCard = {
+  const insuranceCardCopy: InsuranceCard = {
     ...insuranceCard.toObject({
       versionKey: false // Cosmetics; prevents returning of __v property
     })
   };
+  delete insuranceCardCopy.ownerId;
   return {
     ...insuranceCardCopy,
     _id: insuranceCardCopy._id.toString()

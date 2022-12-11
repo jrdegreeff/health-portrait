@@ -17,6 +17,14 @@ export type MedicationResponse = {
  * @returns {MedicationResponse} - The medical contact object formatted for the frontend
  */
 export const constructMedicationResponse = (medication: HydratedDocument<Medication>): MedicationResponse => {
-  const { _id, name, generic_name, dose, notes } = medication;
-  return { _id: _id.toString(), name, generic_name, dose, notes };
+  const medicationCopy: Medication = {
+    ...medication.toObject({
+      versionKey: false // Cosmetics; prevents returning of __v property
+    })
+  };
+  delete medicationCopy.owner;
+  return {
+    ...medicationCopy,
+    _id: medicationCopy._id.toString()
+  };
 };
