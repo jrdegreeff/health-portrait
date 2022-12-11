@@ -46,13 +46,15 @@ export default {
             pointHoverRadius : 14,
             scales : {
               y : {
-                min: 1,
-                max: 5,
+                min: 0,
+                max: 11,
                 ticks: {
                   callback: function(val, index) {
-                    // Hide every 2nd tick label
-                    return index % 2 === 0 ? this.getLabelForValue(val) : '';
-                  }
+                    // Hide y-axis labels at 0 and 11
+                    return !([0, 11].includes(index)) ? this.getLabelForValue(val) : '';
+                  },
+                  stepSize: 1,
+                  padding: 15
                 }
               }
             },
