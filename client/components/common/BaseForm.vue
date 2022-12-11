@@ -39,7 +39,7 @@
       <small v-if="hint"> {{ hint }} </small>
       <small v-if="errors[id]" class="error"> {{ errors[id] }} </small>
       <small v-if="instructions" class="tooltip"> 
-        <img src = "question_circle.svg" alt="Question mark" width="40%"/>
+        <img src = "question_circle.svg" v-bind:alt=instructions width="40%"/>
         <div class="tooltiptext" v-if="instructions"> {{ instructions }}</div>
         <!-- Inspired by https://www.w3schools.com/css/css_tooltip.asp -->
       </small>
@@ -69,7 +69,6 @@ export default {
       values: Object.assign({}, this.document), // The values of the form
       validators: {}, // Functions to run for client-side validation
       errors: {}, // Errors from validators
-      hover: false, //Hover logic for instructions
     };
   },
   created() {
@@ -122,16 +121,15 @@ span {
 
 .tooltiptext {
   visibility: hidden;
-  background-color: black;
+  background-color: var(--darkGray);
   color: #fff;
   text-align: center;
-  padding: 5px 0;
+  padding: 6px;
   border-radius: 6px;
- 
-  /* Position the tooltip text - see examples below! */
+
   position: absolute;
   z-index: 1;
-  width: 500px;
+  width: max-content;
   bottom: 100%;
   left: 110%; 
   margin-left: -60px;
