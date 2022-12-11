@@ -1,6 +1,6 @@
 <!-- Form for changing username (block style) -->
 
-<script lang="ts">
+<script>
 import BlockForm from '@/components/common/BlockForm.vue';
 
 export default {
@@ -15,6 +15,9 @@ export default {
       fields: [
         {id: 'username', label: 'Username'}
       ],
+      validators: {
+        username: this.$helpers.validators.username,
+      },
       title: 'Change username',
       callback: () => {
         this.$store.commit('alert', {

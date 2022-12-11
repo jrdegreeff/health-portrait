@@ -12,7 +12,7 @@
         v-if="type === 'select'"
         :class="errors[id] ? 'error' : ''"
         v-model="values[id]"
-        @change="() => validate(id)"
+        @input="() => validate(id)"
       >
         <option/>
         <option
@@ -27,14 +27,14 @@
         v-else-if="type === 'textarea'"
         :class="errors[id] ? 'error' : ''"
         v-model="values[id]"
-        @change="() => validate(id)"
+        @input="() => validate(id)"
       />
       <input
         v-else
         :class="errors[id] ? 'error' : ''"
         :type="type || 'text'"
         v-model="values[id]"
-        @change="() => validate(id)"
+        @input="() => validate(id)"
       >
       <small v-if="hint"> {{ hint }} </small>
       <small v-if="errors[id]" class="error"> {{ errors[id] }} </small>

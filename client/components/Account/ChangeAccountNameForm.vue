@@ -1,6 +1,6 @@
 <!-- Form for changing account name (block style) -->
 
-<script lang="ts">
+<script>
 import BlockForm from '@/components/common/BlockForm.vue';
 
 export default {
@@ -14,6 +14,9 @@ export default {
       fields: [
         {id: 'name', label: 'Shared Account Name'}
       ],
+      validators: {
+        name: this.$helpers.validators.nonEmpty,
+      },
       title: 'Change shared account name',
       callback: () => {
         this.$store.commit('alert', {

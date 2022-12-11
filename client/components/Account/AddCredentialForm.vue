@@ -1,6 +1,6 @@
 <!-- Form for adding a credential to an account (block style) -->
 
-<script lang="ts">
+<script>
 import BlockForm from '@/components/common/BlockForm.vue';
 
 export default {
@@ -15,6 +15,10 @@ export default {
         {id: 'username', label: 'New Username'},
         {id: 'password', label: 'New Password', type: 'password'}
       ],
+      validators: {
+        username: this.$helpers.validators.username,
+        password: this.$helpers.validators.password,
+      },
       title: 'Add new person to the shared account',
       callback: () => {
         this.$store.commit('alert', {

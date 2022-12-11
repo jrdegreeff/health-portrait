@@ -1,6 +1,6 @@
 <!-- Form for deleting account (block style) -->
 
-<script lang="ts">
+<script>
 import BlockForm from '@/components/common/BlockForm.vue';
 
 export default {
@@ -12,7 +12,6 @@ export default {
       method: 'DELETE',
       loadAccount: true,
       title: 'Delete account',
-      fields: [],
       content: 'Deleting your shared account will permanently and irreversibly delete all of your shared data.<br>\
                 Proceed only if you understand these consequences.',
       buttonClass: 'btn-danger',
