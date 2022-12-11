@@ -12,7 +12,7 @@
         v-if="type === 'select'"
         :class="errors[id] ? 'error' : ''"
         v-model="values[id]"
-        @input="() => validate(id)"
+        @change="() => validate(id)"
       >
         <option/>
         <option
