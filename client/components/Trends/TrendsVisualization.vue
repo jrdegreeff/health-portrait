@@ -34,6 +34,13 @@ export default {
         return {x: e.date, y: e.scale};
       });
 
+      const colors = {
+        green: '#008067',
+        orange: '#A94103', 
+        purple: '#6B06C4',
+        black: '#000'
+      }
+
       new Chart(
         document.getElementById(`graph-${this.detail}`),
         {
@@ -52,17 +59,36 @@ export default {
                     return !([0, 11].includes(index)) ? this.getLabelForValue(val) : '';
                   },
                   stepSize: 1,
-                  padding: 15
+                  padding: 15,
+                  font: {
+                    size: 16
+                  }
+                }
+              },
+              x: {
+                ticks: {
+                  font: {
+                    size: 16
+                  }
                 }
               }
             },
             plugins: {
               title: {
                 display: true,
-                text: this.detail
+                text: this.detail,
+                color: colors.black,
+                font: {
+                  size: 24
+                }
               },
               legend: {
-                display: true
+                display: true,
+                labels: {
+                  font: {
+                    size: 14
+                  }
+                }
               },
               tooltip: {
                 enabled: false
@@ -75,20 +101,20 @@ export default {
               {
                 label: 'Cognition',
                 data: cognition, 
-                borderColor: '#008067',
-                backgroundColor: '#008067'
+                borderColor: colors.green,
+                backgroundColor: colors.green
               },
               {
                 label: 'Pain',
                 data: pain,
-                borderColor: '#A94103',
-                backgroundColor: '#A94103'
+                borderColor: colors.orange,
+                backgroundColor: colors.orange
               },
               {
                 label: 'Happiness',
                 data: happiness,
-                borderColor: '#6B06C4',
-                backgroundColor: '#6B06C4'
+                borderColor: colors.purple,
+                backgroundColor: colors.purple
               }
             ]
           }
@@ -99,9 +125,8 @@ export default {
 };
 </script>
 <style>
-
 canvas {
-  width: 30rem !important;
-  height: 15rem !important;
+  width: 59rem !important;
+  height: 30rem !important;
 }
 </style>

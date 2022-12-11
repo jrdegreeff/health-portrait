@@ -4,7 +4,7 @@
 <template>
   <main>
     <article v-if="filteredEntries.length">
-      <p>Click on the <b>Cognition</b>, <b>Pain</b>, or <b>Happiness</b> labels at the top of each chart to show/hide trend lines.</p>
+      <p>Click on the colored rectangles next to the <b>Cognition</b>, <b>Pain</b>, or <b>Happiness</b> labels at the top of each chart to show/hide trend lines.</p>
       <div v-for="detail in new Set(filteredEntries.map(entry => entry.detail))" :key="detail">
         <TrendsVisualization :entries="filteredEntries.filter(entry => entry.detail === detail).reverse()" :detail="detail" />
         <hr />
