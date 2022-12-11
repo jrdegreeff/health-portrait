@@ -21,7 +21,7 @@ const routes = [
   {path: '/account', name: 'Shared Account', component: AccountPage},
   {path: '/user', name: 'Login Info', component: UserPage},
   {path: '/logs/:type?', name: 'Logs', component: EntryPage, props: true},
-  {path: '/newLog', name: 'New Log', component: CreateEntryPage},
+  {path: '/newLog/:type?', name: 'New Log', component: CreateEntryPage, props: true},
   {path: '/editLog/:entryId', name: 'Edit Log', component: EditEntryPage, props: true},
   {path: '/trends/:type?', name: 'Trends', component: TrendsPage, props: true},
   {path: '/contacts', name: 'Contacts', component: ContactPage},

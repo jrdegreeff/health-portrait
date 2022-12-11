@@ -29,7 +29,7 @@
         title: `${this.$store.getters.accountName}'s Health Portrait`,
         enableBack: false,
         headerLinks: {
-          "/logs/all": "Health Journal",
+          "/logs": "Health Journal",
           "/contacts": "Health Book",
           "/account": "Account Settings",
         },

@@ -11,31 +11,32 @@
             <td>{{entry.condition}}</td>
             <td class="tdCentered">{{entry.scale}}</td>
             <td>{{entry.date}}</td>
-            <td>
-                <button class="btn-secondary">
-                    <router-link :to="link">✏️ edit</router-link>
-                </button>
-            </td>
-            <td>
-                <button class="btn-secondary" @click="deleteEntry">
-                    🗑️ delete
-                </button>
-            </td>
             <td v-if="!expanded">
                 <button class="btn-secondary" @click="toggleExpand">
-                    more
+                    view more
                 </button>
             </td>
             <td v-else>
                 <button class="btn-secondary" @click="toggleExpand">
-                    less
+                    view less
                 </button>
             </td>
         </tr>
         <div v-if="expanded" class="entryNote">
-            <p>
-                Note: {{entry.notes}} 
-            </p>
+            <div class="left">
+                <p>
+                    Note: {{entry.notes}}
+                </p>
+
+            </div>
+            <div class="right">
+                <button class="btn-secondary">
+                    <router-link :to="link">✏️ edit</router-link>
+                </button>
+                <button class="btn-secondary" @click="deleteEntry">
+                    🗑️ delete
+                </button>
+            </div>
         </div>
     </article>
 </template>
@@ -93,22 +94,41 @@ export default {
 
 <style scoped>
 .entryLog {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
     border-bottom: 1px solid var(--dark);
 }
 
 td {
     margin: 1rem 1rem;
-    width: 8rem;
+    width: 10rem;
 }
 
 .tdCentered {
     text-align: center;
-    width: 4rem;
+    width: 6rem;
 }
 
 .entryNote {
+    position: relative;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
     border-bottom: 1px solid var(--dark);
     padding: 1rem 2rem;
+}
+
+.left {
+    max-width: fit-content;
+}
+
+.right {
+    position: absolute;
+    right: 1rem;
+    top: 2rem;
+}
+
+.btn-secondary {
+    width: 8rem;
+    margin: 0rem 1rem;
 }
 </style>
