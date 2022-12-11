@@ -8,7 +8,7 @@
           @{{username}}
         </td>
         <td>
-          <button class="btn-secondary"
+          <button class="btn-danger"
                   @click="() => deleteCredential(username)">
             Remove from shared account
           </button>

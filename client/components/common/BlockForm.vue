@@ -11,8 +11,8 @@
         :customValidators="validators"
         @interface="registerForm"
       />
-      <p v-else>{{ content }}</p>
-      <button class="btn-primary" type="submit">
+      <p v-else v-html="content" />
+      <button :class="buttonClass" type="submit">
         {{ title }}
       </button>
     </fieldset>
@@ -32,6 +32,7 @@ export default {
       title: '', // Form title and submit button text (supplied by specific form)
       fields: [], // Form fields to be rendered (supplied by specific form)
       content: '', // Text to display when no fields (supplied by specific form)
+      buttonClass: 'btn-primary', // Class for the submit button
       document: {}, // The default values of the form
       validators: {}, // Functions to run for client-side validation (supplied by specific form)
       loadAccount: false, // Whether or not to reload all store data associated with the account
@@ -69,3 +70,10 @@ export default {
   }
 };
 </script>
+
+<style>
+p {
+  line-height: 2rem;
+  margin: 0rem;
+}
+</style>

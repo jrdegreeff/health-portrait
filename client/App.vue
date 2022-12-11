@@ -152,6 +152,16 @@ button.btn-secondary:hover {
   background-color: var(--lightSecondary);
 }
 
+button.btn-danger {
+  color: var(--error);
+  background-color: var(--secondary);
+  border-color: var(--error);
+}
+
+button.btn-danger:hover {
+  background-color: var(--lightSecondary);
+}
+
 fieldset {
   border: 1px solid var(--dark);
   margin: 1rem 0 0 0;
@@ -165,7 +175,7 @@ fieldset > span {
   display: block;
 }
 
-fieldset > article + button {
+fieldset > article + button, p + button {
   margin-top: 1rem;
 }
 

@@ -13,7 +13,9 @@ export default {
       loadAccount: true,
       title: 'Delete account',
       fields: [],
-      content: 'Deleting your shared account is permanent and irreversible. Proceed only if you understand these consequences.',
+      content: 'Deleting your shared account will permanently and irreversibly delete all of your shared data.<br>\
+                Proceed only if you understand these consequences.',
+      buttonClass: 'btn-danger',
       callback: () => {
         this.$store.commit('alert', {
           message: 'Your shared account has been deleted!', status: 'success'
