@@ -43,14 +43,13 @@ export default {
     mounted() {
         this.$store.commit('setHeader', {
             title: `${this.$store.state.account.name}'s Health Journal`,
-            enableBack: false,
+            enableBack: true,
             headerLinks: {
                 "/logs/all": "All",
                 "/logs/medication": "Medication",
                 "/logs/appointment": "Appointment",
                 "/logs/other": "Other",
             },
-            activeLink: this.activeType,
         });
     }
 }

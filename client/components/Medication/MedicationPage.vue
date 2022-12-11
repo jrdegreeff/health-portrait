@@ -54,7 +54,6 @@ export default {
         "/medications": "Medications",
         "/insurance": "Insurance",
       },
-      activeLink: "Medications",
     });
   },
   methods: {},

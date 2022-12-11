@@ -63,7 +63,6 @@
           "/medications": "Medications",
           "/insurance": "Insurance",
         },
-        activeLink: "Contacts",
       });
     },
   };

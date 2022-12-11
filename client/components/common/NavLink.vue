@@ -1,7 +1,7 @@
 <template>
   <router-link
     :to="to"
-    :class="name === $store.state.activeLink ? 'active' : 'inactive'"
+    :class="active ? 'active' : 'inactive'"
     :key="name"
   >{{ name }}</router-link>
 </template>
@@ -18,6 +18,15 @@ export default {
       type: String,
       required: true,
     },
-  }
+    activatable: {
+      type: Boolean,
+      default: true,
+    },
+  },
+  computed: {
+    active() {
+      return this.activatable && this.$route.path.startsWith(this.to);
+    }
+  },
 };
 </script>
