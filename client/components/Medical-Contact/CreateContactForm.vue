@@ -21,7 +21,7 @@ export default {
       validators: {
         phone_number: v => phoneRegex.test(v) ? '' : 'invalid format'
       },
-      title: 'Create contact',
+      title: 'Add contact',
       callback: async () => {
         await this.$store.dispatch('refreshContacts');
         this.$store.commit('alert', {

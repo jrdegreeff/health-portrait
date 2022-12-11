@@ -1,7 +1,13 @@
 <template>
   <main>
     <section>
-      <CreateMedicationForm />
+      <button v-if="!showForm" class="btn-primary" @click="showForm=true">
+        Add medication
+      </button>
+      <button v-if="showForm" class="btn-primary" @click="showForm=false">
+        Add medication
+      </button>
+      <CreateMedicationForm v-if="showForm"/>
     </section>
     <hr>
     <section>
@@ -35,7 +41,8 @@ export default {
   components: {CreateMedicationForm, MedicationCard},
   data() {
     return {
-      search: ''
+      search: '',
+      showForm: false,
     };
   },
   computed: {

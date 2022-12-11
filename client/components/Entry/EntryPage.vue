@@ -1,7 +1,7 @@
 <template>
     <main>
         <button class="btn-primary">
-            <NavLink :to="`/newLog/${type}`" name="➕ add"></NavLink>
+            <NavLink :to="`/newLog/${type}`" name="Add log"></NavLink>
         </button>
 
         <table class="entries" v-if="filteredEntries">
