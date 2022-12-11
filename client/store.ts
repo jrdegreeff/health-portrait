@@ -4,6 +4,8 @@ import createPersistedState from 'vuex-persistedstate';
 
 Vue.use(Vuex);
 
+const alertDurationMillis = 8000;
+
 /**
  * Storage for data that needs to be accessed from various components.
  */
@@ -47,11 +49,18 @@ const store = new Vuex.Store({
       state.insurances = insurances || [];
     },
     alert(state, {message, status}) {
-      Vue.set(state.alerts, message, status);
+      const id = Date.now();  // unique identifier for each message
+      Vue.set(state.alerts, id, {message, status});
       setTimeout(() => {
-        Vue.delete(state.alerts, message);
-      }, 3000);
+        this.commit('dismissAlert', id);
+      }, alertDurationMillis);
     },
+    dismissAlert(state, id) {
+      Vue.delete(state.alerts, id);
+    },
+    clearAlerts(state) {
+      state.alerts = {};
+    }
   },
   actions: {
     async loadAccount({commit, dispatch}, {account, username}) {

@@ -18,13 +18,13 @@ import Header from '@/components/layout/Header.vue';
 export default {
   name: 'App',
   components: {NavBar, AlertBox, Header},
-  async beforeCreate () {
+  async beforeCreate() {
     // Sync stored account info to current session
     const res = await this.$helpers.fetch('/api/accounts/session', {});
     await this.$store.dispatch('loadAccount', res);
 
     // Clear alerts on page refresh
-    this.$store.state.alerts = {};
+    this.$store.commit('clearAlerts');
   }
 };
 </script>
