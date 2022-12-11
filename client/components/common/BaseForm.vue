@@ -39,8 +39,8 @@
       <small v-if="hint"> {{ hint }} </small>
       <small v-if="errors[id]" class="error"> {{ errors[id] }} </small>
       <small v-if="instructions" class="tooltip"> 
-        <img src = "question_circle.svg" v-bind:alt=instructions width="40%"/>
-        <div class="tooltiptext" v-if="instructions"> {{ instructions }}</div>
+        <img src = "question_circle.svg" alt=instructions width="40%"/>
+        <div class="tooltiptext" v-if="instructions">{{ instructions }}</div>
         <!-- Inspired by https://www.w3schools.com/css/css_tooltip.asp -->
       </small>
     </span>
@@ -121,7 +121,7 @@ span {
 
 .tooltiptext {
   visibility: hidden;
-  background-color: var(--darkGray);
+  background-color: var(--white);
   color: #fff;
   text-align: center;
   padding: 6px;
