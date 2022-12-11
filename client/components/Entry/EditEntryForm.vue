@@ -9,6 +9,10 @@ export default {
       type: String,
       required: true,
     },
+    type: {
+        type: String,
+        required: true
+    },
   },
   data() {
     return {

@@ -1,7 +1,7 @@
 <template>
     <main>
         <h2>Edit Current Log</h2>
-        <EditEntryForm :entryId="entryId"/>
+        <EditEntryForm :entryId="entryId" :type="type"/>
     </main>
 </template>
 
@@ -16,6 +16,10 @@ export default {
         entryId: {
             type: String,
             required: true,
+        },
+        type: {
+            type: String,
+            required: true
         },
     },
     mounted() {

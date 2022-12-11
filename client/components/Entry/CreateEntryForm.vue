@@ -5,13 +5,19 @@ import BlockForm from '@/components/common/BlockForm.vue';
 export default {
   name: 'CreateEntryForm',
   mixins: [BlockForm],
+  props: {
+      type: {
+          type: String,
+          required: true
+    }
+  },
   data() {
     return {
       url: '/api/entries',
       method: 'POST',
       title: 'Create new entry',
       fields: [
-        {id: 'type', label: 'Type', type: 'select', options: ['medication', 'appointment', 'other']},
+        {id: 'type', label: 'Type', type: 'select', options: ['medication', 'appointment', 'other'], default: this.defaultType},
         {id: 'detail', label: 'Detail'},
         {id: 'condition', label: 'Condition', type: 'select', options: ['pain', 'cognition', 'happiness']},
         {id: 'scale', label: 'Scale', type: 'number'},
@@ -26,6 +32,11 @@ export default {
         this.$router.go(-1);
       }
     };
+  },
+  computed: {
+    defaultType() {
+      return this.fields[0].options.includes(this.type) ? this.type : '';
+    }
   },
 };
 </script>
