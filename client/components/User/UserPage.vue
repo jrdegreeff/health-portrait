@@ -1,7 +1,7 @@
 <template>
   <main>
     <section>
-      <ChangeUsernameForm />
+      <ChangeUsernameForm @submit="setHeader" />
       <ChangePasswordForm />
     </section>
     <hr/>
@@ -24,15 +24,20 @@ export default {
     ChangePasswordForm,
     LogoutForm,
   },
-  mounted() {
-    this.$store.commit('setHeader', {
+  methods: {
+    setHeader() {
+      this.$store.commit('setHeader', {
       title: `Login Settings for ${this.$store.getters.username}`,
       enableBack: true,
       headerLinks: {
         '/account': 'Shared Account',
-        '/user': this.$store.getters.username,
+        '/user': 'Login Settings',
       },
     });
+    }
+  },
+  mounted() {
+    this.setHeader();
   },
 };
 </script>

@@ -1,7 +1,7 @@
 <template>
   <main>
     <section>
-      <ChangeAccountNameForm />
+      <ChangeAccountNameForm @submit="setHeader" />
     </section>
     <hr/>
     <section>
@@ -30,15 +30,20 @@ export default {
     AccessList,
     DeleteAccountForm,
   },
-  mounted() {
-    this.$store.commit('setHeader', {
+  methods: {
+    setHeader() {
+      this.$store.commit('setHeader', {
       title: `Shared Account Settings for ${this.$store.getters.accountName}`,
       enableBack: true,
       headerLinks: {
         '/account': 'Shared Account',
-        '/user': this.$store.getters.username,
+        '/user': 'Login Settings',
       },
     });
+    }
+  },
+  mounted() {
+    this.setHeader();
   },
 };
 </script>
