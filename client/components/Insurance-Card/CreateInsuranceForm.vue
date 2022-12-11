@@ -17,7 +17,7 @@ export default {
         {id: 'plan_type', label: 'Plan Type', optional: true},
         {id: 'notes', label: 'Notes', type: 'textarea', optional: true},
       ],
-      title: 'Add new insurance card',
+      title: 'Add insurance card',
       callback: async () => {
         await this.$store.dispatch('refreshInsurances');
         this.$store.commit('alert', {
