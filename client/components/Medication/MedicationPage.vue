@@ -12,7 +12,7 @@
           <input
             v-model="search"
             type="text"
-            placeholder="Search medication.."
+            placeholder="Search medications..."
           >
         </div>
       </header>
@@ -34,14 +34,13 @@ export default {
   components: {CreateMedicationForm, MedicationCard},
   data() {
     return {
-      search: '',
-      medicationList: this.$store.state.medications,
+      search: ''
     };
   },
   computed: {
     // Inspired by https://codepen.io/AndrewThian/pen/QdeOVa
     filteredMedications() {
-      return this.medicationList.filter(medication => {
+      return this.$store.state.medications.filter(medication => {
         return medication.name.toLowerCase().includes(this.search.toLowerCase())
       })
     }
@@ -55,7 +54,6 @@ export default {
         "/medications": "Medications",
         "/insurance": "Insurance",
       },
-      activeLink: "Medications",
     });
   },
   methods: {},

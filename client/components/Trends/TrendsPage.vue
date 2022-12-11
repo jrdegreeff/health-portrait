@@ -3,22 +3,15 @@
 
 <template>
   <main>
-    <section>
-      <header>
-        <h2>Trends for {{ $store.state.account.name }}</h2>
-      </header>
-      <section v-if="$store.state.entries.length">
-        <div v-for="detail in [...new Set($store.state.entries.map(entry => entry.detail))]" :key="detail">
-          <hr />
-          <TrendsVisualization :entries="$store.state.entries.filter(entry => entry.detail === detail).reverse()" :detail="detail" />
-        </div>
-      </section>
-      <article v-else>
-        <h3>No trends found.</h3>
-      </article>
-      
-    </section>
-    <hr/>
+    <article v-if="$store.state.entries.length">
+      <div v-for="detail in new Set($store.state.entries.map(entry => entry.detail))" :key="detail">
+        <TrendsVisualization :entries="$store.state.entries.filter(entry => entry.detail === detail).reverse()" :detail="detail" />
+        <hr />
+      </div>
+    </article>
+    <article v-else>
+      <h3>No trends found.</h3>
+    </article>
   </main>
 </template>
 
@@ -31,10 +24,17 @@
       TrendsVisualization
     },
     mounted() {
-      this.$store.commit('setHeader', {title: `${this.$store.state.account.name}'s Health Trends`, enableBack: true});
+      this.$store.commit('setHeader', {
+        title: `${this.$store.state.account.name}'s Health Trends`,
+        enableBack: true,
+        headerLinks: {
+          "/trends/all": "All",
+          "/trends/medication": "Medication",
+          "/trends/appointment": "Appointment",
+          "/trends/other": "Other",
+        },
+      });
     },
-    methods: {
-    }
   };
 </script>
 

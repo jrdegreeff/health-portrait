@@ -16,15 +16,15 @@ Vue.use(VueRouter);
 
 const routes = [
   {path: '/', name: 'Home', component: HomePage},
-  {path: '/account', name: 'Account', component: AccountPage},
-  {path: '/contacts', name: 'Contacts', component: ContactPage},
   {path: '/login', name: 'Login', component: LoginPage},
-  {path: '/logs/:type', name: 'Logs', component: EntryPage, props: true},
+  {path: '/account', name: 'Account', component: AccountPage},
+  {path: '/logs/:type?', name: 'Logs', component: EntryPage, props: true},
   {path: '/newLog/:type', name: 'New Log', component: CreateEntryPage, props: true},
   {path: '/editLog/:entryId/:type', name: 'Edit Log', component: EditEntryPage, props: true},
-  {path: '/insurance', name: 'Insurance', component: InsurancePage},
+  {path: '/trends/:type?', name: 'Trends', component: TrendsPage, props: true},
+  {path: '/contacts', name: 'Contacts', component: ContactPage},
   {path: '/medications', name: 'Medications', component: MedicationPage},
-  {path: '/trends', name: 'Trends', component: TrendsPage},
+  {path: '/insurance', name: 'Insurance', component: InsurancePage},
   {path: '*', name: 'Not Found', component: NotFound},
 ];
 
@@ -41,6 +41,16 @@ router.beforeEach((to, from, next) => {
 
   if (to.name !== 'Login' && !(localStorage.vuex && JSON.parse(localStorage.vuex).username)) {
     next({name: 'Login'}); // Go to Login page if user navigates to any other page and are not signed in
+    return;
+  }
+
+  if (to.name === 'Logs' && !to.params.type) {
+    next({name: 'Logs', params: {type: 'all'}})
+    return;
+  }
+
+  if (to.name === 'Trends' && !to.params.type) {
+    next({name: 'Trends', params: {type: 'all'}})
     return;
   }
   

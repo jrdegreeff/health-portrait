@@ -42,7 +42,6 @@
           "/medications": "Medications",
           "/insurance": "Insurance",
         },
-        activeLink: "Insurance",
       });
     },
   };
