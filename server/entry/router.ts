@@ -1,6 +1,7 @@
 import type {Request, Response} from 'express';
 import express from 'express';
 import EntryCollection from './collection';
+import * as validator from '../middleware';
 import * as accountValidator from '../account/middleware';
 import * as entryValidator from './middleware';
 import * as util from './util';
@@ -17,9 +18,7 @@ const router = express.Router();
  */
 router.get(
   '/',
-  [
-    accountValidator.isLoggedIn
-  ],
+  accountValidator.isLoggedIn,
   async (req: Request, res: Response) => {
     const entries = await EntryCollection.findAllByOwnerId(req.session.accountId);
     const response = entries.map(util.constructEntryResponse);
@@ -45,13 +44,13 @@ router.get(
  */
 router.post(
   '/',
-  [
-    accountValidator.isLoggedIn,
-    entryValidator.isValidEntryDetail,
-    entryValidator.isValidEntryCondition,
-    entryValidator.isValidEntryScale,
-    entryValidator.isValidEntryDate
-  ],
+  accountValidator.isLoggedIn,
+  validator.isNonEmpty((req: Request) => req.body.type, 'Type', true),
+  validator.isNonEmpty((req: Request) => req.body.detail, 'Detail', true),
+  entryValidator.isValidEntryType(true),
+  entryValidator.isValidEntryCondition(true),
+  entryValidator.isValidEntryScale(true),
+  validator.isValidDate((req: Request) => req.body.date, true),
   async (req: Request, res: Response) => {
     const entry = await EntryCollection.addOne(
       req.session.accountId,
@@ -89,18 +88,17 @@ router.post(
  * */
 router.patch(
   '/:entryId',
-  [
-    accountValidator.isLoggedIn,
-    entryValidator.isValidEntry,
-    entryValidator.isValidEntryModifier,
-    entryValidator.isValidEntryDetail,
-    entryValidator.isValidEntryCondition,
-    entryValidator.isValidEntryScale,
-    entryValidator.isValidEntryDate
-  ],
+  accountValidator.isLoggedIn,
+  entryValidator.isValidEntry,
+  entryValidator.isValidEntryModifier,
+  validator.isNonEmpty((req: Request) => req.body.type, 'Type', false),
+  validator.isNonEmpty((req: Request) => req.body.detail, 'Detail', false),
+  entryValidator.isValidEntryType(false),
+  entryValidator.isValidEntryCondition(false),
+  entryValidator.isValidEntryScale(false),
+  validator.isValidDate((req: Request) => req.body.date, false),
   async (req: Request, res: Response) => {
-    const entryId = (req.params.entryId) ?? ''; // Will not be an empty string since its validated in isEntryValid
-    const entry = await EntryCollection.updateOne(entryId, req.body);
+    const entry = await EntryCollection.updateOne(req.params.entryId, req.body);
     res.status(200).json({
       message: 'Your entry was updated successfully.',
       entry: util.constructEntryResponse(entry)
@@ -120,14 +118,11 @@ router.patch(
  */
 router.delete(
   '/:entryId',
-  [
-    accountValidator.isLoggedIn,
-    entryValidator.isValidEntry,
-    entryValidator.isValidEntryModifier
-  ],
+  accountValidator.isLoggedIn,
+  entryValidator.isValidEntry,
+  entryValidator.isValidEntryModifier,
   async (req: Request, res: Response) => {
-    const entryId = (req.params.entryId) ?? ''; // Will not be an empty string since its validated in isValidEntry
-    await EntryCollection.deleteOne(entryId);
+    await EntryCollection.deleteOne(req.params.entryId);
     res.status(200).json({
       message: 'Your entry has been deleted successfully.'
     });

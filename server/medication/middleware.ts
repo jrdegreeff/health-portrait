@@ -3,27 +3,6 @@ import { Types } from 'mongoose';
 import MedicationCollection from './collection';
 
 /**
- * Checks that a field in the request is not empty or blank
- */
-const isNonEmpty = (fieldAccessor: Function, name: string, required: boolean) => (req: Request, res: Response, next: NextFunction) => {
-  const field = fieldAccessor(req);
-  if (!required && field === undefined) {
-    next();
-    return;
-  }
-
-  const nonEmptyRegex = /^(?!\s*$).+/i;
-  if (!field || !nonEmptyRegex.test(field)) {
-    res.status(400).json({
-      error: `${name} must be a nonempty string.`
-    });
-    return;
-  }
-
-  next();
-}
-
-/**
  * Checks if a medication with id req.params.medicationId exists
  */
 const isMedicationExists = async (req: Request, res: Response, next: NextFunction) => {
@@ -36,7 +15,6 @@ const isMedicationExists = async (req: Request, res: Response, next: NextFunctio
   }
 
   next();
-
 };
 
 /**
@@ -52,7 +30,6 @@ const isMedicationActive = async (req: Request, res: Response, next: NextFunctio
   }
 
   next();
-
 };
 
 
@@ -73,7 +50,6 @@ const isMedicationOwner = async (req: Request, res: Response, next: NextFunction
 
 
 export {
-  isNonEmpty,
   isMedicationExists,
   isMedicationActive,
   isMedicationOwner,

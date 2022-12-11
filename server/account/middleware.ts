@@ -51,66 +51,6 @@ const isLoggedOut = (req: Request, res: Response, next: NextFunction) => {
 };
 
 /**
- * Checks if a name in req.body is not empty or blank.
- */
-const isValidAccountName = (required: boolean) => (req: Request, res: Response, next: NextFunction) => {
-  if (!required && req.body.name === undefined) {
-    next();
-    return;
-  }
-
-  const nonEmptyRegex = /^(?!\s*$).+/i;
-  if (!req.body.name || !nonEmptyRegex.test(req.body.name)) {
-    res.status(400).json({
-      error: 'Name must be a nonempty string.'
-    });
-    return;
-  }
-
-  next();
-};
-
-/**
- * Checks if a username in req.body is a nonempty alphanumeric string.
- */
-const isValidUsername = (required: boolean) => (req: Request, res: Response, next: NextFunction) => {
-  if (!required && req.body.username === undefined) {
-    next();
-    return;
-  }
-
-  const usernameRegex = /^\w+$/i;
-  if (!req.body.username || !usernameRegex.test(req.body.username)) {
-    res.status(400).json({
-      error: 'Username must be a nonempty alphanumeric string.'
-    });
-    return;
-  }
-
-  next();
-};
-
-/**
- * Checks if a password in req.body is nonempty and contains no whitespace characters.
- */
-const isValidPassword = (required: boolean) => (req: Request, res: Response, next: NextFunction) => {
-  if (!required && req.body.password === undefined) {
-    next();
-    return;
-  }
-
-  const passwordRegex = /^\S+$/;
-  if (!req.body.password || !passwordRegex.test(req.body.password)) {
-    res.status(400).json({
-      error: 'Password must not contain whitespace characters.'
-    });
-    return;
-  }
-
-  next();
-};
-
-/**
  * Checks if a account with username and password in req.body exists
  */
 const isAccountExists = async (req: Request, res: Response, next: NextFunction) => {
@@ -129,7 +69,6 @@ const isAccountExists = async (req: Request, res: Response, next: NextFunction) 
 /**
  * Checks if a username in req.body is already in use
  */
-
 const isUsernameExists = async (req: Request, res: Response, next: NextFunction) => {
   const credential = await CredentialCollection.findOneByUsername(req.body.username);
 
@@ -198,9 +137,6 @@ export {
   isCurrentSessionAccountExists,
   isLoggedIn,
   isLoggedOut,
-  isValidAccountName,
-  isValidUsername,
-  isValidPassword,
   isAccountExists,
   isUsernameExists,
   isUsernameNotExists,

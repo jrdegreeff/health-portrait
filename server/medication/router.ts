@@ -1,6 +1,7 @@
 import type { Request, Response } from 'express';
 import express from 'express';
 import MedicationCollection from './collection';
+import * as validator from '../middleware';
 import * as medicationValidator from './middleware';
 import * as accountValidator from '../account/middleware';
 import * as util from './util';
@@ -43,8 +44,8 @@ router.get(
 router.post(
   '/',
   accountValidator.isLoggedIn,
-  medicationValidator.isNonEmpty((req: Request) => req.body.name, 'Name', true),
-  medicationValidator.isNonEmpty((req: Request) => req.body.dose, 'Dose', true),
+  validator.isNonEmpty((req: Request) => req.body.name, 'Name', true),
+  validator.isNonEmpty((req: Request) => req.body.dose, 'Dose', true),
   async (req: Request, res: Response) => {
     const medication = await MedicationCollection.addOne((req.session.credentialId as string), req.body)
     res.status(201).json({
@@ -76,8 +77,8 @@ router.patch(
   accountValidator.isLoggedIn,
   medicationValidator.isMedicationExists,
   medicationValidator.isMedicationOwner,
-  medicationValidator.isNonEmpty((req: Request) => req.body.name, 'Name', false),
-  medicationValidator.isNonEmpty((req: Request) => req.body.dose, 'Dose', false),
+  validator.isNonEmpty((req: Request) => req.body.name, 'Name', false),
+  validator.isNonEmpty((req: Request) => req.body.dose, 'Dose', false),
   async (req: Request, res: Response) => {
     const medication = await MedicationCollection.updateOne(req.params.medicationId, req.body);
     res.status(200).json({
