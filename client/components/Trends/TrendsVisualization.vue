@@ -1,9 +1,7 @@
 <!-- Component for building a graph -->
 
 <template>
-  <div class="chart-wrap">
-    <canvas :id="`graph-${detail}`"></canvas>
-  </div>
+  <canvas :id="`graph-${detail}`"></canvas>
 </template>
 
 <script>
@@ -101,13 +99,9 @@ export default {
 };
 </script>
 <style>
-.chart-wrap {
-  width: calc(100vw - 60em) !important;
-  min-width: 20em !important;
-}
 
 canvas {
-  width: 100% !important;
-  height: 100% !important;
+  width: 30rem !important;
+  height: 15rem !important;
 }
 </style>
