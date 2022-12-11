@@ -3,7 +3,7 @@
 <template>
   <article>
     <span
-      v-for="{id, label, type, options, hint, optional} in fields"
+      v-for="{id, label, type, options, hint, optional, instructions} in fields"
       :key="id"
     >
       <label v-if="type !== 'hidden'" :for="id"> {{ label }}: </label>
@@ -38,6 +38,10 @@
       >
       <small v-if="hint"> {{ hint }} </small>
       <small v-if="errors[id]" class="error"> {{ errors[id] }} </small>
+      <small v-if="instructions" class="tooltip"> 
+        <img src = "question_circle.svg" alt="Question mark" width="30%"/>
+        <div class="tooltiptext" v-if="instructions"> {{ instructions }}</div>
+      </small>
     </span>
   </article>
 </template>
@@ -64,6 +68,7 @@ export default {
       values: Object.assign({}, this.document), // The values of the form
       validators: {}, // Functions to run for client-side validation
       errors: {}, // Errors from validators
+      hover: false, //Hover logic for instructions
     };
   },
   created() {
@@ -108,4 +113,42 @@ span {
   display: flex;
   align-items: center;
 }
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltiptext {
+  visibility: hidden;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+ 
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+  width: 500px;
+  bottom: 100%;
+  left: 110%; 
+  margin-left: -60px;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.tooltip .tooltiptext::after {
+  content: " ";
+  position: absolute;
+  top: 100%; /* At the bottom of the tooltip */
+  left: 3%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
 </style>
