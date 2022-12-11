@@ -47,7 +47,7 @@
           <NavLink to="/account" name="Shared Account"/>
         </li>
         <li>
-          <NavLink to="/user" :name="$store.getters.username"/>
+          <NavLink to="/user" :name="$store.getters.username || 'Log in'"/>
         </li>
       </ul>
       </section>

@@ -12,12 +12,12 @@ export default {
       method: 'PATCH',
       setAccount: true,
       fields: [
-        {id: 'name', label: 'Name'}
+        {id: 'name', label: 'Shared Account Name'}
       ],
       title: 'Change shared account name',
       callback: () => {
         this.$store.commit('alert', {
-          message: 'Successfully changed account name!',
+          message: 'Successfully changed shared account name!',
           status: 'success'
         });
       }

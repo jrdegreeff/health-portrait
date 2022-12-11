@@ -13,10 +13,10 @@ export default {
       loadAccount: true,
       title: 'Delete account',
       fields: [],
-      content: 'Deleting your account is permanent and irreversible. Proceed only if you understand these consequences.',
+      content: 'Deleting your shared account is permanent and irreversible. Proceed only if you understand these consequences.',
       callback: () => {
         this.$store.commit('alert', {
-          message: 'Your account has been deleted!', status: 'success'
+          message: 'Your shared account has been deleted!', status: 'success'
         });
         this.$router.push({name: 'Login'});
       }

@@ -12,7 +12,7 @@ export default {
       method: 'POST',
       loadAccount: true,
       fields: [
-        {id: 'name', label: 'Name'},
+        {id: 'name', label: 'Shared Account Name'},
         {id: 'username', label: 'Username'},
         {id: 'password', label: 'Password', type: 'password'}
       ],

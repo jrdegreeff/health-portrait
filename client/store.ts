@@ -29,6 +29,9 @@ const store = new Vuex.Store({
     accountName(state) {
       return state.account && state.account.name;
     },
+    credentials(state) {
+      return state.account ? state.account.credentials : [];
+    },
   },
   mutations: {
     setHeader(state, {title, enableBack, headerLinks}) {

@@ -12,13 +12,13 @@ export default {
       method: 'POST',
       setAccount: true,
       fields: [
-        {id: 'username', label: 'Username'},
-        {id: 'password', label: 'Password', type: 'password'}
+        {id: 'username', label: 'New Username'},
+        {id: 'password', label: 'New Password', type: 'password'}
       ],
-      title: 'Create a user and add to the shared account',
+      title: 'Add new person to the shared account',
       callback: () => {
         this.$store.commit('alert', {
-          message: 'Successfully created the new user and added to your account!',
+          message: 'Successfully added the new user to your shared account!',
           status: 'success'
         });
       }
