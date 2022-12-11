@@ -16,7 +16,7 @@
           <NavLink to="/logs" name="Logs"/>
         </li>
         <li>
-          <NavLink to="/trends/all" name="Trends"/>
+          <NavLink to="/trends" name="Trends"/>
         </li>
       </ul>
       </section>

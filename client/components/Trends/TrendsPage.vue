@@ -3,10 +3,10 @@
 
 <template>
   <main>
-    <article v-if="$store.state.entries.length">
+    <article v-if="filteredEntries.length">
       <p>Click on the <b>Cognition</b>, <b>Pain</b>, or <b>Happiness</b> labels at the top of each chart to show/hide trend lines.</p>
-      <div v-for="detail in new Set($store.state.entries.map(entry => entry.detail))" :key="detail">
-        <TrendsVisualization :entries="$store.state.entries.filter(entry => entry.detail === detail).reverse()" :detail="detail" />
+      <div v-for="detail in new Set(filteredEntries.map(entry => entry.detail))" :key="detail">
+        <TrendsVisualization :entries="filteredEntries.filter(entry => entry.detail === detail).reverse()" :detail="detail" />
         <hr />
       </div>
     </article>
@@ -31,10 +31,6 @@
       }
     },
     computed: {
-      activeType() {
-        const type = this.type;
-        return type.charAt(0).toUpperCase() + type.slice(1);
-      },
       filteredEntries() {
         return this.type === "all" ? this.$store.state.entries : this.$store.state.entries.filter(e => e.type === this.type);
       }
