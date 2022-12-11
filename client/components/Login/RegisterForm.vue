@@ -12,7 +12,7 @@ export default {
       method: 'POST',
       loadAccount: true,
       fields: [
-        {id: 'name', label: 'Shared Account Name'},
+        {id: 'name', label: 'Shared Account Name', instructions: 'This should be the name of the person whose health data will be recorded in this account.'},
         {id: 'username', label: 'Username'},
         {id: 'password', label: 'Password', type: 'password'}
       ],

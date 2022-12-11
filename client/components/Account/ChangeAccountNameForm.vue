@@ -12,7 +12,7 @@ export default {
       method: 'PATCH',
       setAccount: true,
       fields: [
-        {id: 'name', label: 'Shared Account Name'}
+        {id: 'name', label: 'Shared Account Name', instructions: 'This should be the name of the person whose health data will be recorded in this account.'}
       ],
       validators: {
         name: this.$helpers.validators.nonEmpty,
