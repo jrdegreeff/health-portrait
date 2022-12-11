@@ -3,7 +3,7 @@
 <template>
   <article>
     <span
-      v-for="{id, label, type, options, hint, optional, range} in fields"
+      v-for="{id, label, type, options, range, hint, instructions, optional} in fields"
       :key="id"
     >
       <label v-if="type !== 'hidden'" :for="id"> {{ label }}: </label>
@@ -49,6 +49,11 @@
       <small v-if="type === 'range'"> {{ values[id] }} </small>
       <small v-if="hint"> {{ hint }} </small>
       <small v-if="errors[id]" class="error"> {{ errors[id] }} </small>
+      <small v-if="instructions" class="tooltip"> 
+        <img src = "question_circle.svg" :alt=instructions width="40%"/>
+        <div class="tooltiptext" v-if="instructions">{{ instructions }}</div>
+        <!-- Inspired by https://www.w3schools.com/css/css_tooltip.asp -->
+      </small>
       
       <datalist v-if="type === 'range'" id="tickmarks">
         <option v-for="num in [1,2,3,4,5,6,7,8,9,10]" :value="num"></option>
@@ -122,4 +127,41 @@ span {
   display: flex;
   align-items: center;
 }
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltiptext {
+  visibility: hidden;
+  background-color: var(--darkGray);
+  color: var(--white);
+  text-align: center;
+  padding: 6px;
+  border-radius: 6px;
+
+  position: absolute;
+  z-index: 1;
+  width: max-content;
+  bottom: 100%;
+  left: 110%; 
+  margin-left: -60px;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
+.tooltip .tooltiptext::after {
+  content: " ";
+  position: absolute;
+  top: 100%; /* At the bottom of the tooltip */
+  left: 4%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+
 </style>
