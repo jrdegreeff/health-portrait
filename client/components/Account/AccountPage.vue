@@ -1,12 +1,11 @@
-<!-- Page for account settings and management -->
-<!-- User should be authenticated in order to see this page -->
-
 <template>
   <main>
     <section>
-      <header>
-        <h2>Shared account settings for {{ $store.state.account && $store.state.account.name }}</h2>
-      </header>
+      <ChangeAccountNameForm />
+    </section>
+    <hr/>
+    <section>
+      <AddCredentialForm />
       <fieldset>
         <legend>Users with access to shared account</legend>
         <ul>
@@ -22,23 +21,9 @@
           </li>
         </ul>
       </fieldset>
-      <ChangeAccountNameForm />
-      <AddCredentialForm />
     </section>
     <hr/>
     <section>
-      <header>
-        <h2>Login settings for @{{ $store.state.username }}</h2>
-      </header>
-      <ChangeUsernameForm />
-      <ChangePasswordForm />
-    </section>
-    <hr/>
-    <section>
-      <header>
-        <h2>Account management</h2>
-      </header>
-      <LogoutForm />
       <DeleteAccountForm />
     </section>
     <hr/>
@@ -48,23 +33,24 @@
 <script>
 import ChangeAccountNameForm from '@/components/Account/ChangeAccountNameForm.vue';
 import AddCredentialForm from '@/components/Account/AddCredentialForm.vue';
-import ChangeUsernameForm from '@/components/Account/ChangeUsernameForm.vue';
-import ChangePasswordForm from '@/components/Account/ChangePasswordForm.vue';
 import DeleteAccountForm from '@/components/Account/DeleteAccountForm.vue';
-import LogoutForm from '@/components/Account/LogoutForm.vue';
 
 export default {
   name: 'AccountPage',
   components: {
     ChangeAccountNameForm,
     AddCredentialForm,
-    ChangeUsernameForm,
-    ChangePasswordForm,
     DeleteAccountForm,
-    LogoutForm,
   },
   mounted() {
-    this.$store.commit('setHeader', {title: 'Account', enableBack: true});
+    this.$store.commit('setHeader', {
+      title: `Shared Account Settings for ${this.$store.getters.accountName}`,
+      enableBack: true,
+      headerLinks: {
+        '/account': 'Shared Account',
+        '/user': this.$store.getters.username,
+      },
+    });
   },
   methods: {
     async deleteCredential(username) {

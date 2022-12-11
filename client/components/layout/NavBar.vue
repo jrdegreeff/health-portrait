@@ -40,8 +40,16 @@
       <hr/>
       <section>
       <header><h2>
-        <NavLink to="/account" name="My Account" :activatable="false"/>
+        <NavLink to="/account" name="Account Settings" :activatable="false"/>
       </h2></header>
+      <ul>
+        <li>
+          <NavLink to="/account" name="Shared Account"/>
+        </li>
+        <li>
+          <NavLink to="/user" :name="$store.getters.username"/>
+        </li>
+      </ul>
       </section>
     </nav>
     <div/>
