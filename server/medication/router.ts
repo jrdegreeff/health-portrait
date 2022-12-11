@@ -38,13 +38,12 @@ router.get(
  * @return {MedicationResponse} - The created medical contact
  * 
  * @throws {401} - If the user is not logged in
- * @throws {400} - If the name, generic_name, or dose is empty or a stream of empty spaces
+ * @throws {400} - If the name or dose is empty or a stream of empty spaces
  */
 router.post(
   '/',
   accountValidator.isLoggedIn,
   medicationValidator.isNonEmpty((req: Request) => req.body.name, 'Name', true),
-  medicationValidator.isNonEmpty((req: Request) => req.body.generic_name, 'Generic Name', true),
   medicationValidator.isNonEmpty((req: Request) => req.body.dose, 'Dose', true),
   async (req: Request, res: Response) => {
     const medication = await MedicationCollection.addOne((req.session.credentialId as string), req.body)
@@ -70,7 +69,7 @@ router.post(
  * @throws {401} - If the user is not logged in
  * @throws {404} - If the medicationId is invalid
  * @throws {403} - If the user is not the owner of the medication
- * @throws {400} - If the name, generic_name, or dose is empty or a stream of empty spaces
+ * @throws {400} - If the name or dose is empty or a stream of empty spaces
  */
 router.patch(
   '/:medicationId',
@@ -78,7 +77,6 @@ router.patch(
   medicationValidator.isMedicationExists,
   medicationValidator.isMedicationOwner,
   medicationValidator.isNonEmpty((req: Request) => req.body.name, 'Name', false),
-  medicationValidator.isNonEmpty((req: Request) => req.body.generic_name, 'Generic Name', false),
   medicationValidator.isNonEmpty((req: Request) => req.body.dose, 'Dose', false),
   async (req: Request, res: Response) => {
     const medication = await MedicationCollection.updateOne(req.params.medicationId, req.body);

@@ -12,7 +12,7 @@
           <input
             v-model="search"
             type="text"
-            placeholder="Search medication.."
+            placeholder="Search medications..."
           >
         </div>
       </header>
@@ -20,6 +20,7 @@
         v-for="medication in filteredMedications"
         :key="medication._id"
         :document="medication"
+        :ref="medication._id"
       />
     </section>
   </main>
@@ -34,14 +35,13 @@ export default {
   components: {CreateMedicationForm, MedicationCard},
   data() {
     return {
-      search: '',
-      medicationList: this.$store.state.medications,
+      search: ''
     };
   },
   computed: {
     // Inspired by https://codepen.io/AndrewThian/pen/QdeOVa
     filteredMedications() {
-      return this.medicationList.filter(medication => {
+      return this.$store.state.medications.filter(medication => {
         return medication.name.toLowerCase().includes(this.search.toLowerCase())
       })
     }
@@ -55,7 +55,17 @@ export default {
         "/medications": "Medications",
         "/insurance": "Insurance",
       },
-      activeLink: "Medications",
+    });
+    // https://forsmile.jp/en/vue-en/1118/
+    // https://forum.vuejs.org/t/dynamic-ref-not-working/79131/8
+    // https://www.reddit.com/r/vuejs/comments/x4ws8k/scrolling_to_ref_in_composition_api/
+    this.$nextTick(() => {
+      const hash = this.$route.hash;
+      if (hash) {
+          const refName = hash.replace('#', '');
+          const component = this.$refs[refName][0];
+          component.$el.scrollIntoView({ behavior: 'smooth' });
+      }
     });
   },
   methods: {},

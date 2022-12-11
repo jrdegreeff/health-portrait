@@ -1,7 +1,7 @@
 <template>
     <main>
-        <button class="btn-secondary">
-            <router-link to="/newLog">➕ add</router-link>
+        <button class="btn-primary">
+            <NavLink :to="`/newLog/${type}`" name="➕ add"></NavLink>
         </button>
 
         <table class="entries" v-if="filteredEntries">
@@ -20,11 +20,12 @@
 </template>
 
 <script lang="ts">
+import NavLink from '@/components/common/NavLink.vue';
 import EntryComponent from '@/components/Entry/EntryComponent.vue';
 
 export default {
     name: 'EntryPage',
-    components: {EntryComponent},
+    components: {NavLink, EntryComponent},
     props: {
         type: {
             type: String,
@@ -43,14 +44,13 @@ export default {
     mounted() {
         this.$store.commit('setHeader', {
             title: `${this.$store.state.account.name}'s Health Journal`,
-            enableBack: false,
+            enableBack: true,
             headerLinks: {
-                "/logs/all": "All",
+                "/logs/all": "All", // keeping the /all here to avoid weird activeLink styling behavior
                 "/logs/medication": "Medication",
                 "/logs/appointment": "Appointment",
                 "/logs/other": "Other",
             },
-            activeLink: this.activeType,
         });
     }
 }
@@ -58,7 +58,7 @@ export default {
 
 <style scoped>
 .entries {
-    border: 1px solid black;
+    border: 1px solid var(--dark);
     border-bottom: 0px;
     border-spacing: 0px;
     margin-top: 2rem;

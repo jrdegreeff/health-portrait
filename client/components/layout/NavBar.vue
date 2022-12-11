@@ -3,17 +3,17 @@
     <nav>
       <section>
         <header><h2>
-          <NavLink to="/" name="Home"/>
+          <NavLink to="/" name="Home" :activatable="false"/>
         </h2></header>
       </section>
       <hr/>
       <section>
       <header><h2>
-        <NavLink to="/logs/all" name="Health Journal"/>
+        <NavLink to="/logs" name="Health Journal" :activatable="false"/>
       </h2></header>
       <ul>
         <li>
-          <NavLink to="/logs/all" name="Logs"/>
+          <NavLink to="/logs" name="Logs"/>
         </li>
         <li>
           <NavLink to="/trends" name="Trends"/>
@@ -23,7 +23,7 @@
       <hr/>
       <section>
       <header><h2>
-        <NavLink to="/contacts" name="Health Book"/>
+        <NavLink to="/contacts" name="Health Book" :activatable="false"/>
       </h2></header>
       <ul>
         <li>
@@ -40,7 +40,7 @@
       <hr/>
       <section>
       <header><h2>
-        <NavLink to="/account" name="My Account"/>
+        <NavLink to="/account" name="My Account" :activatable="false"/>
       </h2></header>
       </section>
     </nav>
@@ -59,7 +59,7 @@ export default {
 
 <style scoped>
 article {
-  background-color: var(--primaryGray);
+  background-color: var(--primary);
   padding: 1em 2em;
 }
 
@@ -69,10 +69,6 @@ nav {
   flex-direction: column;
   justify-content: center;
   white-space: nowrap;
-}
-
-a.active {
-  border-bottom: 1px black solid;
 }
 
 h2 {

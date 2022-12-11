@@ -318,7 +318,7 @@
 **Throws**
 
 - `401` if the user is not logged in
-- `400` If the name, generic_name, or dose is empty or a stream of empty spaces
+- `400` If the name or dose is empty or a stream of empty spaces
 
 #### `PATCH /api/medications/:medicationId` - Edit the information of a medication
 
@@ -338,7 +338,7 @@
 
 - `401` if the user is not logged in
 - `403` if the user is not the owner of the medication
-- `400` If the name, generic_name, or dose is empty or a stream of empty spaces
+- `400` If the name or dose is empty or a stream of empty spaces
 - `404` if the medicationId is invalid
 
 #### `DELETE /api/medications/:medicationId` - Deactivates a medication

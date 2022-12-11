@@ -18,7 +18,7 @@
           <input
             v-model="search"
             type="text"
-            placeholder="Search contact.."
+            placeholder="Search contacts..."
           >
         </div>
       </header>
@@ -44,13 +44,12 @@
     data() {
       return {
         search: '',
-        contactList: this.$store.state.contacts,
       };
     },
     computed: {
       // Inspired by https://codepen.io/AndrewThian/pen/QdeOVa
       filteredContacts() {
-        return this.contactList.filter(contact => {
+        return this.$store.state.contacts.filter(contact => {
           return contact.last_name.toLowerCase().includes(this.search.toLowerCase()) || contact.first_name.toLowerCase().includes(this.search.toLowerCase())
         })
       }
@@ -64,7 +63,6 @@
           "/medications": "Medications",
           "/insurance": "Insurance",
         },
-        activeLink: "Contacts",
       });
     },
   };

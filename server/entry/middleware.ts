@@ -51,10 +51,10 @@ const isValidEntryCondition = async (req: Request, res: Response, next: NextFunc
 }
 
 const isValidEntryScale = async (req: Request, res: Response, next: NextFunction) => {
-    const specifiedScales = [1,2,3,4,5];
+    const specifiedScales = [1,2,3,4,5,6,7,8,9,10];
     if (!specifiedScales.includes(parseInt(req.body.scale))) {
         res.status(400).json({
-            error: 'Scale must be a valid integer between 1 and 5.'
+            error: 'Scale must be a valid number between 1 and 10.'
         });
         return;
     }

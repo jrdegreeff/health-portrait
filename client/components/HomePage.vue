@@ -30,10 +30,9 @@
         enableBack: false,
         headerLinks: {
           "/account": "My Account",
-          "/logs/all": "Health Journal",
+          "/logs": "Health Journal",
           "/contacts": "Health Book",
         },
-        activeLink: "",
       });
     },
   };

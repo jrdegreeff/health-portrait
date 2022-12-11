@@ -13,9 +13,17 @@
     <section>
       <header>
         <h2>Current Insurance Cards</h2>
+        <div class="search-wrapper">
+          <label>Search by purpose:</label>
+          <input
+            v-model="search"
+            type="text"
+            placeholder="Search insurances..."
+          >
+        </div>
       </header>
       <InsuranceCard
-        v-for="insurance in $store.state.insurances"
+        v-for="insurance in filteredInsurances"
         :key="insurance._id"
         :document="insurance"
       />
@@ -33,6 +41,19 @@
       CreateInsuranceForm, 
       InsuranceCard
     },
+    data() {
+      return {
+        search: '',
+      };
+    },
+    computed: {
+      // Inspired by https://codepen.io/AndrewThian/pen/QdeOVa
+      filteredInsurances() {
+        return this.$store.state.insurances.filter(insurance => {
+          return insurance.purpose.toLowerCase().includes(this.search.toLowerCase())
+        })
+      }
+    },
     mounted() {
       this.$store.commit("setHeader", {
         title: `${this.$store.state.account.name}'s Health Book`,
@@ -42,7 +63,6 @@
           "/medications": "Medications",
           "/insurance": "Insurance",
         },
-        activeLink: "Insurance",
       });
     },
   };
