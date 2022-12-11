@@ -47,7 +47,7 @@ export default {
     },
     data() {
         return {
-            link: `/editLog/${this.entry._id}/${this.entry.type}`, 
+            link: `/editLog/${this.entry._id}`, 
             expanded: false,
         };
     },

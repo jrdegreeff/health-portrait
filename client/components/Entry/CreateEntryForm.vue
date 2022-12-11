@@ -8,7 +8,7 @@ export default {
   props: {
       type: {
           type: String,
-          required: true
+          required: false
     }
   },
   data() {
@@ -17,7 +17,7 @@ export default {
       method: 'POST',
       title: 'Create new entry',
       fields: [
-        {id: 'type', label: 'Type', type: 'select', options: ['medication', 'appointment', 'other'], default: this.defaultType},
+        {id: 'type', label: 'Type', type: 'select', options: ['medication', 'appointment', 'other'], default: (this.type !== "all") ? this.type : ''},
         {id: 'detail', label: 'Detail'},
         {id: 'condition', label: 'Condition', type: 'select', options: ['pain', 'cognition', 'happiness']},
         {id: 'scale', label: 'Scale', type: 'number'},
@@ -32,11 +32,6 @@ export default {
         this.$router.go(-1);
       }
     };
-  },
-  computed: {
-    defaultType() {
-      return this.fields[0].options.includes(this.type) ? this.type : '';
-    }
   },
 };
 </script>
