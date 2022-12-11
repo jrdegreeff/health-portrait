@@ -45,19 +45,15 @@ export default {
   position: relative;
   display: flex;
   align-items: center;
-  border-bottom: 1px black solid;
+  border-bottom: 1px var(--dark) solid;
 }
 
 nav {
-  border-bottom: 1px black solid;
+  border-bottom: 1px var(--dark) solid;
 }
 
 a {
   margin-right: 2rem;
   font-size: 1.5rem;
-}
-
-a.active {
-  border-bottom: 1px black solid;
 }
 </style>

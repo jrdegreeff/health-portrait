@@ -59,7 +59,7 @@ export default {
 
 <style scoped>
 article {
-  background-color: var(--primaryGray);
+  background-color: var(--primary);
   padding: 1em 2em;
 }
 
@@ -69,10 +69,6 @@ nav {
   flex-direction: column;
   justify-content: center;
   white-space: nowrap;
-}
-
-a.active {
-  border-bottom: 1px black solid;
 }
 
 h2 {
