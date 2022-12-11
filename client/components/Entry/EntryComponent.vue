@@ -2,7 +2,12 @@
     <article>
         <tr class="entryLog">
             <td>{{entry.type}}</td>
-            <td>{{entry.detail}}</td>
+            <td v-if="medLink">
+                <router-link :to="medLink">{{entry.detail}}</router-link>
+            </td>
+            <td v-else>
+                {{entry.detail}}
+            </td>
             <td>{{entry.condition}}</td>
             <td class="tdCentered">{{entry.scale}}</td>
             <td>{{entry.date}}</td>
@@ -50,6 +55,14 @@ export default {
             link: `/editLog/${this.entry._id}`, 
             expanded: false,
         };
+    },
+    computed: {
+        medLink() {
+            if (this.entry.type === "medication") {
+                const med = this.$store.state.medications.find(med => med.name === this.entry.detail);
+                return med ? `/medications#${med._id}` : ''
+            }
+        }
     },
     methods: {     
         toggleExpand() {
