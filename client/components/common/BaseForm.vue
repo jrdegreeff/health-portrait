@@ -143,7 +143,7 @@ span {
   content: " ";
   position: absolute;
   top: 100%; /* At the bottom of the tooltip */
-  left: 3%;
+  left: 4%;
   margin-left: -5px;
   border-width: 5px;
   border-style: solid;

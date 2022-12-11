@@ -9,7 +9,7 @@ export default {
       url: '/api/insurance-cards',
       method: 'POST',
       fields: [
-        {id: 'purpose', label: 'Purpose', instructions: "What do you use this insurance for? Dental, medical, etc.?" },
+        {id: 'purpose', label: 'Purpose', instructions: "What do you use this insurance for? Dental, Primary Care, etc.?" },
         {id: 'subscriber_name', label: 'Subscriber Name'},
         {id: 'member_id', label: 'Member ID', optional: true},
         {id: 'group_number', label: 'Group Number', optional: true},
