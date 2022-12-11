@@ -33,7 +33,6 @@
           "/logs/all": "Health Journal",
           "/contacts": "Health Book",
         },
-        activeLink: "",
       });
     },
   };
