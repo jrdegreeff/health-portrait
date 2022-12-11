@@ -1,6 +1,5 @@
 import type {Types} from 'mongoose';
 import {Schema, model} from 'mongoose';
-import type {Account} from '../account/model';
 
 /**
  * This file defines the properties stored in a Medical Contact
@@ -8,21 +7,8 @@ import type {Account} from '../account/model';
 
 // Type definition for Medical Contact on the backend
 export type MedicalContact = {
-  _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
-  ownerId: Types.ObjectId;
-  active: boolean;
-  title: string;
-  first_name: string;
-  last_name: string;
-  hospital: string;
-  specialty: string;
-  phone_number: string;
-  notes: string;
-};
-
-export type PopulatedMedicalContact = {
-  _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
-  ownerId: Account;
+  _id: Types.ObjectId;
+  owner: Types.ObjectId;
   active: boolean;
   title: string;
   first_name: string;
@@ -35,7 +21,7 @@ export type PopulatedMedicalContact = {
 
 const MedicalContactSchema = new Schema<MedicalContact>({
   // The owner of the medical contact
-  ownerId: {
+  owner: {
     // Use Types.ObjectId outside of the schema
     type: Schema.Types.ObjectId,
     required: true,

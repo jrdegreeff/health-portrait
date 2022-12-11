@@ -1,6 +1,7 @@
 import type {Request, Response} from 'express';
 import express from 'express';
 import InsuranceCardCollection from './collection';
+import * as validator from '../middleware';
 import * as accountValidator from '../account/middleware';
 import * as insuranceCardValidator from '../insurance/middleware';
 import * as util from './util';
@@ -18,11 +19,9 @@ const router = express.Router();
  */
 router.get(
   '/',
-  [
-    accountValidator.isLoggedIn
-  ],
+  accountValidator.isLoggedIn,
   async (req: Request, res: Response) => {
-    const insuranceCards = await InsuranceCardCollection.findAllByOwnerId(req.session.accountId as string);
+    const insuranceCards = await InsuranceCardCollection.findAllByOwner(req.session.accountId);
     const response = insuranceCards.map(util.constructInsuranceCardResponse);
     res.status(200).json(response);
   }
@@ -32,7 +31,6 @@ router.get(
  * Create a new insurance card.
  *
  * @name POST /api/insurance-cards
- * @param {string} ownerId - The id of the owner of the insurance card
  * @param {string} subscriber_name - The subscriber name of the insurance card
  * @param {string} member_id - The member id of the insurance card
  * @param {string} group_number - The group number of the insurance card
@@ -47,14 +45,11 @@ router.get(
  */
 router.post(
   '/',
-  [
-    accountValidator.isLoggedIn,
-    insuranceCardValidator.isValidSubscriberName(true),
-    insuranceCardValidator.isValidPurpose(true),
-  ],
+  accountValidator.isLoggedIn,
+  validator.isNonEmpty((req: Request) => req.body.subscriber_name, 'Subscriber name', true),
+  validator.isNonEmpty((req: Request) => req.body.purpose, 'Purpose', true),
   async (req: Request, res: Response) => {
-    const accountId = (req.session.accountId as string) ?? ''; // Will not be an empty string since its validated in isLoggedIn
-    const insuranceCard = await InsuranceCardCollection.addOne(accountId, req.body);
+    const insuranceCard = await InsuranceCardCollection.addOne(req.session.accountId, req.body);
     res.status(201).json({
       message: 'Your insurance card was created successfully.',
       insuranceCard: util.constructInsuranceCardResponse(insuranceCard)
@@ -67,7 +62,6 @@ router.post(
  *
  * @name PATCH /api/insurance-cards/:insuranceCardId
  *
- * @param {string} ownerId - The id of the owner of the insurance card
  * @param {string} subscriber_name - The subscriber name of the insurance card
  * @param {string} member_id - The member id of the insurance card
  * @param {string} group_number - The group number of the insurance card
@@ -84,13 +78,11 @@ router.post(
  */
 router.patch(
   '/:insuranceCardId',
-  [
-    accountValidator.isLoggedIn,
-    insuranceCardValidator.isInsuranceCardExists,
-    insuranceCardValidator.isValidInsuranceCardModifier,
-    insuranceCardValidator.isValidSubscriberName(false),
-    insuranceCardValidator.isValidPurpose(false),
-  ],
+  accountValidator.isLoggedIn,
+  insuranceCardValidator.isInsuranceCardExists,
+  insuranceCardValidator.isValidInsuranceCardModifier,
+  validator.isNonEmpty((req: Request) => req.body.subscriber_name, 'Subscriber name', false),
+  validator.isNonEmpty((req: Request) => req.body.purpose, 'Purpose', false),
   async (req: Request, res: Response) => {
     const insuranceCard = await InsuranceCardCollection.updateOne(req.params.insuranceCardId, req.body);
     res.status(200).json({
@@ -112,11 +104,9 @@ router.patch(
  */
 router.delete(
   '/:insuranceCardId',
-  [
-    accountValidator.isLoggedIn,
-    insuranceCardValidator.isInsuranceCardExists,
-    insuranceCardValidator.isValidInsuranceCardModifier
-  ],
+  accountValidator.isLoggedIn,
+  insuranceCardValidator.isInsuranceCardExists,
+  insuranceCardValidator.isValidInsuranceCardModifier,
   async (req: Request, res: Response) => {
     await InsuranceCardCollection.deleteOne(req.params.insuranceCardId);
     res.status(200).json({

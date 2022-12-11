@@ -19,52 +19,11 @@ const isInsuranceCardExists = async (req: Request, res: Response, next: NextFunc
 };
 
 /**
- * Checks if a subscriber name in req.body is valid, that is, is a nonempty string
- */
-const isValidSubscriberName = (required: boolean) => (req: Request, res: Response, next: NextFunction) => {
-  if (!required && req.body.subscriber_name === undefined) {
-    next();
-    return;
-  }
-
-  const nameRegex = /^(?!\s*$).+/i;
-  if (!req.body.subscriber_name || !nameRegex.test(req.body.subscriber_name)) {
-    res.status(400).json({
-      error: 'Subscriber name must be a nonempty string.'
-    });
-    return;
-  }
-
-  next();
-};
-
-/**
- * Checks if a purpose in req.body is valid, that is, is a nonempty string
- */
-const isValidPurpose = (required: boolean) => (req: Request, res: Response, next: NextFunction) => {
-  if (!required && req.body.purpose === undefined) {
-    next();
-    return;
-  }
-
-  const purposeRegex = /^(?!\s*$).+/i;
-  if (!req.body.purpose || !purposeRegex.test(req.body.purpose)) {
-    res.status(400).json({
-      error: 'Purpose must be a nonempty string.'
-    });
-    return;
-  }
-
-  next();
-};
-
-/**
  * Checks if the current user is the owner of the insurance card whose insuranceCardId is in req.params
  */
 const isValidInsuranceCardModifier = async (req: Request, res: Response, next: NextFunction) => {
   const insuranceCard = await InsuranceCardCollection.findOne(req.params.insuranceCardId);
-  const ownerId = insuranceCard.ownerId._id;
-  if (req.session.accountId !== ownerId.toString()) {
+  if (req.session.accountId !== insuranceCard.owner.toString()) {
     res.status(403).json({
       error: 'Cannot modify other users\' insurance cards.'
     });
@@ -76,7 +35,5 @@ const isValidInsuranceCardModifier = async (req: Request, res: Response, next: N
 
 export {
   isInsuranceCardExists,
-  isValidSubscriberName,
-  isValidPurpose,
   isValidInsuranceCardModifier
 };

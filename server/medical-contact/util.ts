@@ -1,5 +1,5 @@
 import type {HydratedDocument} from 'mongoose';
-import type {MedicalContact, PopulatedMedicalContact} from './model';
+import type {MedicalContact} from './model';
 
 type MedicalContactResponse = {
   _id: string;
@@ -20,11 +20,12 @@ type MedicalContactResponse = {
  * @returns {MedicalContactResponse} - The medical contact object formatted for the frontend
  */
 const constructMedicalContactResponse = (medicalContact: HydratedDocument<MedicalContact>): MedicalContactResponse => {
-  const medicalContactCopy: PopulatedMedicalContact = {
+  const medicalContactCopy: MedicalContact = {
     ...medicalContact.toObject({
       versionKey: false // Cosmetics; prevents returning of __v property
     })
   };
+  delete medicalContactCopy.owner;
   return {
     ...medicalContactCopy,
     _id: medicalContactCopy._id.toString()

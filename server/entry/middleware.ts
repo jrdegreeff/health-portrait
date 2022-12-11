@@ -16,18 +16,16 @@ const isValidEntry = async (req: Request, res: Response, next: NextFunction) => 
     next();
 }
 
-const isValidEntryDetail = async (req: Request, res: Response, next: NextFunction) => {
-    const {type, detail} = req.body as {type: string, detail: string};
-    const nonEmptyRegex = /^(?!\s*$).+/i;
-    if (!type || !nonEmptyRegex.test(type) || !detail || !nonEmptyRegex.test(detail)) {
-        res.status(400).json({
-            error: 'Entry type/detail must be at least one character long.'
-        });
+const isValidEntryType = (required: boolean) => async (req: Request, res: Response, next: NextFunction) => {
+    if (!required && req.body.type === undefined) {
+        next();
         return;
     }
+    
+    req.body.type = req.body.type.toLowerCase();
 
     const specifiedTypes = ["appointment", "medication", "other"];
-    if (!specifiedTypes.includes(type.toLowerCase())) {
+    if (!specifiedTypes.includes(req.body.type)) {
         res.status(400).json({
             error: 'Entry type must be either "appointment", "medication", or "other".'
         });
@@ -37,10 +35,16 @@ const isValidEntryDetail = async (req: Request, res: Response, next: NextFunctio
     next();
 }
 
-const isValidEntryCondition = async (req: Request, res: Response, next: NextFunction) => {
-    const condition = req.body.condition;
+const isValidEntryCondition = (required: boolean) => async (req: Request, res: Response, next: NextFunction) => {
+    if (!required && req.body.condition === undefined) {
+        next();
+        return;
+    }
+    
+    req.body.condition = req.body.condition.toLowerCase();
+    
     const specifiedConditions = ["pain", "cognition", "happiness"];
-    if (!specifiedConditions.includes(condition.toLowerCase())) {
+    if (!specifiedConditions.includes(req.body.condition)) {
         res.status(400).json({
             error: 'Condition must be either "pain", "cognition", or "happiness".'
         });
@@ -50,7 +54,12 @@ const isValidEntryCondition = async (req: Request, res: Response, next: NextFunc
     next();
 }
 
-const isValidEntryScale = async (req: Request, res: Response, next: NextFunction) => {
+const isValidEntryScale = (required: boolean) => async (req: Request, res: Response, next: NextFunction) => {
+    if (!required && req.body.scale === undefined) {
+        next();
+        return;
+    }
+    
     const specifiedScales = [1,2,3,4,5,6,7,8,9,10];
     if (!specifiedScales.includes(parseInt(req.body.scale))) {
         res.status(400).json({
@@ -62,24 +71,11 @@ const isValidEntryScale = async (req: Request, res: Response, next: NextFunction
     next();
 }
 
-const isValidEntryDate = async (req: Request, res: Response, next: NextFunction) => {
-    const dateRegex = /^[0-9]{4}-(1[0-2]|0[1-9])-(3[01]|[12][0-9]|0[1-9])$/;
-    if (!dateRegex.test(req.body.date)) {
-        res.status(400).json({
-            error: 'Invalid format for entry date: must be YYYY-MM-DD.'
-        });
-        return;
-    }
-
-    next();
-}
-
 const isValidEntryModifier = async (req: Request, res: Response, next: NextFunction) => {
     const entry = await EntryCollection.findOne(req.params.entryId);
-    const accountId = entry.owner._id;
-    if (req.session.accountId !== accountId.toString()) {
+    if (req.session.accountId !== entry.owner._id.toString()) {
       res.status(403).json({
-        error: 'Cannot modify other accounts\' entries.'
+          error: 'Cannot modify other accounts\' entries.'
       });
       return;
     }
@@ -89,9 +85,8 @@ const isValidEntryModifier = async (req: Request, res: Response, next: NextFunct
 
 export {
     isValidEntry,
-    isValidEntryDetail,
+    isValidEntryType,
     isValidEntryCondition,
     isValidEntryScale,
-    isValidEntryDate,
     isValidEntryModifier,
 };

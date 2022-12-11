@@ -387,8 +387,8 @@
 **Body**
 - `type` _{string}_ - The type of the log entry (optional)
 - `detail` _{string}_ - The detail of the log entry (optional)
-- `condition` _{string}_ - The condition of the log entry
-- `scale` _{string}_ - The scale of the log entry
+- `condition` _{string}_ - The condition of the log entry (optional)
+- `scale` _{string}_ - The scale of the log entry (optional)
 - `notes` _{string}_ - The log entry's notes (optional)
 - `date` _{Date}_ - The date associated with the log entry (optional)
 

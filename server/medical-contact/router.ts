@@ -1,6 +1,7 @@
 import type {Request, Response} from 'express';
 import express from 'express';
 import MedicalContactCollection from './collection';
+import * as validator from '../middleware';
 import * as accountValidator from '../account/middleware';
 import * as medicalContactValidator from '../medical-contact/middleware';
 import * as util from './util';
@@ -18,11 +19,9 @@ const router = express.Router();
  */
 router.get(
   '/',
-  [
-    accountValidator.isLoggedIn
-  ],
+  accountValidator.isLoggedIn,
   async (req: Request, res: Response) => {
-    const medicalContacts = await MedicalContactCollection.findAllByOwnerId(req.session.accountId as string);
+    const medicalContacts = await MedicalContactCollection.findAllByOwner(req.session.accountId);
     const response = medicalContacts.map(util.constructMedicalContactResponse);
     res.status(200).json(response);
   }
@@ -32,7 +31,6 @@ router.get(
  * Create a new medical contact.
  *
  * @name POST /api/medical-contacts
- * @param {string} ownerId - The id of the owner of the medical contact
  * @param {string} title - The username of the user
  * @param {string} first_name - The username of the user
  * @param {string} last_name - The username of the user
@@ -48,15 +46,13 @@ router.get(
  */
 router.post(
   '/',
-  [
-    accountValidator.isLoggedIn,
-    medicalContactValidator.isValidFirstName(true),
-    medicalContactValidator.isValidLastName(true),
-    medicalContactValidator.isValidPhoneNumber(true),
-  ],
+  accountValidator.isLoggedIn,
+  validator.isNonEmpty((req: Request) => req.body.title, 'Title', true),
+  validator.isNonEmpty((req: Request) => req.body.first_name, 'First name', true),
+  validator.isNonEmpty((req: Request) => req.body.last_name, 'Last name', true),
+  validator.isValidPhoneNumber((req: Request) => req.body.phone_number, true),
   async (req: Request, res: Response) => {
-    const accountId = (req.session.accountId as string) ?? ''; // Will not be an empty string since its validated in isLoggedIn
-    const medicalContact = await MedicalContactCollection.addOne(accountId, req.body);
+    const medicalContact = await MedicalContactCollection.addOne(req.session.accountId, req.body);
     res.status(201).json({
       message: 'Your medical contact was created successfully.',
       medicalContact: util.constructMedicalContactResponse(medicalContact)
@@ -69,7 +65,6 @@ router.post(
  *
  * @name PATCH /api/medical-contacts/:medicalContactId
  *
- * @param {string} ownerId - The id of the owner of the medical contact
  * @param {string} title - The username of the user
  * @param {string} first_name - The username of the user
  * @param {string} last_name - The username of the user
@@ -87,14 +82,13 @@ router.post(
  */
 router.patch(
   '/:medicalContactId',
-  [
-    accountValidator.isLoggedIn,
-    medicalContactValidator.isMedicalContactExists,
-    medicalContactValidator.isValidMedicalContactModifier,
-    medicalContactValidator.isValidFirstName(false),
-    medicalContactValidator.isValidLastName(false),
-    medicalContactValidator.isValidPhoneNumber(false),
-  ],
+  accountValidator.isLoggedIn,
+  medicalContactValidator.isMedicalContactExists,
+  medicalContactValidator.isValidMedicalContactModifier,
+  validator.isNonEmpty((req: Request) => req.body.title, 'Title', false),
+  validator.isNonEmpty((req: Request) => req.body.first_name, 'First name', false),
+  validator.isNonEmpty((req: Request) => req.body.last_name, 'Last name', false),
+  validator.isValidPhoneNumber((req: Request) => req.body.phone_number, false),
   async (req: Request, res: Response) => {
     const medicalContact = await MedicalContactCollection.updateOne(req.params.medicalContactId, req.body);
     res.status(200).json({
@@ -117,12 +111,10 @@ router.patch(
  */
 router.delete(
   '/:medicalContactId',
-  [
-    accountValidator.isLoggedIn,
-    medicalContactValidator.isMedicalContactExists,
-    medicalContactValidator.isValidMedicalContactModifier,
-    medicalContactValidator.isMedicalContactActive
-  ],
+  accountValidator.isLoggedIn,
+  medicalContactValidator.isMedicalContactExists,
+  medicalContactValidator.isValidMedicalContactModifier,
+  medicalContactValidator.isMedicalContactActive,
   async (req: Request, res: Response) => {
     await MedicalContactCollection.deleteOne(req.params.medicalContactId);
     res.status(200).json({

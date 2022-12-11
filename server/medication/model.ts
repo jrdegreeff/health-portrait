@@ -2,7 +2,7 @@ import type { Types } from 'mongoose';
 import { Schema, model } from 'mongoose';
 
 export type Medication = {
-  id: Types.ObjectId;
+  _id: Types.ObjectId;
   owner: Types.ObjectId;
   active: boolean;
   name: string;

@@ -1,6 +1,5 @@
 import type {Types} from 'mongoose';
 import {Schema, model} from 'mongoose';
-import type {Account} from '../account/model';
 
 /**
  * This file defines the properties stored in an insurance card
@@ -8,20 +7,8 @@ import type {Account} from '../account/model';
 
 // Type definition for Insurance Card on the backend
 export type InsuranceCard = {
-  _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
-  ownerId: Types.ObjectId;
-  subscriber_name: string;
-  member_id: string;
-  group_number: string;
-  plan_number: string;
-  plan_type: string;
-  purpose: string;
-  notes: string;
-};
-
-export type PopulatedInsuranceCard = {
-  _id: Types.ObjectId; // MongoDB assigns each object this ID on creation
-  ownerId: Account;
+  _id: Types.ObjectId;
+  owner: Types.ObjectId;
   subscriber_name: string;
   member_id: string;
   group_number: string;
@@ -33,7 +20,7 @@ export type PopulatedInsuranceCard = {
 
 const InsuranceCardSchema = new Schema<InsuranceCard>({
   // The owner of the insurance card
-  ownerId: {
+  owner: {
     // Use Types.ObjectId outside of the schema
     type: Schema.Types.ObjectId,
     required: true,

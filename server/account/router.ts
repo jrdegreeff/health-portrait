@@ -5,6 +5,7 @@ import EntryCollection from '../entry/collection';
 import InsuranceCardCollection from '../insurance/collection';
 import MedicalContactCollection from '../medical-contact/collection';
 import MedicationCollection from '../medication/collection';
+import * as validator from '../middleware';
 import * as accountValidator from './middleware';
 import * as util from './util';
 
@@ -51,8 +52,8 @@ router.get(
 router.post(
   '/session',
   accountValidator.isLoggedOut,
-  accountValidator.isValidUsername(true),
-  accountValidator.isValidPassword(true),
+  validator.isValidUsername((req: Request) => req.body.username, true),
+  validator.isValidPassword((req: Request) => req.body.password, true),
   accountValidator.isAccountExists,
   async (req: Request, res: Response) => {
     const credential = await CredentialCollection.findOneByUsernameAndPassword(req.body.username, req.body.password);
@@ -106,9 +107,9 @@ router.delete(
 router.post(
   '/',
   accountValidator.isLoggedOut,
-  accountValidator.isValidAccountName(true),
-  accountValidator.isValidUsername(true),
-  accountValidator.isValidPassword(true),
+  validator.isNonEmpty((req: Request) => req.body.password, 'Name', true),
+  validator.isValidUsername((req: Request) => req.body.username, true),
+  validator.isValidPassword((req: Request) => req.body.password, true),
   accountValidator.isUsernameNotExists(true),
   async (req: Request, res: Response) => {
     const account = await AccountCollection.addOne(req.body.name);
@@ -138,7 +139,7 @@ router.post(
 router.patch(
   '/',
   accountValidator.isLoggedIn,
-  accountValidator.isValidAccountName(true),
+  validator.isNonEmpty((req: Request) => req.body.password, 'Name', true),
   async (req: Request, res: Response) => {
     const account = await AccountCollection.updateOne(req.session.accountId, req.body.name);
     res.status(200).json({
@@ -192,8 +193,8 @@ router.delete(
 router.post(
   '/credentials',
   accountValidator.isLoggedIn,
-  accountValidator.isValidUsername(true),
-  accountValidator.isValidPassword(true),
+  validator.isValidUsername((req: Request) => req.body.username, true),
+  validator.isValidPassword((req: Request) => req.body.password, true),
   accountValidator.isUsernameNotExists(true),
   async (req: Request, res: Response) => {
     const account = await AccountCollection.findOne(req.session.accountId);
@@ -225,8 +226,8 @@ router.patch(
   '/credentials',
   accountValidator.isLoggedIn,
   accountValidator.isUsernameOrPasswordPresent,
-  accountValidator.isValidUsername(false),
-  accountValidator.isValidPassword(false),
+  validator.isValidUsername((req: Request) => req.body.username, false),
+  validator.isValidPassword((req: Request) => req.body.password, false),
   accountValidator.isUsernameNotExists(false),
   async (req: Request, res: Response) => {
     const credential = await CredentialCollection.updateOne(req.session.credentialId, req.body);
@@ -254,7 +255,7 @@ router.patch(
 router.delete(
   '/credentials',
   accountValidator.isLoggedIn,
-  accountValidator.isValidUsername(true),
+  validator.isValidUsername((req: Request) => req.body.username, true),
   accountValidator.isUsernameExists,
   accountValidator.isUsernameSameAccount,
   async (req: Request, res: Response) => {
