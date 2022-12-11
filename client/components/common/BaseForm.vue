@@ -3,7 +3,7 @@
 <template>
   <article>
     <span
-      v-for="{id, label, type, options, hint, optional} in fields"
+      v-for="{id, label, type, options, hint, optional, range} in fields"
       :key="id"
     >
       <label v-if="type !== 'hidden'" :for="id"> {{ label }}: </label>
@@ -30,14 +30,29 @@
         @change="() => validate(id)"
       />
       <input
+        v-else-if="type === 'range'"
+        type="range"
+        :min="range.min"
+        :max="range.max"
+        list="tickmarks"
+        :class="errors[id] ? 'error' : ''"
+        v-model="values[id]"
+        @change="() => validate(id)"
+      >
+      <input
         v-else
         :class="errors[id] ? 'error' : ''"
         :type="type || 'text'"
         v-model="values[id]"
         @change="() => validate(id)"
       >
+      <small v-if="type === 'range'"> {{ values[id] }} </small>
       <small v-if="hint"> {{ hint }} </small>
       <small v-if="errors[id]" class="error"> {{ errors[id] }} </small>
+      
+      <datalist v-if="type === 'range'" id="tickmarks">
+        <option v-for="num in [1,2,3,4,5,6,7,8,9,10]" :value="num"></option>
+      </datalist>
     </span>
   </article>
 </template>
@@ -67,7 +82,6 @@ export default {
     };
   },
   created() {
-    // this.values = Object.fromEntries(this.fields.map(f => [f.id, this.document[f.id]]));
     this.fields.forEach(f => {
       const validators = [
         !f.optional && (v => v ? '' : 'required field'),
