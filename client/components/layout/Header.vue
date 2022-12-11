@@ -6,7 +6,7 @@
         class="back"
         @click="() => $router.go(-1)"
       >
-        ←
+        <img class="back_arrow" src="back_arrow.png" alt="Back Arrow"/>
       </h1>
       <h1> {{ $store.state.title }} </h1>
     </header>
@@ -39,6 +39,11 @@ export default {
   border: 1px dotted;
   border-radius: 1rem;
   margin-right: 1rem;
+}
+
+.back_arrow {
+  max-width: 2rem;
+  max-height: 2rem;
 }
 
 .title {
