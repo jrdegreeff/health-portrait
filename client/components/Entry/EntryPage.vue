@@ -1,7 +1,7 @@
 <template>
     <main>
         <button class="btn-secondary">
-            <router-link to="/newLog">➕ add</router-link>
+            <NavLink to="/newLog" name="➕ add"></NavLink>
         </button>
 
         <table class="entries" v-if="filteredEntries">
@@ -20,11 +20,12 @@
 </template>
 
 <script lang="ts">
+import NavLink from '@/components/common/NavLink.vue';
 import EntryComponent from '@/components/Entry/EntryComponent.vue';
 
 export default {
     name: 'EntryPage',
-    components: {EntryComponent},
+    components: {NavLink, EntryComponent},
     props: {
         type: {
             type: String,
@@ -43,7 +44,7 @@ export default {
     mounted() {
         this.$store.commit('setHeader', {
             title: `${this.$store.state.account.name}'s Health Journal`,
-            enableBack: false,
+            enableBack: true,
             headerLinks: {
                 "/logs/all": "All",
                 "/logs/medication": "Medication",
