@@ -7,6 +7,7 @@ export type MedicationResponse = {
   generic_name: string;
   dose: string;
   notes: string;
+  active: boolean;
 };
 
 /**

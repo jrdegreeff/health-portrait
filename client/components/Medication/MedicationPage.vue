@@ -26,7 +26,7 @@
         v-for="medication in filteredMedications"
         :key="medication._id"
         :document="medication"
-        :ref="medication._id"
+        :ref="`#${medication._id}`"
       />
     </section>
   </main>
@@ -47,7 +47,7 @@ export default {
   },
   computed: {
     filteredMedications() {
-      return this.$store.filter('medications', ['name'], this.search);
+      return this.$store.filter('activeMedications', ['name'], this.search);
     }
   },
   mounted() {
@@ -60,17 +60,10 @@ export default {
         "/insurance": "Insurance",
       },
     });
-    // https://forsmile.jp/en/vue-en/1118/
-    // https://forum.vuejs.org/t/dynamic-ref-not-working/79131/8
-    // https://www.reddit.com/r/vuejs/comments/x4ws8k/scrolling_to_ref_in_composition_api/
-    this.$nextTick(() => {
-      const hash = this.$route.hash;
-      if (hash) {
-          const refName = hash.replace('#', '');
-          const component = this.$refs[refName][0];
-          component.$el.scrollIntoView({ behavior: 'smooth' });
-      }
-    });
+    if (this.$route.hash) {
+      const component = this.$refs[this.$route.hash][0];
+      component.$el.scrollIntoView({ behavior: 'smooth' });
+    }
   },
   methods: {},
 };

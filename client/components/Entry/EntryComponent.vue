@@ -2,23 +2,23 @@
     <article>
         <tr class="entryLog">
             <td>{{entry.type}}</td>
-            <td v-if="medLink">
-                <router-link :to="medLink">{{entry.title}}</router-link>
-            </td>
-            <td v-else>
-                {{entry.title}}
+            <td>
+                <router-link
+                    v-if="entry.active"
+                    :to="{name: pageForType(entry.type), hash:`#${entry.detail}`}"
+                >
+                    {{entry.title}}
+                </router-link>
+                <span v-else>
+                    {{entry.title}}
+                </span>
             </td>
             <td>{{entry.condition}}</td>
             <td class="tdCentered">{{entry.scale}}</td>
             <td>{{entry.date}}</td>
-            <td v-if="!expanded">
+            <td>
                 <button class="btn-secondary" @click="toggleExpand">
-                    view more
-                </button>
-            </td>
-            <td v-else>
-                <button class="btn-secondary" @click="toggleExpand">
-                    view less
+                    {{ expanded ? 'view less' : 'view more' }}
                 </button>
             </td>
         </tr>
@@ -27,11 +27,10 @@
                 <p>
                     Note: {{entry.notes}}
                 </p>
-
             </div>
             <div class="right">
                 <button class="btn-secondary">
-                    <router-link :to="link">✏️ edit</router-link>
+                    <router-link :to="editLink">✏️ edit</router-link>
                 </button>
                 <button class="btn-secondary" @click="deleteEntry">
                     🗑️ delete
@@ -52,19 +51,17 @@ export default {
     },
     data() {
         return {
-            link: `/editLog/${this.entry._id}`, 
+            editLink: `/editLog/${this.entry._id}`, 
             expanded: false,
         };
     },
-    computed: {
-        medLink() {
-            if (this.entry.type === "medication") {
-                const med = this.$store.state.medications.find(med => med.name === this.entry.detail);
-                return med ? `/medications#${med._id}` : ''
-            }
-        }
-    },
     methods: {     
+        pageForType(type) {
+            return {
+                appointment: 'Contacts',
+                medication: 'Medications',
+            }[type];
+        },
         toggleExpand() {
             this.expanded = !this.expanded;
         },
@@ -130,5 +127,9 @@ td {
 .btn-secondary {
     width: 8rem;
     margin: 0rem 1rem;
+}
+
+td > a {
+    text-decoration: underline;
 }
 </style>
