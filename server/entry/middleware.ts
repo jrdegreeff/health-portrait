@@ -22,8 +22,10 @@ const isValidEntryType = (required: boolean) => async (req: Request, res: Respon
         return;
     }
     
+    req.body.type = req.body.type.toLowerCase();
+
     const specifiedTypes = ["appointment", "medication", "other"];
-    if (!specifiedTypes.includes(req.body.type.toLowerCase())) {
+    if (!specifiedTypes.includes(req.body.type)) {
         res.status(400).json({
             error: 'Entry type must be either "appointment", "medication", or "other".'
         });
@@ -39,8 +41,10 @@ const isValidEntryCondition = (required: boolean) => async (req: Request, res: R
         return;
     }
     
+    req.body.condition = req.body.condition.toLowerCase();
+    
     const specifiedConditions = ["pain", "cognition", "happiness"];
-    if (!specifiedConditions.includes(req.body.condition.toLowerCase())) {
+    if (!specifiedConditions.includes(req.body.condition)) {
         res.status(400).json({
             error: 'Condition must be either "pain", "cognition", or "happiness".'
         });

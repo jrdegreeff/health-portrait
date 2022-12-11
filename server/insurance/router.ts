@@ -21,7 +21,7 @@ router.get(
   '/',
   accountValidator.isLoggedIn,
   async (req: Request, res: Response) => {
-    const insuranceCards = await InsuranceCardCollection.findAllByOwnerId(req.session.accountId as string);
+    const insuranceCards = await InsuranceCardCollection.findAllByOwnerId(req.session.accountId);
     const response = insuranceCards.map(util.constructInsuranceCardResponse);
     res.status(200).json(response);
   }

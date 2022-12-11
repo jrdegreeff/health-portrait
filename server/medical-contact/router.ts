@@ -23,7 +23,7 @@ router.get(
     accountValidator.isLoggedIn
   ],
   async (req: Request, res: Response) => {
-    const medicalContacts = await MedicalContactCollection.findAllByOwnerId(req.session.accountId as string);
+    const medicalContacts = await MedicalContactCollection.findAllByOwnerId(req.session.accountId);
     const response = medicalContacts.map(util.constructMedicalContactResponse);
     res.status(200).json(response);
   }

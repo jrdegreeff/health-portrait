@@ -1,8 +1,15 @@
-import type { HydratedDocument, Types } from 'mongoose';
+import type { HydratedDocument } from 'mongoose';
 import type { Medication } from './model';
 import { MedicationModel } from './model';
 
-export default class MedicalContactCollection {
+type MedicationDetails = {
+  name?: string;
+  generic_name?: string;
+  dose?: string;
+  notes?: string;
+};
+
+export default class MedicationCollection {
 
   /**
    * Add a new medication record.
@@ -11,7 +18,7 @@ export default class MedicalContactCollection {
    * @param {object} details - An object with the details of the medication record
    * @return {Promise<HydratedDocument<Medication>>} - The newly created medication
    */
-  static async addOne(owner: string, details: { name?: string; generic_name?: string, dose?: string, notes?: string }): Promise<HydratedDocument<Medication>> {
+  static async addOne(owner: string, details: MedicationDetails): Promise<HydratedDocument<Medication>> {
     const medication = new MedicationModel({
       owner,
       active: true,
@@ -27,7 +34,7 @@ export default class MedicalContactCollection {
    * @param {string} medicationId - The id of the medication record to find
    * @return {Promise<HydratedDocument<Medication>> | Promise<null>} - The medicationId with the given id, if any
    */
-  static async findOne(medicationId: Types.ObjectId | string): Promise<HydratedDocument<Medication>> {
+  static async findOne(medicationId: string): Promise<HydratedDocument<Medication>> {
     return MedicationModel.findOne({ _id: medicationId });
   }
 
@@ -48,7 +55,7 @@ export default class MedicalContactCollection {
    * @param {Object} details - An object with the updated details of the medication record -- all non-empty values in the object will be applied
    * @return {Promise<HydratedDocument<Medication>>} - The updated medication record
    */
-  static async updateOne(medicationId: Types.ObjectId | string, details: { name?: string; generic_name?: string, dose?: string, notes?: string }): Promise<HydratedDocument<Medication>> {
+  static async updateOne(medicationId: string, details: MedicationDetails): Promise<HydratedDocument<Medication>> {
     const medication = await MedicationModel.findOne({ _id: medicationId });
 
     // @ts-ignore
@@ -74,7 +81,7 @@ export default class MedicalContactCollection {
    *
    * @param {string} owner - The id of owner of medical contacts
    */
-  static async deleteMany(owner: Types.ObjectId | string): Promise<void> {
+  static async deleteMany(owner: string): Promise<void> {
     await MedicationModel.deleteMany({ owner });
   }
 

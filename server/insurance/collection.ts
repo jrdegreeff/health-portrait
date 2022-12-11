@@ -2,18 +2,28 @@ import type {HydratedDocument, Types} from 'mongoose';
 import type {InsuranceCard} from './model';
 import InsuranceCardModel from './model';
 
-class InsuranceCardCollection {
+type InsuranceDetails = {
+  subscriber_name?: string;
+  member_id?: string;
+  group_number?: string;
+  plan_number?: string;
+  plan_type?: string;
+  purpose?: string;
+  notes?: string;
+};
+
+export default class InsuranceCardCollection {
   /**
    * Add a new insurance card
    *
    * @param {string} ownerId - The id of the owner of the insurance card
-   * @param {string} cardDetails - the details about the insurance card
+   * @param {string} details - the details about the insurance card
    * @return {Promise<HydratedDocument<InsuranceCard>>} - The newly created insurance card
    */
-  static async addOne(ownerId: Types.ObjectId | string, cardDetails: {subscriber_name?: string; member_id?: string; group_number?: string; plan_number?: string; plan_type?: string; purpose?: string; notes?: string}): Promise<HydratedDocument<InsuranceCard>> {
+  static async addOne(ownerId: Types.ObjectId | string, details: InsuranceDetails): Promise<HydratedDocument<InsuranceCard>> {
     const insuranceCard = new InsuranceCardModel({
       ownerId,
-      ...cardDetails,
+      ...details,
     });
     await insuranceCard.save(); // Saves user to MongoDB
     return insuranceCard;
@@ -25,7 +35,7 @@ class InsuranceCardCollection {
    * @param {string} insuranceCardId - The id of the insurance card to find
    * @return {Promise<HydratedDocument<InsuranceCard>> | Promise<null>} - The insurance card with the given id, if any
    */
-  static async findOne(insuranceCardId: Types.ObjectId | string): Promise<HydratedDocument<InsuranceCard>> {
+  static async findOne(insuranceCardId: string): Promise<HydratedDocument<InsuranceCard>> {
     return InsuranceCardModel.findOne({_id: insuranceCardId});
   }
 
@@ -43,39 +53,14 @@ class InsuranceCardCollection {
    * Update an insurance card's information
    *
    * @param {string} insuranceCardId - The id of the insurance card to update
-   * @param {Object} cardDetails - An object with the insurance card's updated details
+   * @param {Object} details - An object with the insurance card's updated details
    * @return {Promise<HydratedDocument<InsuranceCard>>} - The updated insurance card
    */
-  static async updateOne(insuranceCardId: Types.ObjectId | string, cardDetails: {subscriber_name?: string; member_id?: string; group_number?: string; plan_number?: string; plan_type?: string; purpose?: string; notes?: string}): Promise<HydratedDocument<InsuranceCard>> {
+  static async updateOne(insuranceCardId: string, details: InsuranceDetails): Promise<HydratedDocument<InsuranceCard>> {
     const insuranceCard = await InsuranceCardModel.findOne({_id: insuranceCardId});
 
-    if (cardDetails.subscriber_name) {
-      insuranceCard.subscriber_name = cardDetails.subscriber_name;
-    }
-
-    if (cardDetails.member_id) {
-      insuranceCard.member_id = cardDetails.member_id;
-    }
-
-    if (cardDetails.group_number) {
-      insuranceCard.group_number = cardDetails.group_number;
-    }
-
-    if (cardDetails.plan_number) {
-      insuranceCard.plan_number = cardDetails.plan_number;
-    }
-
-    if (cardDetails.plan_type) {
-      insuranceCard.plan_type = cardDetails.plan_type;
-    }
-
-    if (cardDetails.purpose) {
-      insuranceCard.purpose = cardDetails.purpose;
-    }
-
-    if (cardDetails.notes) {
-      insuranceCard.notes = cardDetails.notes;
-    }
+    // @ts-ignore
+    Object.keys(details).forEach(k => insuranceCard[k] = details[k]);
 
     await insuranceCard.save();
     return insuranceCard;
@@ -86,7 +71,7 @@ class InsuranceCardCollection {
    *
    * @param {string} insuranceCardId - The id of the insurance card to delete
    */
-  static async deleteOne(insuranceCardId: Types.ObjectId | string): Promise<void> {
+  static async deleteOne(insuranceCardId: string): Promise<void> {
     await InsuranceCardModel.deleteOne({_id: insuranceCardId});
   }
 
@@ -95,9 +80,7 @@ class InsuranceCardCollection {
    *
    * @param {string} ownerId - The id of owner of medical contacts
    */
-  static async deleteMany(ownerId: Types.ObjectId | string): Promise<void> {
+  static async deleteMany(ownerId: string): Promise<void> {
     await InsuranceCardModel.deleteMany({ownerId});
   }
 }
-
-export default InsuranceCardCollection;

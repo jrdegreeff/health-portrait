@@ -52,15 +52,7 @@ router.post(
   entryValidator.isValidEntryScale(true),
   validator.isValidDate((req: Request) => req.body.date, true),
   async (req: Request, res: Response) => {
-    const entry = await EntryCollection.addOne(
-      req.session.accountId,
-      req.body.type,
-      req.body.detail,
-      req.body.condition,
-      req.body.scale,
-      req.body.notes,
-      req.body.date
-    );
+    const entry = await EntryCollection.addOne(req.session.accountId, req.body);
     res.status(201).json({
       message: 'Your entry was created successfully.',
       entry: util.constructEntryResponse(entry)

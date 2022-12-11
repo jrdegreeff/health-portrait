@@ -79,6 +79,10 @@ p {
   margin: 0;
 }
 
+.placeholder, .dismiss {
+  font-size: 1.5rem;
+}
+
 .placeholder {
   visibility: hidden;
 }

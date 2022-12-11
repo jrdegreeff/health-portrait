@@ -1,77 +1,51 @@
-import type {HydratedDocument, Types} from 'mongoose';
+import type {HydratedDocument} from 'mongoose';
 import type {Entry} from './model';
 import EntryModel from './model';
 
-class EntryCollection {
-  static async addOne(ownerId: Types.ObjectId | string, type: string, detail: string, 
-    condition: string, scale: number, notes: string, date: Date): Promise<HydratedDocument<Entry>> {
-      const entry = new EntryModel({
-        owner: ownerId,
-        type: type.toLowerCase(),
-        detail,
-        condition: condition.toLowerCase(),
-        scale,
-        notes,
-        date
+type EntryDetails = {
+  type?: string;
+  detail?: string;
+  condition?: string;
+  scale?: number;
+  notes?: string;
+  date?: Date;
+};
+
+export default class EntryCollection {
+  static async addOne(owner: string, details: EntryDetails): Promise<HydratedDocument<Entry>> {
+    const entry = new EntryModel({
+        owner,
+        ...details,
       });
       await entry.save();
-      return entry.populate([]);
+      return entry;
   }
 
-  static async findOne(entryId: Types.ObjectId | string): Promise<HydratedDocument<Entry>> {
-    return EntryModel.findOne({_id: entryId}).populate([]);
+  static async findOne(entryId: string): Promise<HydratedDocument<Entry>> {
+    return EntryModel.findOne({_id: entryId});
   }
 
-  static async findAllByOwnerId(ownerId: Types.ObjectId | string): Promise<HydratedDocument<Entry>[]> {
-    return EntryModel.find({owner: ownerId}).sort({date: -1}).populate([]);
+  static async findAllByOwnerId(ownerId: string): Promise<HydratedDocument<Entry>[]> {
+    return EntryModel.find({owner: ownerId}).sort({date: -1});
   }
 
-  static async updateOne(entryId: Types.ObjectId | string, entryDetails: {type?: string; detail?: string; 
-    condition?: string, scale?: number, notes?: string, date?: Date}): Promise<HydratedDocument<Entry>> {
+  static async updateOne(entryId: string, details: EntryDetails): Promise<HydratedDocument<Entry>> {
     const entry = await EntryModel.findOne({_id: entryId});
-    if (entryDetails.type) {
-      entry.type = entryDetails.type.toLowerCase();
-    }
 
-    if (entryDetails.detail) {
-      entry.detail = entryDetails.detail;
-    }
-
-    if (entryDetails.condition) {
-      entry.condition = entryDetails.condition.toLowerCase();
-    }
-
-    if (entryDetails.scale) {
-      entry.scale = entryDetails.scale;
-    }
-
-    if (entryDetails.notes) {
-      entry.notes = entryDetails.notes;
-    }
-
-    if (entryDetails.date) {
-      entry.date = entryDetails.date;
-    }
+    // @ts-ignore
+    Object.keys(details).forEach(k => entry[k] = details[k]);
 
     await entry.save();
-    return entry.populate([]);
+    return entry;
   }
 
-  /**
-   * Delete an entry from the collection.
-   *
-   * @param {string} entryId - The id of entry to delete
-   * @return {Promise<boolean>} - true if the entry has been deleted, false otherwise
-   */
-  static async deleteOne(entryId: Types.ObjectId | string): Promise<boolean> {
+  static async deleteOne(entryId: string): Promise<boolean> {
     const entry = await EntryModel.deleteOne({_id: entryId});
     return entry !== null;
   }
 
-  static async deleteMany(ownerId: Types.ObjectId | string): Promise<boolean> {
-    const entries = await EntryModel.deleteMany({owner: ownerId});
+  static async deleteMany(owner: string): Promise<boolean> {
+    const entries = await EntryModel.deleteMany({owner});
     return entries !== null;
   }
 }
-
-export default EntryCollection;
