@@ -39,13 +39,11 @@ export default class EntryCollection {
     return entry;
   }
 
-  static async deleteOne(entryId: string): Promise<boolean> {
-    const entry = await EntryModel.deleteOne({_id: entryId});
-    return entry !== null;
+  static async deleteOne(entryId: string): Promise<void> {
+    await EntryModel.deleteOne({_id: entryId});
   }
 
-  static async deleteMany(owner: string): Promise<boolean> {
-    const entries = await EntryModel.deleteMany({owner});
-    return entries !== null;
+  static async deleteMany(owner: string): Promise<void> {
+    await EntryModel.deleteMany({owner});
   }
 }
