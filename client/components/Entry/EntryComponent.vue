@@ -3,10 +3,10 @@
         <tr class="entryLog">
             <td>{{entry.type}}</td>
             <td v-if="medLink">
-                <router-link :to="medLink">{{entry.detail}}</router-link>
+                <router-link :to="medLink">{{entry.title}}</router-link>
             </td>
             <td v-else>
-                {{entry.detail}}
+                {{entry.title}}
             </td>
             <td>{{entry.condition}}</td>
             <td class="tdCentered">{{entry.scale}}</td>

@@ -6,6 +6,15 @@ Vue.use(Vuex);
 
 const alertDurationMillis = 8000;
 
+const formatContact = (contact) => {
+  return contact ? `${contact.title} ${contact.first_name} ${contact.last_name}` : '';
+}
+
+const formatMedication = (medication) => {
+  return medication ? medication.name : '';
+}
+
+
 /**
  * Storage for data that needs to be accessed from various components.
  */
@@ -31,6 +40,16 @@ const store = new Vuex.Store({
     },
     credentials(state) {
       return state.account ? state.account.credentials : [];
+    },
+    populatedEntries(state) {
+      return state.entries.map(e => {
+        return {
+          ...e,
+          title: e.type === 'appointment' ? formatContact(state.contacts.find(c => c._id === e.detail))
+               : e.type === 'medication' ? formatMedication(state.medications.find(m => m._id === e.detail))
+               : e.detail
+        };
+      });
     },
   },
   mutations: {

@@ -3,13 +3,7 @@
         <button class="btn-primary">
             <NavLink :to="`/newLog/${type}`" name="Add log"></NavLink>
         </button>
-
         <table class="entries" v-if="filteredEntries">
-            <!-- <tr>
-                <th>Type</th>
-                <th>Title</th>
-                <th>Date</th>
-            </tr> -->
             <EntryComponent 
                 v-for="entry in filteredEntries" 
                 :key="entry._id"
@@ -34,7 +28,8 @@ export default {
     },
     computed: {
         filteredEntries() {
-            return this.$store.filter('entries', ['type'], this.type === 'all' ? '' : this.type);
+            const entries = this.$store.getters.populatedEntries;
+            return this.type === 'all' ? entries : entries.filter(e => e.type === this.type);
         }
     },
     mounted() {
