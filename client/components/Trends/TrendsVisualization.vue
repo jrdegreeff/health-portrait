@@ -42,8 +42,8 @@ export default {
           type: 'line',
           options: {
             animation : false,
-            pointRadius : 10,
-            pointHoverRadius : 14,
+            pointRadius : 7,
+            pointHoverRadius : 10,
             scales : {
               y : {
                 min: 0,
