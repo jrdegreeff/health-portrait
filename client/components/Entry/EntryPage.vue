@@ -32,10 +32,6 @@ export default {
       }
     },
     computed: {
-        activeType() {
-            const type = this.type;
-            return type.charAt(0).toUpperCase() + type.slice(1);
-        },
         filteredEntries() {
             return this.type === "all" ? this.$store.state.entries : this.$store.state.entries.filter(e => e.type === this.type);
         }
