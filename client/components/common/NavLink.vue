@@ -21,3 +21,9 @@ export default {
   }
 };
 </script>
+
+<style scoped>
+a.active {
+  border-bottom: 3px var(--darkPrimary) solid;
+}
+</style>

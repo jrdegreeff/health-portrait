@@ -81,7 +81,7 @@ export default {
 <style scoped>
 .entryLog {
     display: flex;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--dark);
 }
 
 td {
@@ -95,7 +95,7 @@ td {
 }
 
 .entryNote {
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--dark);
     padding: 1rem 2rem;
 }
 </style>

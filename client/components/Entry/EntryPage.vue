@@ -1,6 +1,6 @@
 <template>
     <main>
-        <button class="btn-secondary">
+        <button class="btn-primary">
             <router-link to="/newLog">➕ add</router-link>
         </button>
 
@@ -58,7 +58,7 @@ export default {
 
 <style scoped>
 .entries {
-    border: 1px solid black;
+    border: 1px solid var(--dark);
     border-bottom: 0px;
     border-spacing: 0px;
     margin-top: 2rem;
