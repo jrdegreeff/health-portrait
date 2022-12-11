@@ -29,8 +29,8 @@
                 </p>
             </div>
             <div class="right">
-                <button class="btn-secondary">
-                    <router-link :to="editLink">✏️ edit</router-link>
+                <button class="btn-secondary" @click="$router.push({ path: `/editLog/${entry._id}` })">
+                    ✏️ edit
                 </button>
                 <button class="btn-secondary" @click="deleteEntry">
                     🗑️ delete
@@ -51,7 +51,6 @@ export default {
     },
     data() {
         return {
-            editLink: `/editLog/${this.entry._id}`, 
             expanded: false,
         };
     },

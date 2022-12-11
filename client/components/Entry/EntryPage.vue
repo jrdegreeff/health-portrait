@@ -1,7 +1,7 @@
 <template>
     <main>
-        <button class="btn-primary">
-            <NavLink :to="`/newLog/${type}`" name="Add log"></NavLink>
+        <button class="btn-primary" @click="$router.push({ path: `/newLog/${type}` })">
+            Add log
         </button>
         <table class="entries" v-if="filteredEntries">
             <EntryComponent 
@@ -14,12 +14,11 @@
 </template>
 
 <script lang="ts">
-import NavLink from '@/components/common/NavLink.vue';
 import EntryComponent from '@/components/Entry/EntryComponent.vue';
 
 export default {
     name: 'EntryPage',
-    components: {NavLink, EntryComponent},
+    components: {EntryComponent},
     props: {
         type: {
             type: String,
