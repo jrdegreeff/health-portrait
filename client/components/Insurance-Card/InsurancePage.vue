@@ -4,13 +4,10 @@
 <template>
   <main>
     <section>
-      <button v-if="!showForm" class="btn-primary" @click="showForm=true">
-        Add insurance
+      <button class="btn-primary" @click="toggleForm">
+        {{ showForm ? 'Cancel' : 'Add insurance' }}
       </button>
-      <button v-if="showForm" class="btn-primary" @click="showForm=false">
-        Add insurance
-      </button>
-      <CreateInsuranceForm v-if="showForm"/>
+      <CreateInsuranceForm v-if="showForm" @submit="hideForm" />
     </section>
     <hr>
     <section>
@@ -53,6 +50,14 @@
     computed: {
       filteredInsurances() {
         return this.$store.filter('insurances', ['purpose'], this.search);
+      }
+    },
+    methods: {
+      toggleForm() {
+        this.showForm = !this.showForm;
+      },
+      hideForm() {
+        this.showForm = false;
       }
     },
     mounted() {
