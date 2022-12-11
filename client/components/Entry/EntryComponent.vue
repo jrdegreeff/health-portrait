@@ -2,7 +2,12 @@
     <article>
         <tr class="entryLog">
             <td>{{entry.type}}</td>
-            <td>{{entry.detail}}</td>
+            <td v-if="medLink">
+                <router-link :to="medLink">{{entry.detail}}</router-link>
+            </td>
+            <td v-else>
+                {{entry.detail}}
+            </td>
             <td>{{entry.condition}}</td>
             <td class="tdCentered">{{entry.scale}}</td>
             <td>{{entry.date}}</td>
@@ -30,7 +35,6 @@
         <div v-if="expanded" class="entryNote">
             <p>
                 Note: {{entry.notes}} 
-                <router-link v-if="medLink" :to="medLink">({{entry.detail}})</router-link>
             </p>
         </div>
     </article>
