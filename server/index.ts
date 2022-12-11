@@ -7,12 +7,12 @@ import http from 'http';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import MongoStore from 'connect-mongo';
-import * as accountValidator from '../server/account/middleware';
-import {accountRouter} from '../server/account/router';
-import {entryRouter} from '../server/entry/router';
-import {medicalContactRouter} from '../server/medical-contact/router';
-import {insuranceCardRouter} from '../server/insurance/router';
-import {medicationRouter} from '../server/medication/router';
+import * as accountValidator from './account/middleware';
+import {accountRouter} from './account/router';
+import {entryRouter} from './entry/router';
+import {medicalContactRouter} from './medical-contact/router';
+import {insuranceCardRouter} from './insurance/router';
+import {medicationRouter} from './medication/router';
 
 // Load environmental variables
 dotenv.config({});
