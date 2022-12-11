@@ -107,7 +107,7 @@ router.delete(
 router.post(
   '/',
   accountValidator.isLoggedOut,
-  validator.isNonEmpty((req: Request) => req.body.password, 'Name', true),
+  validator.isNonEmpty((req: Request) => req.body.name, 'Name', true),
   validator.isValidUsername((req: Request) => req.body.username, true),
   validator.isValidPassword((req: Request) => req.body.password, true),
   accountValidator.isUsernameNotExists(true),
@@ -139,7 +139,7 @@ router.post(
 router.patch(
   '/',
   accountValidator.isLoggedIn,
-  validator.isNonEmpty((req: Request) => req.body.password, 'Name', true),
+  validator.isNonEmpty((req: Request) => req.body.name, 'Name', true),
   async (req: Request, res: Response) => {
     const account = await AccountCollection.updateOne(req.session.accountId, req.body.name);
     res.status(200).json({
