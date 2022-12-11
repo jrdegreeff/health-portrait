@@ -41,6 +41,7 @@
       <small v-if="instructions" class="tooltip"> 
         <img src = "question_circle.svg" alt="Question mark" width="30%"/>
         <div class="tooltiptext" v-if="instructions"> {{ instructions }}</div>
+        <!-- Inspired by https://www.w3schools.com/css/css_tooltip.asp -->
       </small>
     </span>
   </article>
