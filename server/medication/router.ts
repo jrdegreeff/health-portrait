@@ -21,7 +21,7 @@ router.get(
   '/',
   accountValidator.isLoggedIn,
   async (req: Request, res: Response) => {
-    const medicalContacts = await MedicationCollection.findAllByOwner(req.session.credentialId);
+    const medicalContacts = await MedicationCollection.findAllByOwner(req.session.accountId);
     res.status(200).json(medicalContacts.map(util.constructMedicationResponse));
   }
 );
@@ -47,7 +47,7 @@ router.post(
   validator.isNonEmpty((req: Request) => req.body.name, 'Name', true),
   validator.isNonEmpty((req: Request) => req.body.dose, 'Dose', true),
   async (req: Request, res: Response) => {
-    const medication = await MedicationCollection.addOne(req.session.credentialId, req.body)
+    const medication = await MedicationCollection.addOne(req.session.accountId, req.body)
     res.status(201).json({
       message: 'Your medication was added successfully.',
       medication: util.constructMedicationResponse(medication)

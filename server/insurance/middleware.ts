@@ -7,7 +7,7 @@ import InsuranceCardCollection from './collection';
  */
 const isInsuranceCardExists = async (req: Request, res: Response, next: NextFunction) => {
   const validFormat = Types.ObjectId.isValid(req.params.insuranceCardId);
-  const insuranceCard = validFormat ? await InsuranceCardCollection.findOne(req.params.insuranceCardId) : '';
+  const insuranceCard = validFormat && await InsuranceCardCollection.findOne(req.params.insuranceCardId);
   if (!insuranceCard) {
     res.status(404).json({
       error: `Insurance card with insurance card ID ${req.params.insuranceCardId} does not exist.`
@@ -22,7 +22,8 @@ const isInsuranceCardExists = async (req: Request, res: Response, next: NextFunc
  * Checks if the current user is the owner of the insurance card whose insuranceCardId is in req.params
  */
 const isValidInsuranceCardModifier = async (req: Request, res: Response, next: NextFunction) => {
-  const insuranceCard = await InsuranceCardCollection.findOne(req.params.insuranceCardId);
+  const validFormat = Types.ObjectId.isValid(req.params.insuranceCardId);
+  const insuranceCard = validFormat &&await InsuranceCardCollection.findOne(req.params.insuranceCardId);
   if (req.session.accountId !== insuranceCard.owner.toString()) {
     res.status(403).json({
       error: 'Cannot modify other users\' insurance cards.'
