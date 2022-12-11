@@ -23,8 +23,7 @@ const isInsuranceCardExists = async (req: Request, res: Response, next: NextFunc
  */
 const isValidInsuranceCardModifier = async (req: Request, res: Response, next: NextFunction) => {
   const insuranceCard = await InsuranceCardCollection.findOne(req.params.insuranceCardId);
-  const ownerId = insuranceCard.ownerId._id;
-  if (req.session.accountId !== ownerId.toString()) {
+  if (req.session.accountId !== insuranceCard.owner.toString()) {
     res.status(403).json({
       error: 'Cannot modify other users\' insurance cards.'
     });

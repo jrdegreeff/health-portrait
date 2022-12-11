@@ -25,7 +25,7 @@ const constructInsuranceCardResponse = (insuranceCard: HydratedDocument<Insuranc
       versionKey: false // Cosmetics; prevents returning of __v property
     })
   };
-  delete insuranceCardCopy.ownerId;
+  delete insuranceCardCopy.owner;
   return {
     ...insuranceCardCopy,
     _id: insuranceCardCopy._id.toString()

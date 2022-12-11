@@ -25,8 +25,8 @@ export default class EntryCollection {
     return EntryModel.findOne({_id: entryId});
   }
 
-  static async findAllByOwnerId(ownerId: string): Promise<HydratedDocument<Entry>[]> {
-    return EntryModel.find({owner: ownerId}).sort({date: -1});
+  static async findAllByOwner(owner: string): Promise<HydratedDocument<Entry>[]> {
+    return EntryModel.find({owner}).sort({date: -1});
   }
 
   static async updateOne(entryId: string, details: EntryDetails): Promise<HydratedDocument<Entry>> {

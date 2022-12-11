@@ -8,7 +8,7 @@ import {Schema, model} from 'mongoose';
 // Type definition for Medical Contact on the backend
 export type MedicalContact = {
   _id: Types.ObjectId;
-  ownerId: Types.ObjectId;
+  owner: Types.ObjectId;
   active: boolean;
   title: string;
   first_name: string;
@@ -21,7 +21,7 @@ export type MedicalContact = {
 
 const MedicalContactSchema = new Schema<MedicalContact>({
   // The owner of the medical contact
-  ownerId: {
+  owner: {
     // Use Types.ObjectId outside of the schema
     type: Schema.Types.ObjectId,
     required: true,

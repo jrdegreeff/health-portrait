@@ -19,11 +19,9 @@ const router = express.Router();
  */
 router.get(
   '/',
-  [
-    accountValidator.isLoggedIn
-  ],
+  accountValidator.isLoggedIn,
   async (req: Request, res: Response) => {
-    const medicalContacts = await MedicalContactCollection.findAllByOwnerId(req.session.accountId);
+    const medicalContacts = await MedicalContactCollection.findAllByOwner(req.session.accountId);
     const response = medicalContacts.map(util.constructMedicalContactResponse);
     res.status(200).json(response);
   }
@@ -33,7 +31,6 @@ router.get(
  * Create a new medical contact.
  *
  * @name POST /api/medical-contacts
- * @param {string} ownerId - The id of the owner of the medical contact
  * @param {string} title - The username of the user
  * @param {string} first_name - The username of the user
  * @param {string} last_name - The username of the user
@@ -68,7 +65,6 @@ router.post(
  *
  * @name PATCH /api/medical-contacts/:medicalContactId
  *
- * @param {string} ownerId - The id of the owner of the medical contact
  * @param {string} title - The username of the user
  * @param {string} first_name - The username of the user
  * @param {string} last_name - The username of the user

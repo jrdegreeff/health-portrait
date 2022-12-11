@@ -20,7 +20,7 @@ router.get(
   '/',
   accountValidator.isLoggedIn,
   async (req: Request, res: Response) => {
-    const entries = await EntryCollection.findAllByOwnerId(req.session.accountId);
+    const entries = await EntryCollection.findAllByOwner(req.session.accountId);
     const response = entries.map(util.constructEntryResponse);
     res.status(200).json(response);
   }

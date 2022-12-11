@@ -16,16 +16,16 @@ export default class InsuranceCardCollection {
   /**
    * Add a new insurance card
    *
-   * @param {string} ownerId - The id of the owner of the insurance card
+   * @param {string} owner - The id of the owner of the insurance card
    * @param {string} details - the details about the insurance card
    * @return {Promise<HydratedDocument<InsuranceCard>>} - The newly created insurance card
    */
-  static async addOne(ownerId: Types.ObjectId | string, details: InsuranceDetails): Promise<HydratedDocument<InsuranceCard>> {
+  static async addOne(owner: Types.ObjectId | string, details: InsuranceDetails): Promise<HydratedDocument<InsuranceCard>> {
     const insuranceCard = new InsuranceCardModel({
-      ownerId,
+      owner,
       ...details,
     });
-    await insuranceCard.save(); // Saves user to MongoDB
+    await insuranceCard.save();
     return insuranceCard;
   }
 
@@ -42,11 +42,11 @@ export default class InsuranceCardCollection {
   /**
    * Get all insurance cards in by given owner
    *
-   * @param {string} ownerId - The id of the owner of the medical contacts
+   * @param {string} owner - The id of the owner of the medical contacts
    * @return {Promise<HydratedDocument<InsuranceCard>[]>} - An array of all of the insurance cards sorted in alphabetical order by purpose
    */
-  static async findAllByOwnerId(ownerId: string): Promise<Array<HydratedDocument<InsuranceCard>>> {
-    return InsuranceCardModel.find({ownerId}).sort({purpose: 1});
+  static async findAllByOwner(owner: string): Promise<Array<HydratedDocument<InsuranceCard>>> {
+    return InsuranceCardModel.find({owner}).sort({purpose: 1});
   }
 
   /**
@@ -78,9 +78,9 @@ export default class InsuranceCardCollection {
   /**
    * Delete all the insurance cards by the given owner
    *
-   * @param {string} ownerId - The id of owner of medical contacts
+   * @param {string} owner - The id of owner of medical contacts
    */
-  static async deleteMany(ownerId: string): Promise<void> {
-    await InsuranceCardModel.deleteMany({ownerId});
+  static async deleteMany(owner: string): Promise<void> {
+    await InsuranceCardModel.deleteMany({owner});
   }
 }

@@ -16,18 +16,18 @@ export default class MedicalContactCollection {
   /**
    * Add a new medical contact
    *
-   * @param {string} ownerId - The id of the owner of the medical contact
+   * @param {string} owner - The id of the owner of the medical contact
    * @param {string} details - An object with the medical contact's details
    * @return {Promise<HydratedDocument<MedicalContact>>} - The newly created medical contact
    */
-  static async addOne(ownerId: string, details: ContractDetails): Promise<HydratedDocument<MedicalContact>> {
+  static async addOne(owner: string, details: ContractDetails): Promise<HydratedDocument<MedicalContact>> {
     const active = true; // Since medical contact was just created, it is active
     const medicalContact = new MedicalContactModel({
-      ownerId,
+      owner,
       active,
       ...details,
     });
-    await medicalContact.save(); // Saves user to MongoDB
+    await medicalContact.save();
     return medicalContact;
   }
 
@@ -44,11 +44,11 @@ export default class MedicalContactCollection {
   /**
    * Get all the medical contacts in by given owner
    *
-   * @param {string} ownerId - The id of the owner of the medical contacts
+   * @param {string} owner - The id of the owner of the medical contacts
    * @return {Promise<HydratedDocument<MedicalContact>[]>} - An array of all of the medical contacts sorted in alphabetical order by last name
    */
-  static async findAllByOwnerId(ownerId: string): Promise<Array<HydratedDocument<MedicalContact>>> {
-    return MedicalContactModel.find({ownerId, active: true}).sort({last_name: 1});
+  static async findAllByOwner(owner: string): Promise<Array<HydratedDocument<MedicalContact>>> {
+    return MedicalContactModel.find({owner, active: true}).sort({last_name: 1});
   }
 
   /**
@@ -82,9 +82,9 @@ export default class MedicalContactCollection {
   /**
    * Delete all the medical contacts by the given owner
    *
-   * @param {string} ownerId - The id of owner of medical contacts
+   * @param {string} owner - The id of owner of medical contacts
    */
-  static async deleteMany(ownerId: string): Promise<void> {
-    await MedicalContactModel.deleteMany({ownerId});
+  static async deleteMany(owner: string): Promise<void> {
+    await MedicalContactModel.deleteMany({owner});
   }
 }

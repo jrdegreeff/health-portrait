@@ -8,7 +8,7 @@ import {Schema, model} from 'mongoose';
 // Type definition for Insurance Card on the backend
 export type InsuranceCard = {
   _id: Types.ObjectId;
-  ownerId: Types.ObjectId;
+  owner: Types.ObjectId;
   subscriber_name: string;
   member_id: string;
   group_number: string;
@@ -20,7 +20,7 @@ export type InsuranceCard = {
 
 const InsuranceCardSchema = new Schema<InsuranceCard>({
   // The owner of the insurance card
-  ownerId: {
+  owner: {
     // Use Types.ObjectId outside of the schema
     type: Schema.Types.ObjectId,
     required: true,

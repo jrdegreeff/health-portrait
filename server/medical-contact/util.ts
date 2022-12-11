@@ -25,7 +25,7 @@ const constructMedicalContactResponse = (medicalContact: HydratedDocument<Medica
       versionKey: false // Cosmetics; prevents returning of __v property
     })
   };
-  delete medicalContactCopy.ownerId;
+  delete medicalContactCopy.owner;
   return {
     ...medicalContactCopy,
     _id: medicalContactCopy._id.toString()
