@@ -46,11 +46,8 @@ export default {
     };
   },
   computed: {
-    // Inspired by https://codepen.io/AndrewThian/pen/QdeOVa
     filteredMedications() {
-      return this.$store.state.medications.filter(medication => {
-        return medication.name.toLowerCase().includes(this.search.toLowerCase())
-      })
+      return this.$store.filter('medications', ['name'], this.search);
     }
   },
   mounted() {
@@ -80,12 +77,7 @@ export default {
 </script>
 
 <style scoped>
-
-/* h2 {
-  display: inline;
-} */
 .search-wrapper {
   padding-top: 20px;
 }
-
 </style>
