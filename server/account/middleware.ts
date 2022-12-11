@@ -51,7 +51,7 @@ const isLoggedOut = (req: Request, res: Response, next: NextFunction) => {
 };
 
 /**
- * Checks if a name in req.body is valid, that is, it matches the name regex.
+ * Checks if a name in req.body is not empty or blank.
  */
 const isValidAccountName = (required: boolean) => (req: Request, res: Response, next: NextFunction) => {
   if (!required && req.body.name === undefined) {
@@ -59,10 +59,10 @@ const isValidAccountName = (required: boolean) => (req: Request, res: Response, 
     return;
   }
 
-  const nameRegex = /^[a-z ,.'-]+$/i;
-  if (!req.body.name || !nameRegex.test(req.body.name)) {
+  const nonEmptyRegex = /^(?!\s*$).+/i;
+  if (!req.body.name || !nonEmptyRegex.test(req.body.name)) {
     res.status(400).json({
-      error: 'Name must be a nonempty string of valid characters.'
+      error: 'Name must be a nonempty string.'
     });
     return;
   }

@@ -31,7 +31,7 @@ const MedicationSchema = new Schema<Medication>({
   // The generic name of the medication
   generic_name: {
     type: String,
-    required: true
+    default: ''
   },
   // The dose of the medication
   dose: {
@@ -41,7 +41,7 @@ const MedicationSchema = new Schema<Medication>({
   // Notes about the medication
   notes: {
     type: String,
-    default: ""
+    default: ''
   }
 });
 
