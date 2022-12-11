@@ -51,11 +51,8 @@
       };
     },
     computed: {
-      // Inspired by https://codepen.io/AndrewThian/pen/QdeOVa
       filteredContacts() {
-        return this.$store.state.contacts.filter(contact => {
-          return contact.last_name.toLowerCase().includes(this.search.toLowerCase()) || contact.first_name.toLowerCase().includes(this.search.toLowerCase())
-        })
+        return this.$store.filter('contacts', ['last_name', 'first_name'], this.search);
       }
     },
     mounted() {
@@ -73,9 +70,7 @@
 </script>
 
 <style scoped>
-
 .search-wrapper {
   padding-top: 20px;
 }
-
 </style>

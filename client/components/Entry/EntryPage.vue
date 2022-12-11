@@ -34,7 +34,7 @@ export default {
     },
     computed: {
         filteredEntries() {
-            return this.type === "all" ? this.$store.state.entries : this.$store.state.entries.filter(e => e.type === this.type);
+            return this.$store.filter('entries', ['type'], this.type === 'all' ? '' : this.type);
         }
     },
     mounted() {

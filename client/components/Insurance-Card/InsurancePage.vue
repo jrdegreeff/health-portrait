@@ -21,7 +21,7 @@
           <input
             v-model="search"
             type="text"
-            placeholder="Search insurances..."
+            placeholder="Search insurance cards..."
           >
         </div>
       </header>
@@ -51,11 +51,8 @@
       };
     },
     computed: {
-      // Inspired by https://codepen.io/AndrewThian/pen/QdeOVa
       filteredInsurances() {
-        return this.$store.state.insurances.filter(insurance => {
-          return insurance.purpose.toLowerCase().includes(this.search.toLowerCase())
-        })
+        return this.$store.filter('insurances', ['purpose'], this.search);
       }
     },
     mounted() {
@@ -71,3 +68,9 @@
     },
   };
 </script>
+
+<style scoped>
+.search-wrapper {
+  padding-top: 20px;
+}
+</style>

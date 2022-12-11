@@ -46,7 +46,12 @@
         v-model="values[id]"
         @input="() => validate(id)"
       >
+      
       <small v-if="type === 'range'"> {{ values[id] }} </small>
+      <datalist v-if="type === 'range'" id="tickmarks">
+        <option v-for="num in [...Array(range.max - range.min + 1).keys()].map(x => x + range.min)" :value="num" />
+      </datalist>
+
       <small v-if="hint"> {{ hint }} </small>
       <small v-if="errors[id]" class="error"> {{ errors[id] }} </small>
       <small v-if="instructions" class="tooltip"> 
@@ -54,10 +59,6 @@
         <div class="tooltiptext" v-if="instructions">{{ instructions }}</div>
         <!-- Inspired by https://www.w3schools.com/css/css_tooltip.asp -->
       </small>
-      
-      <datalist v-if="type === 'range'" id="tickmarks">
-        <option v-for="num in [1,2,3,4,5,6,7,8,9,10]" :value="num"></option>
-      </datalist>
     </span>
   </article>
 </template>

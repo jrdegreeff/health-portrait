@@ -119,4 +119,8 @@ const store = new Vuex.Store({
   plugins: [createPersistedState()]
 });
 
+store.filter = (collection, fields, value) => {
+  return store.state[collection].filter(r => fields.some(f => r[f].toLowerCase().includes(value.toLowerCase())));
+}
+
 export default store;
