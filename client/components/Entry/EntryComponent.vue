@@ -48,7 +48,6 @@ export default {
         return {
             link: `/editLog/${this.entry._id}`, 
             expanded: false,
-            alerts: {} 
         };
     },
     methods: {     
@@ -67,21 +66,13 @@ export default {
             this.request(params);
         },
         async request(params) {
-            const options = {
-                method: params.method, headers: {'Content-Type': 'application/json'}
-            };
-            try {
-                const r = await fetch(`/api/entries/${this.entry._id}`, options);
-                if (!r.ok) {
-                    const res = await r.json();
-                    throw new Error(res.error);
-                }
-                this.$store.dispatch('refreshEntries');
-                params.callback();
-            } catch (e) {
-                this.$set(this.alerts, e, 'error');
-                setTimeout(() => this.$delete(this.alerts, e), 3000);
-            }
+            const res = await this.$helpers.fetch(`/api/entries/${this.entry._id}`, {
+                method: params.method,
+            });
+            if (!res) return;
+
+            await this.$store.dispatch('refreshEntries');
+            params.callback();
         }
     }
 }

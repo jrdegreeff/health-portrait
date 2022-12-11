@@ -1,45 +1,16 @@
 <!-- Reusable component representing a form in a block style -->
-<!-- This is just an example; feel free to define any reusable components you want! -->
 
 <template>
   <form @submit.prevent="submit">
     <fieldset>
       <legend>{{ title }}</legend>
-      <article v-if="fields.length">
-        <div
-          v-for="field in fields"
-          :key="field.id"
-        >
-          <span>
-            <label
-              v-if="!field.hidden"
-              :for="field.id"
-            >
-              {{ field.label }}:
-            </label>
-            <input
-              v-if="field.hidden"
-              type=hidden
-              :name="field.id"
-              :value="field.value"
-            >
-            <textarea
-              v-else-if="field.id === 'notes'"
-              :name="field.id"
-              :value="field.value"
-              @input="field.value = $event.target.value"
-            />
-            <input
-              v-else
-              :type="field.id === 'password' ? 'password' : 'text'"
-              :name="field.id"
-              :value="field.value"
-              @input="field.value = $event.target.value"
-            >
-            <small v-if="field.hint"> {{ field.hint }} </small>
-          </span>
-        </div>
-      </article>
+      <BaseForm
+        v-if="fields.length"
+        :fields="fields"
+        :document="document"
+        :customValidators="validators"
+        @interface="registerForm"
+      />
       <p v-else>{{ content }}</p>
       <button class="btn-primary" type="submit">
         {{ title }}
@@ -49,66 +20,51 @@
 </template>
 
 <script>
+import BaseForm from '@/components/common/BaseForm.vue';
+
 export default {
   name: 'BlockForm',
+  components: {BaseForm},
   data() {
-    /**
-     * Options for submitting this form.
-     */
     return {
-      url: '', // Url to submit form to
+      url: '', // URL to submit form to (supplied by specific form)
       method: 'GET', // Form request method
-      hasBody: false, // Whether or not form request has a body
+      title: '', // Form title and submit button text (supplied by specific form)
+      fields: [], // Form fields to be rendered (supplied by specific form)
+      content: '', // Text to display when no fields (supplied by specific form)
+      document: {}, // The default values of the form
+      validators: {}, // Functions to run for client-side validation (supplied by specific form)
       loadAccount: false, // Whether or not to reload all store data associated with the account
       setAccount: false, // Whether or not stored account info should be updated after form submission
       setUsername: false, // Whether or not stored username should be updated after form submission
       callback: null, // Function to run after successful form submission
     };
   },
+  created() {
+    this.document = Object.fromEntries(this.fields.map(f => [f.id, f.default]));
+  },
   methods: {
+    registerForm(formInterface) {
+      this.form = formInterface;
+    },
     async submit() {
-      /**
-        * Submits a form with the specified options from data().
-        */
-      const options = {
+      // run client-side validation before sending to server
+      if (this.form && this.form.hasErrors()) return;
+
+      const res = await this.$helpers.fetch(this.url, {
         method: this.method,
-        headers: {'Content-Type': 'application/json'},
-        credentials: 'same-origin' // Sends express-session credentials with request
-      };
-      if (this.hasBody) {
-        const fields = Object.fromEntries(this.fields.map(f => [f.id, f.value]));
-        options.body = JSON.stringify(fields);
-      }
+        body: this.form ? JSON.stringify(this.form.values()) : undefined,
+      });
+      if (!res) return;
 
-      try {
-        const r = await fetch(this.url, options);
-        if (!r.ok) {
-          const res = await r.json();
-          throw new Error(res.error);
-        }
+      // clear form on successful submission
+      this.form && this.form.clear();
 
-        this.fields.forEach(f => f.value = '');
+      this.loadAccount && await this.$store.dispatch('loadAccount', res);
+      this.setAccount && this.$store.commit('setAccount', res.account);
+      this.setUsername && this.$store.commit('setUsername', res.username);
 
-        const text = await r.text();
-
-        if (this.loadAccount) {
-          await this.$store.dispatch('loadAccount', JSON.parse(text));
-        }
-
-        if (this.setAccount) {
-          this.$store.commit('setAccount', JSON.parse(text).account);
-        }
-        
-        if (this.setUsername) {
-          this.$store.commit('setUsername', JSON.parse(text).username);
-        }
-
-        if (this.callback) {
-          this.callback();
-        }
-      } catch (e) {
-        this.$store.commit('alert', { message: e, status: 'error' });
-      }
+      this.callback && this.callback();
     }
   }
 };

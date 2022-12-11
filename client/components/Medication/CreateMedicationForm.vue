@@ -8,12 +8,11 @@ export default {
     return {
       url: '/api/medications',
       method: 'POST',
-      hasBody: true,
       fields: [
-        {id: 'name', label: 'Medication Name', value: ''},
-        {id: 'generic_name', label: 'Generic Name', value: ''},
-        {id: 'dose', label: 'Dose', value: ''},
-        {id: 'notes', label: 'Notes', value: ''},
+        {id: 'name', label: 'Medication Name'},
+        {id: 'generic_name', label: 'Generic Name', optional: true},
+        {id: 'dose', label: 'Dose'},
+        {id: 'notes', label: 'Notes', type: 'textarea', optional: true},
       ],
       title: 'Add medication',
       callback: async () => {

@@ -1,25 +1,25 @@
 <!-- Reusable component representing a single editable object -->
 
 <template>
-  <article class="card">
-    <section>
-      <div
-        v-for="field in fields"
-        :key="field.id"
+  <section>
+    <BaseForm
+      v-if="editing"
+      :fields="fields"
+      :document="document"
+      :customValidators="validators"
+      @interface="registerForm"
+    />
+    <article v-else>
+      <span
+        v-for="{id, label, type, hint, optional} in fields"
+        :key="id"
       >
-        <label>{{ field.label }}:</label>
-        <textarea v-if="editing && field.id === 'notes'" v-model="values[field.id]" />
-        <input v-else-if="editing" v-model="values[field.id]" />
-        <span v-else>
-          {{ values[field.id] }}
-        </span>
-        <small v-if="editing && field.hint">
-          {{ field.hint }}
-        </small>
-      </div>
-    </section>
+        <label> {{ label }}: </label>
+        {{ document[id] }}
+      </span>
+    </article>
     <hr>
-    <section class="actions">
+    <div class="actions">
       <button class="btn-secondary" v-if="editing" @click="sendPatch">
         ✅ save changes
       </button>
@@ -32,13 +32,16 @@
       <button class="btn-secondary" @click="sendDelete">
         🗑️ delete
       </button>
-    </section>
-  </article>
+    </div>
+  </section>
 </template>
 
 <script>
+import BaseForm from '@/components/common/BaseForm.vue';
+
 export default {
-  name: "EditableCard",
+  name: 'EditableCard',
+  components: {BaseForm},
   props: {
     document: {
       type: Object,
@@ -47,59 +50,63 @@ export default {
   },
   data() {
     return {
-      values: Object.assign({}, this.document), // The values to display (editable)
+      url: '', // URL to submit patch and delete requests to (supplied by specific card)
+      fields: [], // Card fields to be rendered (supplied by specific card)
+      validators: {}, // Functions to run for client-side validation (supplied by specific card)
       editing: false, // Whether or not this contact is in edit mode
+      deleteCallback: null, // Function to be called when delete request is successful (supplied by specific card)
+      patchCallback: null, // Function to be called when patch request is successful (supplied by specific card)
     };
   },
   methods: {
+    registerForm(formInterface) {
+      this.form = formInterface;
+    },
     startEditing() {
       this.editing = true;
-      this.values = Object.assign({}, this.document);
     },
     stopEditing() {
       this.editing = false;
-      this.values = Object.assign({}, this.document);
     },
     async sendDelete() {
-      await this.request({ method: "DELETE" });
+      const res = await this.$helpers.fetch(`${this.url}/${this.document._id}`, {
+        method: 'DELETE'
+      });
+      if (!res) return;
+
       await this.deleteCallback();
     },
     async sendPatch() {
-      const modified = Object.fromEntries(this.fields.filter(f => this.document[f.id] !== this.values[f.id])
-                                                     .map(f => [f.id, this.values[f.id]]));
-      await this.request({ method: "PATCH", body: JSON.stringify(modified) });
+      // run client-side validation before sending to server
+      if (this.form.hasErrors()) return;
+
+      const res = await this.$helpers.fetch(`${this.url}/${this.document._id}`, {
+        method: 'PATCH',
+        body: JSON.stringify(this.form.modified())
+      });
+      if (!res) return;
+
       await this.patchCallback();
-    },
-    async request(params) {
-      const options = {
-        ...params,
-        headers: { "Content-Type": "application/json" },
-        credentials: 'same-origin' // Sends express-session credentials with request
-      };
-      try {
-        const r = await fetch(`${this.url}/${this.document._id}`, options);
-        if (!r.ok) {
-          const res = await r.json();
-          throw new Error(res.error);
-        }
-        this.editing = false;
-      } catch (e) {
-        this.$store.commit('alert', { message: e, status: 'error' });
-      }
+      this.stopEditing();
     },
   },
 };
 </script>
 
 <style scoped>
-.card {
+section {
   border: 1px solid #111;
   padding: 20px;
   position: relative;
   margin-bottom: -1px;
 }
 
-div {
+article {
+  display: flex;
+  flex-direction: column;
+}
+
+span {
   padding: 0.5rem;
 }
 

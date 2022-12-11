@@ -5,7 +5,6 @@
         <header><h2>
           <NavLink to="/" name="Home"/>
         </h2></header>
-
       </section>
       <hr/>
       <section>

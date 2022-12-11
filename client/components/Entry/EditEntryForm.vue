@@ -6,40 +6,26 @@ export default {
   mixins: [CreateEntryForm],
   props: {
     entryId: {
-        type: String,
-        required: true,
+      type: String,
+      required: true,
     },
   },
   data() {
     return {
       url: `/api/entries/${this.entryId}`,
       method: 'PATCH',
-      hasBody: true,
       title: 'Edit entry',
-      callback: () => {
-        this.$router.go(-1);
-        this.$store.dispatch('refreshEntries');
+      callback: async () => {
         this.$store.commit('alert', {
           message: 'You\'ve saved changes to the entry!', status: 'success'
         });
+        await this.$store.dispatch('refreshEntries');
+        this.$router.go(-1);
       }
     };
   },
-  computed: {
-    entry: function() {
-      return this.$store.state.entries.find((entry) => entry._id === this.entryId);
-    },
-  },
-  methods: {
-    setDefaultFieldVals() {
-      Object.entries(this.entry).forEach(([id, value]) => {
-        const field = this.fields.find(f => f.id === id);
-        field && (field.value = value);
-      });
-    },
-  },
-  mounted() {
-    this.setDefaultFieldVals();
+  created() {
+    this.document = this.$store.state.entries.find(e => e._id === this.entryId);
   },
 };
 

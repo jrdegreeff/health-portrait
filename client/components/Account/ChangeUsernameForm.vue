@@ -10,11 +10,10 @@ export default {
     return {
       url: '/api/accounts/credentials',
       method: 'PATCH',
-      hasBody: true,
       setAccount: true,
       setUsername: true,
       fields: [
-        {id: 'username', label: 'Username', value: ''}
+        {id: 'username', label: 'Username'}
       ],
       title: 'Change username',
       callback: () => {

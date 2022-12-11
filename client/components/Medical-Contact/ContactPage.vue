@@ -13,9 +13,17 @@
     <section>
       <header>
         <h2>Current Contacts</h2>
+        <div class="search-wrapper">
+          <label>Search by contact name:</label>
+          <input
+            v-model="search"
+            type="text"
+            placeholder="Search contact.."
+          >
+        </div>
       </header>
       <ContactCard
-        v-for="contact in $store.state.contacts"
+        v-for="contact in filteredContacts"
         :key="contact._id"
         :document="contact"
       />
@@ -33,9 +41,23 @@
       CreateContactForm, 
       ContactCard
     },
+    data() {
+      return {
+        search: '',
+        contactList: this.$store.state.contacts,
+      };
+    },
+    computed: {
+      // Inspired by https://codepen.io/AndrewThian/pen/QdeOVa
+      filteredContacts() {
+        return this.contactList.filter(contact => {
+          return contact.last_name.toLowerCase().includes(this.search.toLowerCase()) || contact.first_name.toLowerCase().includes(this.search.toLowerCase())
+        })
+      }
+    },
     mounted() {
       this.$store.commit("setHeader", {
-        title: "Health Book",
+        title: `${this.$store.state.account.name}'s Health Book`,
         enableBack: true,
         headerLinks: {
           "/contacts": "Contacts",
@@ -47,3 +69,11 @@
     },
   };
 </script>
+
+<style scoped>
+
+.search-wrapper {
+  padding-top: 20px;
+}
+
+</style>

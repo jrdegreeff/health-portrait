@@ -3,8 +3,8 @@
     <header class="title">
       <h1
         v-if="$store.state.enableBack"
-        @click="() => $router.go(-1)"
         class="back"
+        @click="() => $router.go(-1)"
       >
         <img class="back_arrow" src="../../public/back_arrow.png" alt="Back Arrow"/>
       </h1>

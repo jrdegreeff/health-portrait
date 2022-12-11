@@ -48,7 +48,7 @@
     },
     mounted() {
       this.$store.commit('setHeader', {
-        title: 'Trends', 
+        title: `${this.$store.state.account.name}'s Health Trends`, 
         enableBack: true, 
         headerLinks: {
           "/trends/all": "All",

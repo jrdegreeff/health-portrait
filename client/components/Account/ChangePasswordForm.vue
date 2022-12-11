@@ -10,9 +10,8 @@ export default {
     return {
       url: '/api/accounts/credentials',
       method: 'PATCH',
-      hasBody: true,
       fields: [
-        {id: 'password', label: 'Password', value: ''}
+        {id: 'password', label: 'Password', type: 'password'}
       ],
       title: 'Change password',
       callback: () => {
