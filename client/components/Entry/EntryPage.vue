@@ -1,7 +1,7 @@
 <template>
     <main>
         <button class="btn-primary">
-            <router-link to="/newLog">➕ add</router-link>
+            <router-link to="/newLog"> Add log </router-link>
         </button>
 
         <table class="entries" v-if="filteredEntries">

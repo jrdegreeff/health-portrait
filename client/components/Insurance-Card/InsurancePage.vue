@@ -4,10 +4,13 @@
 <template>
   <main>
     <section>
-      <!-- <button>
-          Add contact
-        </button> -->
-      <CreateInsuranceForm />
+      <button v-if="!showForm" class="btn-primary" @click="showForm=true">
+        Add insurance
+      </button>
+      <button v-if="showForm" class="btn-primary" @click="showForm=false">
+        Add insurance
+      </button>
+      <CreateInsuranceForm v-if="showForm"/>
     </section>
     <hr>
     <section>
@@ -44,6 +47,7 @@
     data() {
       return {
         search: '',
+        showForm: false,
       };
     },
     computed: {
