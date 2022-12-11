@@ -19,7 +19,7 @@ const routes = [
   {path: '/login', name: 'Login', component: LoginPage},
   {path: '/account', name: 'Account', component: AccountPage},
   {path: '/logs/:type?', name: 'Logs', component: EntryPage, props: true},
-  {path: '/newLog', name: 'New Log', component: CreateEntryPage},
+  {path: '/newLog/:type?', name: 'New Log', component: CreateEntryPage, props: true},
   {path: '/editLog/:entryId', name: 'Edit Log', component: EditEntryPage, props: true},
   {path: '/trends/:type?', name: 'Trends', component: TrendsPage, props: true},
   {path: '/contacts', name: 'Contacts', component: ContactPage},

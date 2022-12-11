@@ -1,7 +1,7 @@
 <template>
     <main>
         <button class="btn-primary">
-            <router-link to="/newLog"> Add log </router-link>
+            <NavLink :to="`/newLog/${type}`" name="Add log"></NavLink>
         </button>
 
         <table class="entries" v-if="filteredEntries">
@@ -20,11 +20,12 @@
 </template>
 
 <script lang="ts">
+import NavLink from '@/components/common/NavLink.vue';
 import EntryComponent from '@/components/Entry/EntryComponent.vue';
 
 export default {
     name: 'EntryPage',
-    components: {EntryComponent},
+    components: {NavLink, EntryComponent},
     props: {
         type: {
             type: String,
@@ -32,10 +33,6 @@ export default {
       }
     },
     computed: {
-        activeType() {
-            const type = this.type;
-            return type.charAt(0).toUpperCase() + type.slice(1);
-        },
         filteredEntries() {
             return this.type === "all" ? this.$store.state.entries : this.$store.state.entries.filter(e => e.type === this.type);
         }
@@ -45,7 +42,7 @@ export default {
             title: `${this.$store.state.account.name}'s Health Journal`,
             enableBack: true,
             headerLinks: {
-                "/logs/all": "All",
+                "/logs/all": "All", // keeping the /all here to avoid weird activeLink styling behavior
                 "/logs/medication": "Medication",
                 "/logs/appointment": "Appointment",
                 "/logs/other": "Other",
