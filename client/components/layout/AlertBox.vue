@@ -40,7 +40,7 @@ article {
   border-radius: 5px;
   padding: 0.5rem 1rem;
   margin: 0.5rem 0;
-  color: white;
+  color: var(--light);
 
   display: flex;
   justify-content: space-between;

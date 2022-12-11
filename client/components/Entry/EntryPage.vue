@@ -1,6 +1,6 @@
 <template>
     <main>
-        <button class="btn-secondary">
+        <button class="btn-primary">
             <router-link to="/newLog">➕ add</router-link>
         </button>
 
@@ -43,14 +43,13 @@ export default {
     mounted() {
         this.$store.commit('setHeader', {
             title: `${this.$store.state.account.name}'s Health Journal`,
-            enableBack: false,
+            enableBack: true,
             headerLinks: {
                 "/logs/all": "All",
                 "/logs/medication": "Medication",
                 "/logs/appointment": "Appointment",
                 "/logs/other": "Other",
             },
-            activeLink: this.activeType,
         });
     }
 }
@@ -58,7 +57,7 @@ export default {
 
 <style scoped>
 .entries {
-    border: 1px solid black;
+    border: 1px solid var(--dark);
     border-bottom: 0px;
     border-spacing: 0px;
     margin-top: 2rem;

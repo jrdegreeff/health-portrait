@@ -14,7 +14,6 @@ const store = new Vuex.Store({
     title: "",
     enableBack: false,
     headerLinks: {},
-    activeLink: undefined,
     account: null,
     username: null,
     entries: [],
@@ -24,11 +23,10 @@ const store = new Vuex.Store({
     alerts: {},
   },
   mutations: {
-    setHeader(state, {title, enableBack, headerLinks, activeLink}) {
+    setHeader(state, {title, enableBack, headerLinks}) {
       state.title = title;
       state.enableBack = enableBack;
       state.headerLinks = headerLinks || {};
-      state.activeLink = activeLink;
     },
     setAccount(state, account) {
       state.account = account || null;
