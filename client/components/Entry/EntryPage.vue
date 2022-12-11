@@ -36,9 +36,9 @@ export default {
             title: `${this.$store.getters.accountName}'s Health Journal`,
             enableBack: true,
             headerLinks: {
-                "/logs/all": "All", // keeping the /all here to avoid weird activeLink styling behavior
-                "/logs/medication": "Medication",
+                "/logs/all": "All",
                 "/logs/appointment": "Appointment",
+                "/logs/medication": "Medication",
                 "/logs/other": "Other",
             },
         });

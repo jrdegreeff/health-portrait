@@ -41,8 +41,8 @@
         enableBack: true,
         headerLinks: {
           "/trends/all": "All",
-          "/trends/medication": "Medication",
           "/trends/appointment": "Appointment",
+          "/trends/medication": "Medication",
           "/trends/other": "Other",
         },
       });

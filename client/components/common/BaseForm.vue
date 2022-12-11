@@ -12,22 +12,22 @@
         v-if="type === 'select'"
         :class="errors[id] ? 'error' : ''"
         v-model="values[id]"
-        @change="() => validate(id)"
+        @change="() => update(id)"
       >
         <option/>
         <option
-          v-for="option in options"
-          :key="option"
-          :value="option"
+          v-for="{value, text} in options"
+          :key="value"
+          :value="value"
         >
-        {{ option }}
+        {{ text }}
         </option>
       </select>
       <textarea
         v-else-if="type === 'textarea'"
         :class="errors[id] ? 'error' : ''"
         v-model="values[id]"
-        @input="() => validate(id)"
+        @input="() => update(id)"
       />
       <input
         v-else-if="type === 'range'"
@@ -37,14 +37,14 @@
         list="tickmarks"
         :class="errors[id] ? 'error' : ''"
         v-model="values[id]"
-        @change="() => validate(id)"
+        @change="() => update(id)"
       >
       <input
         v-else
         :class="errors[id] ? 'error' : ''"
         :type="type || 'text'"
         v-model="values[id]"
-        @input="() => validate(id)"
+        @input="() => update(id)"
       >
       
       <small v-if="type === 'range'"> {{ values[id] }} </small>
@@ -78,7 +78,11 @@ export default {
     customValidators: {
       type: Object,
       required: true
-    }
+    },
+    customUpdaters: {
+      type: Object,
+      required: true
+    },
   },
   data() {
     return {
@@ -113,6 +117,10 @@ export default {
   methods: {
     validate(id) {
       this.$set(this.errors, id, this.validators[id](this.values[id]));
+    },
+    update(id) {
+      this.customUpdaters[id] && this.customUpdaters[id](this);  // escape hatch
+      this.validate(id);
     },
   },
 };

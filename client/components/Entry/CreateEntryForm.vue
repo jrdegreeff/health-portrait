@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
 import moment from 'moment';
 import BlockForm from '@/components/common/BlockForm.vue';
 
@@ -6,9 +6,9 @@ export default {
   name: 'CreateEntryForm',
   mixins: [BlockForm],
   props: {
-      type: {
-          type: String,
-          required: false
+    type: {
+      type: String,
+      required: false
     }
   },
   data() {
@@ -17,13 +17,39 @@ export default {
       method: 'POST',
       title: 'Create new entry',
       fields: [
-        {id: 'type', label: 'Type', type: 'select', options: ['medication', 'appointment', 'other'], default: (this.type !== "all") ? this.type : ''},
-        {id: 'detail', label: 'Detail'},
-        {id: 'condition', label: 'Condition', type: 'select', options: ['pain', 'cognition', 'happiness']},
-        {id: 'scale', label: 'Scale', type: 'range', range: {min: 1, max: 10}, default: "5"},
+        {id: 'type', label: 'Type', type: 'select', options: [
+          {value: 'appointment', text: 'Appointment'},
+          {value: 'medication', text: 'Medication'},
+          {value: 'other', text: 'Other'},
+        ], default: (this.type !== "all") ? this.type : ''},
+        {id: 'detail', label: '', type: 'hidden'},
+        {id: 'condition', label: 'Condition', type: 'select', options: [
+          {value: 'pain', text: 'pain'},
+          {value: 'cognition', text: 'cognition'},
+          {value: 'happiness', text: 'happiness'},
+        ]},
+        {id: 'scale', label: 'Scale', type: 'range', range: {min: 1, max: 10}, default: 5},
         {id: 'notes', label: 'Notes', type: 'textarea', optional: true},
         {id: 'date', label: 'Date', type: 'date', default: moment().format('YYYY-MM-DD')}
       ],
+      updaters: {
+        type: form => {
+          const detailTypes = {
+            '': {id: 'detail', label: '', type: 'hidden'},
+            appointment: {id: 'detail', label: 'doctor', type: 'select', options: this.$store.getters.activeContacts.map(
+              c => { return {value: c._id, text: c.title}; }
+            )},
+            medication: {id: 'detail', label: 'medication', type: 'select', options: this.$store.getters.activeMedications.map(
+              m => { return {value: m._id, text: m.title}; }
+            )},
+            other: {id: 'detail', label: 'description'},
+          };
+          form.fields[1] = detailTypes[form.values['type']];
+        }
+      },
+      validators: {
+        date: this.$helpers.validators.date,
+      },
       callback: async () => {
         this.$store.commit('alert', {
           message: 'You\'ve created a new entry!', status: 'success'

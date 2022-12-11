@@ -14,7 +14,6 @@ const formatMedication = (medication) => {
   return medication ? medication.name : '';
 }
 
-
 /**
  * Storage for data that needs to be accessed from various components.
  */
@@ -42,13 +41,17 @@ const store = new Vuex.Store({
       return state.account ? state.account.credentials : [];
     },
     activeContacts(state) {
-      return state.contacts.filter(c => c.active);
+      return state.contacts.filter(c => c.active).map(c => {
+        return { ...c, title: formatContact(c) };
+      });
     },
     activeInsurances(state) {
       return state.insurances;
     },
     activeMedications(state) {
-      return state.medications.filter(m => m.active);
+      return state.medications.filter(m => m.active).map(m => {
+        return { ...m, title: formatMedication(m) };
+      });
     },
     populatedEntries(state) {
       return state.entries.map(e => {
