@@ -1,6 +1,6 @@
 <!-- Form for registering an account (block style) -->
 
-<script lang="ts">
+<script>
 import BlockForm from '@/components/common/BlockForm.vue';
 
 export default {
@@ -12,10 +12,14 @@ export default {
       method: 'POST',
       loadAccount: true,
       fields: [
-        {id: 'name', label: 'Name'},
+        {id: 'name', label: 'Shared Account Name', instructions: 'This should be the name of the person whose health data will be recorded in this account.'},
         {id: 'username', label: 'Username'},
         {id: 'password', label: 'Password', type: 'password'}
       ],
+      validators: {
+        username: this.$helpers.validators.username,
+        password: this.$helpers.validators.password,
+      },
       title: 'Create account',
       callback: () => {
         this.$store.commit('alert', {

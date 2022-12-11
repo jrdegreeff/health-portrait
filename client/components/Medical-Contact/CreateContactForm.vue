@@ -5,7 +5,6 @@ export default {
   name: 'CreateContactForm',
   mixins: [BlockForm],
   data() {
-    const phoneRegex = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/;
     return {
       url: '/api/medical-contacts',
       method: 'POST',
@@ -19,7 +18,7 @@ export default {
         {id: 'notes', label: 'Notes', type: 'textarea', optional: true},
       ],
       validators: {
-        phone_number: v => phoneRegex.test(v) ? '' : 'invalid format'
+        phone_number: this.$helpers.validators.phoneNumber
       },
       title: 'Add contact',
       callback: async () => {

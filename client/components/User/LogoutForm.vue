@@ -12,7 +12,6 @@ export default {
       method: 'DELETE',
       loadAccount: true,
       title: 'Log out',
-      fields: [],
       content: 'Taking a break? See you later.',
       callback: () => {
         this.$router.push({name: 'Login'}); // Goes to Home page after signing out

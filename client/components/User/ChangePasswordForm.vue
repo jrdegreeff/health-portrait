@@ -1,24 +1,25 @@
-<!-- Form for changing username (block style) -->
+<!-- Form for changing password (block style) -->
 
-<script lang="ts">
+<script>
 import BlockForm from '@/components/common/BlockForm.vue';
 
 export default {
-  name: 'ChangeUsernameForm',
+  name: 'ChangePasswordForm',
   mixins: [BlockForm],
   data() {
     return {
       url: '/api/accounts/credentials',
       method: 'PATCH',
-      setAccount: true,
-      setUsername: true,
       fields: [
-        {id: 'username', label: 'Username'}
+        {id: 'password', label: 'Password', type: 'password'}
       ],
-      title: 'Change username',
+      validators: {
+        password: this.$helpers.validators.password,
+      },
+      title: 'Change password',
       callback: () => {
         this.$store.commit('alert', {
-          message: 'Successfully changed username!',
+          message: 'Successfully changed password!',
           status: 'success'
         });
       }

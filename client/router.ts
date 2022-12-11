@@ -1,23 +1,25 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import HomePage from './components/HomePage.vue';
-import AccountPage from './components/Account/AccountPage.vue';
-import ContactPage from './components/Medical-Contact/ContactPage.vue';
 import LoginPage from './components/Login/LoginPage.vue';
+import AccountPage from './components/Account/AccountPage.vue';
+import UserPage from './components/User/UserPage.vue';
 import EntryPage from './components/Entry/EntryPage.vue';
 import CreateEntryPage from './components/Entry/CreateEntryPage.vue';
 import EditEntryPage from './components/Entry/EditEntryPage.vue';
-import InsurancePage from './components/Insurance-Card/InsurancePage.vue'
-import MedicationPage from './components/Medication/MedicationPage.vue'
-import NotFound from './NotFound.vue';
 import TrendsPage from './components/Trends/TrendsPage.vue';
+import ContactPage from './components/Medical-Contact/ContactPage.vue';
+import MedicationPage from './components/Medication/MedicationPage.vue';
+import InsurancePage from './components/Insurance-Card/InsurancePage.vue';
+import NotFound from './NotFound.vue';
 
 Vue.use(VueRouter);
 
 const routes = [
   {path: '/', name: 'Home', component: HomePage},
   {path: '/login', name: 'Login', component: LoginPage},
-  {path: '/account', name: 'Account', component: AccountPage},
+  {path: '/account', name: 'Shared Account', component: AccountPage},
+  {path: '/user', name: 'Login Info', component: UserPage},
   {path: '/logs/:type?', name: 'Logs', component: EntryPage, props: true},
   {path: '/newLog/:type?', name: 'New Log', component: CreateEntryPage, props: true},
   {path: '/editLog/:entryId', name: 'Edit Log', component: EditEntryPage, props: true},
@@ -44,13 +46,8 @@ router.beforeEach((to, from, next) => {
     return;
   }
 
-  if (to.name === 'Logs' && !to.params.type) {
-    next({name: 'Logs', params: {type: 'all'}})
-    return;
-  }
-
-  if (to.name === 'Trends' && !to.params.type) {
-    next({name: 'Trends', params: {type: 'all'}})
+  if (['Logs', 'Trends'].includes(to.name) && !to.params.type) {
+    next({name: to.name, params: {type: 'all'}})
     return;
   }
   

@@ -22,6 +22,17 @@ const store = new Vuex.Store({
     medications: [],
     alerts: {},
   },
+  getters: {
+    username(state) {
+      return state.username && `@${state.username}`;
+    },
+    accountName(state) {
+      return state.account && state.account.name;
+    },
+    credentials(state) {
+      return state.account ? state.account.credentials : [];
+    },
+  },
   mutations: {
     setHeader(state, {title, enableBack, headerLinks}) {
       state.title = title;

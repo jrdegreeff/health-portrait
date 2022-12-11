@@ -39,7 +39,7 @@ export default {
     },
     mounted() {
         this.$store.commit('setHeader', {
-            title: `${this.$store.state.account.name}'s Health Journal`,
+            title: `${this.$store.getters.accountName}'s Health Journal`,
             enableBack: true,
             headerLinks: {
                 "/logs/all": "All", // keeping the /all here to avoid weird activeLink styling behavior

@@ -102,7 +102,7 @@ const isValidPassword = (required: boolean) => (req: Request, res: Response, nex
   const passwordRegex = /^\S+$/;
   if (!req.body.password || !passwordRegex.test(req.body.password)) {
     res.status(400).json({
-      error: 'Password must be a nonempty string.'
+      error: 'Password must not contain whitespace characters.'
     });
     return;
   }

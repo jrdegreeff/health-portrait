@@ -1,28 +1,28 @@
-<!-- Form for adding a credential to an account (block style) -->
+<!-- Form for changing username (block style) -->
 
 <script>
 import BlockForm from '@/components/common/BlockForm.vue';
 
 export default {
-  name: 'AddCredentialForm',
+  name: 'ChangeUsernameForm',
   mixins: [BlockForm],
   data() {
     return {
       url: '/api/accounts/credentials',
-      method: 'POST',
+      method: 'PATCH',
       setAccount: true,
+      setUsername: true,
       fields: [
-        {id: 'username', label: 'New Username'},
-        {id: 'password', label: 'New Password', type: 'password'}
+        {id: 'username', label: 'Username'}
       ],
       validators: {
         username: this.$helpers.validators.username,
-        password: this.$helpers.validators.password,
       },
-      title: 'Add new person to the shared account',
+      title: 'Change username',
       callback: () => {
+        this.$emit('submit');
         this.$store.commit('alert', {
-          message: 'Successfully added the new person to your shared account!',
+          message: 'Successfully changed username!',
           status: 'success'
         });
       }

@@ -1,4 +1,11 @@
+const nonEmptyRegex = /^(?!\s*$).+/i;
+const usernameRegex = /^\w+$/i;
+const passwordRegex = /^\S+$/;
+const phoneRegex = /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/;
+const dateRegex = /^[0-9]{4}-(1[0-2]|0[1-9])-(3[01]|[12][0-9]|0[1-9])$/;
+
 const helpers = (store) => {
+  const validateRegex = (regex, message) => v => regex.test(v) ? '' : message;
   return {
     fetch: async (url, options) => {
       let r;
@@ -26,7 +33,14 @@ const helpers = (store) => {
         console.log(e);
         return text;
       }
-    }
+    },
+    validators: {
+      nonEmpty: validateRegex(nonEmptyRegex, 'field cannot be blank'),
+      username: validateRegex(usernameRegex, 'username can only have letters and numbers'),
+      password: validateRegex(passwordRegex, 'password cannot have spaces'),
+      phoneNumber: validateRegex(phoneRegex, 'invalid phone number'),
+      date: validateRegex(dateRegex, 'invalid date'),
+    },
   };
 };
 
