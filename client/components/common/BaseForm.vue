@@ -39,7 +39,7 @@
       <small v-if="hint"> {{ hint }} </small>
       <small v-if="errors[id]" class="error"> {{ errors[id] }} </small>
       <small v-if="instructions" class="tooltip"> 
-        <img src = "question_circle.svg" alt="Question mark" width="30%"/>
+        <img src = "question_circle.svg" alt="Question mark" width="40%"/>
         <div class="tooltiptext" v-if="instructions"> {{ instructions }}</div>
         <!-- Inspired by https://www.w3schools.com/css/css_tooltip.asp -->
       </small>
