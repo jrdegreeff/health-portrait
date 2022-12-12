@@ -37,10 +37,10 @@ export default {
           const detailTypes = {
             '': {id: 'detail', label: '', type: 'hidden'},
             appointment: {id: 'detail', label: 'Doctor', type: 'select', options: this.$store.getters.activeContacts.map(
-              c => { return {value: c._id, text: c.title}; }
+              c => { return {value: c._id, text: c._title}; }
             )},
             medication: {id: 'detail', label: 'Medication', type: 'select', options: this.$store.getters.activeMedications.map(
-              m => { return {value: m._id, text: m.title}; }
+              m => { return {value: m._id, text: m._title}; }
             )},
             other: {id: 'detail', label: 'Description'},
           };

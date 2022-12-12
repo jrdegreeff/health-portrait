@@ -5,8 +5,8 @@
   <main>
     <article v-if="filteredEntries.length">
       <p>Click on the colored rectangles next to the <b>Cognition</b>, <b>Pain</b>, or <b>Happiness</b> labels at the top of each chart to show/hide trend lines.</p>
-      <div v-for="{title} in new Set(filteredEntries)" :key="title">
-        <TrendsVisualization :entries="filteredEntries.filter(entry => entry.title === title).reverse()" :title="title" />
+      <div v-for="_title in new Set(filteredEntries.map(e => e._title))" :key="_title">
+        <TrendsVisualization :entries="filteredEntries.filter(entry => entry._title === _title).reverse()" :title="_title" />
         <hr />
       </div>
     </article>
