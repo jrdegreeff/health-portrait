@@ -32,7 +32,8 @@
     },
     computed: {
       filteredEntries() {
-        return this.$store.filter('populatedEntries', ['type'], this.type === 'all' ? '' : this.type);
+        const entries = this.$store.getters.populatedEntries;
+        return this.type === 'all' ? entries : entries.filter(e => e.type === this.type);
       }
     },
     mounted() {
