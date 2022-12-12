@@ -1,13 +1,10 @@
 <template>
   <main>
     <section>
-      <button v-if="!showForm" class="btn-primary" @click="showForm=true">
-        Add medication
+      <button class="btn-primary" @click="toggleForm">
+        {{ showForm ? 'Cancel' : 'Add medication' }}
       </button>
-      <button v-if="showForm" class="btn-primary" @click="showForm=false">
-        Add medication
-      </button>
-      <CreateMedicationForm v-if="showForm"/>
+      <CreateMedicationForm v-if="showForm" @submit="hideForm" />
     </section>
     <hr>
     <section>
@@ -50,6 +47,14 @@ export default {
       return this.$store.filter('medications', ['name'], this.search);
     }
   },
+  methods: {
+    toggleForm() {
+      this.showForm = !this.showForm;
+    },
+    hideForm() {
+      this.showForm = false;
+    },
+  },
   mounted() {
     this.$store.commit("setHeader", {
       title: `${this.$store.getters.accountName}'s Health Book`,
@@ -72,7 +77,6 @@ export default {
       }
     });
   },
-  methods: {},
 };
 </script>
 

@@ -4,13 +4,10 @@
 <template>
   <main>
     <section>
-      <button v-if="!showForm" class="btn-primary" @click="showForm=true">
-        Add contact
+      <button class="btn-primary" @click="toggleForm">
+        {{ showForm ? 'Cancel' : 'Add contact' }}
       </button>
-      <button v-if="showForm" class="btn-primary" @click="showForm=false">
-        Add contact
-      </button>
-      <CreateContactForm v-if="showForm"/>
+      <CreateContactForm v-if="showForm" @submit="hideForm" />
     </section>
     <hr>
     <section>
@@ -53,6 +50,14 @@
     computed: {
       filteredContacts() {
         return this.$store.filter('contacts', ['last_name', 'first_name'], this.search);
+      }
+    },
+    methods: {
+      toggleForm() {
+        this.showForm = !this.showForm;
+      },
+      hideForm() {
+        this.showForm = false;
       }
     },
     mounted() {

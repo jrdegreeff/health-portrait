@@ -20,7 +20,6 @@ export default {
       },
       title: 'Change username',
       callback: () => {
-        this.$emit('submit');
         this.$store.commit('alert', {
           message: 'Successfully changed username!',
           status: 'success'

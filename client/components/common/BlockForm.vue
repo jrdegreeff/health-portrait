@@ -65,6 +65,7 @@ export default {
       this.setAccount && this.$store.commit('setAccount', res.account);
       this.setUsername && this.$store.commit('setUsername', res.username);
 
+      this.$emit('submit');
       this.callback && this.callback();
     }
   }
