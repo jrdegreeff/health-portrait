@@ -1,7 +1,7 @@
 <!-- Component for building a graph -->
 
 <template>
-  <canvas :id="`graph-${detail}`"></canvas>
+  <canvas :id="`graph-${title}`"></canvas>
 </template>
 
 <script>
@@ -10,7 +10,7 @@ import { Chart } from 'chart.js/auto'
 export default {
   name: 'TrendsVisualization',
   props: {
-    detail: {
+    title: {
       type: String,
       required: true
     }, 
@@ -42,7 +42,7 @@ export default {
       }
 
       new Chart(
-        document.getElementById(`graph-${this.detail}`),
+        document.getElementById(`graph-${this.title}`),
         {
           type: 'line',
           options: {
@@ -76,7 +76,7 @@ export default {
             plugins: {
               title: {
                 display: true,
-                text: this.detail,
+                text: this.title,
                 color: colors.black,
                 font: {
                   size: 24

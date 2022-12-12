@@ -9,6 +9,7 @@
         :fields="fields"
         :document="document"
         :customValidators="validators"
+        :customUpdaters="updaters"
         @interface="registerForm"
       />
       <p v-else v-html="content" />
@@ -35,6 +36,7 @@ export default {
       buttonClass: 'btn-primary', // Class for the submit button
       document: {}, // The default values of the form
       validators: {}, // Functions to run for client-side validation (supplied by specific form)
+      updaters: {}, // Functions to run whenever a field is updated (supplied by specific form)
       loadAccount: false, // Whether or not to reload all store data associated with the account
       setAccount: false, // Whether or not stored account info should be updated after form submission
       setUsername: false, // Whether or not stored username should be updated after form submission

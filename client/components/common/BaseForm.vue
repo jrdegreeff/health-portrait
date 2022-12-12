@@ -16,11 +16,11 @@
       >
         <option/>
         <option
-          v-for="option in options"
-          :key="option"
-          :value="option"
+          v-for="{value, text} in options"
+          :key="value"
+          :value="value"
         >
-        {{ option }}
+        {{ text }}
         </option>
       </select>
       <textarea
@@ -78,7 +78,11 @@ export default {
     customValidators: {
       type: Object,
       required: true
-    }
+    },
+    customUpdaters: {
+      type: Object,
+      required: true
+    },
   },
   data() {
     return {
@@ -94,6 +98,9 @@ export default {
         this.customValidators[f.id]
       ].filter(x => x);
       this.$set(this.validators, f.id, v => validators.reduce((message, validator) => message || validator(v), null));
+    });
+    this.fields.forEach(f => {
+      this.update(f.id);
     });
   },
   mounted() {
@@ -112,7 +119,11 @@ export default {
   },
   methods: {
     validate(id) {
+      this.update(id);
       this.$set(this.errors, id, this.validators[id](this.values[id]));
+    },
+    update(id) {
+      this.customUpdaters[id] && this.customUpdaters[id](this);  // escape hatch
     },
   },
 };

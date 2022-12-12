@@ -1,15 +1,9 @@
 <template>
     <main>
-        <button class="btn-primary">
-            <NavLink :to="`/newLog/${type}`" name="Add log"></NavLink>
+        <button class="btn-primary" @click="$router.push({ path: `/newLog/${type}` })">
+            Add log
         </button>
-
         <table class="entries" v-if="filteredEntries">
-            <!-- <tr>
-                <th>Type</th>
-                <th>Title</th>
-                <th>Date</th>
-            </tr> -->
             <EntryComponent 
                 v-for="entry in filteredEntries" 
                 :key="entry._id"
@@ -20,12 +14,11 @@
 </template>
 
 <script lang="ts">
-import NavLink from '@/components/common/NavLink.vue';
 import EntryComponent from '@/components/Entry/EntryComponent.vue';
 
 export default {
     name: 'EntryPage',
-    components: {NavLink, EntryComponent},
+    components: {EntryComponent},
     props: {
         type: {
             type: String,
@@ -34,7 +27,7 @@ export default {
     },
     computed: {
         filteredEntries() {
-            return this.$store.filter('entries', ['type'], this.type === 'all' ? '' : this.type);
+            return this.$store.filter('populatedEntries', ['type'], this.type === 'all' ? '' : this.type);
         }
     },
     mounted() {
@@ -42,9 +35,9 @@ export default {
             title: `${this.$store.getters.accountName}'s Health Journal`,
             enableBack: true,
             headerLinks: {
-                "/logs/all": "All", // keeping the /all here to avoid weird activeLink styling behavior
-                "/logs/medication": "Medication",
+                "/logs/all": "All",
                 "/logs/appointment": "Appointment",
+                "/logs/medication": "Medication",
                 "/logs/other": "Other",
             },
         });

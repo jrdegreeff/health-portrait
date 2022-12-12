@@ -380,7 +380,11 @@
 
 **Throws** 
 - `401` if the user is not logged in
-- `400` if the `type`, `detail`, or `condition` is empty or a stream of empty spaces, or if given `type`, `condition`, or `scale` is not in specified set of valid inputs, or if `date` is empty/an invalid timestamp
+- `400` if the `type`, `detail`, or `condition` is empty or a stream of empty spaces
+- `400` if given `type`, `condition`, or `scale` is not in specified set of valid inputs
+- `400` if `date` is empty/an invalid timestamp
+- `404` if `detail` references a record that is doesn't exist
+- `403` if `detail` references a record that is not owned by the user
 
 #### `PATCH /api/entries/:entryId` - Editing an entry in the log
 
@@ -400,7 +404,11 @@
 - `401` if the user is not logged in
 - `404` if the `entryId` is invalid
 - `403` if the user is not the owner of the entry
-- `400` if the `type`, `detail`, or `condition` is empty or a stream of empty spaces, or if given `type`, `condition`, or `scale` is not in specified set of valid inputs, or if `date` is empty/an invalid timestamp
+- `400` if the `type`, `detail`, or `condition` is empty or a stream of empty spaces
+- `400` if given `type`, `condition`, or `scale` is not in specified set of valid inputs
+- `400` if `date` is empty/an invalid timestamp
+- `404` if `detail` references a record that is doesn't exist
+- `403` if `detail` references a record that is not owned by the user
 
 #### `DELETE /api/entries/:entryId` - Delete an entry in the log
 

@@ -10,6 +10,7 @@ type MedicalContactResponse = {
   specialty: string;
   phone_number: string;
   notes: string;
+  active: boolean;
 };
 
 /**

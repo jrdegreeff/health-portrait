@@ -48,7 +48,7 @@ export default class MedicalContactCollection {
    * @return {Promise<HydratedDocument<MedicalContact>[]>} - An array of all of the medical contacts sorted in alphabetical order by last name
    */
   static async findAllByOwner(owner: string): Promise<Array<HydratedDocument<MedicalContact>>> {
-    return MedicalContactModel.find({owner, active: true}).sort({last_name: 1});
+    return MedicalContactModel.find({owner}).sort({last_name: 1});
   }
 
   /**

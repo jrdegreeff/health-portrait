@@ -26,6 +26,7 @@
         v-for="contact in filteredContacts"
         :key="contact._id"
         :document="contact"
+        :ref="`#${contact._id}`"
       />
     </section>
   </main>
@@ -49,7 +50,7 @@
     },
     computed: {
       filteredContacts() {
-        return this.$store.filter('contacts', ['last_name', 'first_name'], this.search);
+        return this.$store.filter('activeContacts', ['last_name', 'first_name'], this.search);
       }
     },
     methods: {
@@ -70,6 +71,10 @@
           "/insurance": "Insurance",
         },
       });
+      if (this.$route.hash) {
+        const component = this.$refs[this.$route.hash][0];
+        component.$el.scrollIntoView({ behavior: 'smooth' });
+      }
     },
   };
 </script>

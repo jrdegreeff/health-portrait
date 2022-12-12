@@ -49,7 +49,7 @@
     },
     computed: {
       filteredInsurances() {
-        return this.$store.filter('insurances', ['purpose'], this.search);
+        return this.$store.filter('activeInsurances', ['purpose'], this.search);
       }
     },
     methods: {

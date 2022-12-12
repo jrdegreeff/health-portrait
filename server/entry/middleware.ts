@@ -1,14 +1,32 @@
 import type {Request, Response, NextFunction} from 'express';
 import {Types} from 'mongoose';
 import EntryCollection from './collection';
+import ContactCollection from '../medical-contact/collection';
+import MedicationCollection from '../medication/collection';
+
+const types = {
+    appointment: {
+        detailCollection: ContactCollection,
+        detailName: 'Contact',
+    },
+    medication: {
+        detailCollection: MedicationCollection,
+        detailName: 'Medication',
+    },
+    other: {
+        detailCollection: null,
+        detailName: null,
+    },
+} as { [index: string]: { detailCollection: any, detailName: string } };
+const conditionValues = ["pain", "cognition", "happiness"];
+const scaleValues = [1,2,3,4,5,6,7,8,9,10];
 
 const isValidEntry = async (req: Request, res: Response, next: NextFunction) => {
-    const entryId = req.params.entryId;
-    const validFormat = Types.ObjectId.isValid(entryId);
-    const entry = validFormat ? EntryCollection.findOne(entryId) : null;
+    const validFormat = Types.ObjectId.isValid(req.params.entryId);
+    const entry = validFormat && await EntryCollection.findOne(req.params.entryId);
     if (!entry) {
         res.status(404).json({
-            error: `Entry with entry ID ${entryId} does not exist.`
+            error: `Entry with entry ID ${req.params.entryId} does not exist.`
         });
         return;
     }
@@ -24,13 +42,43 @@ const isValidEntryType = (required: boolean) => async (req: Request, res: Respon
     
     req.body.type = req.body.type.toLowerCase();
 
-    const specifiedTypes = ["appointment", "medication", "other"];
-    if (!specifiedTypes.includes(req.body.type)) {
+    if (!Object.keys(types).includes(req.body.type)) {
         res.status(400).json({
             error: 'Entry type must be either "appointment", "medication", or "other".'
         });
         return;
     }
+
+    next();
+}
+
+const isValidEntryDetail = (required: boolean) => async (req: Request, res: Response, next: NextFunction) => {
+    if (!required && req.body.detail === undefined) {
+        next();
+        return;
+    }
+
+    const type = req.body.type || (await EntryCollection.findOne(req.params.entryId)).type;
+    const collection = types[type].detailCollection;
+    if (!collection) {
+        next();
+        return;
+    }
+
+    const record = Types.ObjectId.isValid(req.body.detail) && await collection.findOne(req.body.detail);
+    if (!record) {
+        res.status(404).json({
+            error: `${types[type].detailName} with id ${req.body.detail} does not exist.`
+        });
+        return;
+    }
+
+    if (req.session.accountId !== record.owner._id.toString()) {
+        res.status(403).json({
+            error: 'Cannot link to another account\'s record.'
+        });
+        return;
+      }
 
     next();
 }
@@ -43,8 +91,7 @@ const isValidEntryCondition = (required: boolean) => async (req: Request, res: R
     
     req.body.condition = req.body.condition.toLowerCase();
     
-    const specifiedConditions = ["pain", "cognition", "happiness"];
-    if (!specifiedConditions.includes(req.body.condition)) {
+    if (!conditionValues.includes(req.body.condition)) {
         res.status(400).json({
             error: 'Condition must be either "pain", "cognition", or "happiness".'
         });
@@ -60,8 +107,7 @@ const isValidEntryScale = (required: boolean) => async (req: Request, res: Respo
         return;
     }
     
-    const specifiedScales = [1,2,3,4,5,6,7,8,9,10];
-    if (!specifiedScales.includes(parseInt(req.body.scale))) {
+    if (!scaleValues.includes(parseInt(req.body.scale))) {
         res.status(400).json({
             error: 'Scale must be a valid number between 1 and 10.'
         });
@@ -75,7 +121,7 @@ const isValidEntryModifier = async (req: Request, res: Response, next: NextFunct
     const entry = await EntryCollection.findOne(req.params.entryId);
     if (req.session.accountId !== entry.owner._id.toString()) {
       res.status(403).json({
-          error: 'Cannot modify other accounts\' entries.'
+          error: 'Cannot modify another accounts\' entries.'
       });
       return;
     }
@@ -86,6 +132,7 @@ const isValidEntryModifier = async (req: Request, res: Response, next: NextFunct
 export {
     isValidEntry,
     isValidEntryType,
+    isValidEntryDetail,
     isValidEntryCondition,
     isValidEntryScale,
     isValidEntryModifier,

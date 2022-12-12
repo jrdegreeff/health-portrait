@@ -5,8 +5,8 @@
   <main>
     <article v-if="filteredEntries.length">
       <p>Click on the colored rectangles next to the <b>Cognition</b>, <b>Pain</b>, or <b>Happiness</b> labels at the top of each chart to show/hide trend lines.</p>
-      <div v-for="detail in new Set(filteredEntries.map(entry => entry.detail))" :key="detail">
-        <TrendsVisualization :entries="filteredEntries.filter(entry => entry.detail === detail).reverse()" :detail="detail" />
+      <div v-for="{title} in new Set(filteredEntries)" :key="title">
+        <TrendsVisualization :entries="filteredEntries.filter(entry => entry.title === title).reverse()" :title="title" />
         <hr />
       </div>
     </article>
@@ -32,7 +32,7 @@
     },
     computed: {
       filteredEntries() {
-        return this.$store.filter('entries', ['type'], this.type === 'all' ? '' : this.type);
+        return this.$store.filter('populatedEntries', ['type'], this.type === 'all' ? '' : this.type);
       }
     },
     mounted() {
@@ -41,8 +41,8 @@
         enableBack: true,
         headerLinks: {
           "/trends/all": "All",
-          "/trends/medication": "Medication",
           "/trends/appointment": "Appointment",
+          "/trends/medication": "Medication",
           "/trends/other": "Other",
         },
       });

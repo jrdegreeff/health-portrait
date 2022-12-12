@@ -6,6 +6,14 @@ Vue.use(Vuex);
 
 const alertDurationMillis = 8000;
 
+const formatContact = (contact) => {
+  return contact ? `${contact.title} ${contact.first_name} ${contact.last_name}` : '';
+}
+
+const formatMedication = (medication) => {
+  return medication ? medication.name : '';
+}
+
 /**
  * Storage for data that needs to be accessed from various components.
  */
@@ -31,6 +39,32 @@ const store = new Vuex.Store({
     },
     credentials(state) {
       return state.account ? state.account.credentials : [];
+    },
+    activeContacts(state) {
+      return state.contacts.filter(c => c.active).map(c => {
+        return { ...c, title: formatContact(c) };
+      });
+    },
+    activeInsurances(state) {
+      return state.insurances;
+    },
+    activeMedications(state) {
+      return state.medications.filter(m => m.active).map(m => {
+        return { ...m, title: formatMedication(m) };
+      });
+    },
+    populatedEntries(state) {
+      return state.entries.map(e => {
+        return {
+          ...e,
+          title: e.type === 'appointment' ? formatContact(state.contacts.find(c => c._id === e.detail))
+               : e.type === 'medication' ? formatMedication(state.medications.find(m => m._id === e.detail))
+               : e.detail,
+          active: e.type === 'appointment' ? !!state.contacts.find(c => c.active && c._id === e.detail)
+                : e.type === 'medication' ? !!state.medications.find(m => m.active && m._id === e.detail)
+                : false,
+        };
+      });
     },
   },
   mutations: {
@@ -120,7 +154,7 @@ const store = new Vuex.Store({
 });
 
 store.filter = (collection, fields, value) => {
-  return store.state[collection].filter(r => fields.some(f => r[f].toLowerCase().includes(value.toLowerCase())));
+  return store.getters[collection].filter(r => fields.some(f => r[f].toLowerCase().includes(value.toLowerCase())));
 }
 
 export default store;

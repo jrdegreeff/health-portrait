@@ -45,7 +45,7 @@ export default class MedicationCollection {
    * @return {Promise<HydratedDocument<Medication>[]>} - An array of all of the medications sorted in alphabetical order by medication name
    */
   static async findAllByOwner(owner: string): Promise<Array<HydratedDocument<Medication>>> {
-    return MedicationModel.find({ owner, active: true }).sort({ name: 1 });
+    return MedicationModel.find({ owner }).sort({ name: 1 });
   }
 
   /**
