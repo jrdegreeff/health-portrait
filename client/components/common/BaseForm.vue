@@ -28,7 +28,7 @@
           :value="values[id]"
         >
           {{ values['type'] === 'medication' ? $store.state.medications.find(m => m._id === values[id]).name
-                                             : formatContact($store.state.contacts.find(c => c._id === values[id])) }}
+                                             : formatContact($store.state.contacts.find(c => c._id === values[id])) }} (inactive)
         </option>
       </select>
       <textarea
