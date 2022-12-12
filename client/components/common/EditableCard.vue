@@ -7,6 +7,7 @@
       :fields="fields"
       :document="document"
       :customValidators="validators"
+      :customUpdaters="{}"
       @interface="registerForm"
     />
     <article v-else>
