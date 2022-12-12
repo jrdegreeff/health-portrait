@@ -8,8 +8,8 @@ export default {
     return {
       url: '/api/medications',
       fields: [
-        {id: 'name', label: 'Medication Name'},
-        {id: 'generic_name', label: 'Generic Name', optional: true},
+        {id: 'name', label: 'Medication Name', instructions: "This is the brand name of the drug (e.g. Advil)"},
+        {id: 'generic_name', label: 'Generic Name', instructions: "This is the drug's compound (e.g. ibuprofen)", optional: true},
         {id: 'dose', label: 'Dose'},
         {id: 'notes', label: 'Notes', type: 'textarea', optional: true},
       ],
