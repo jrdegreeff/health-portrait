@@ -40,8 +40,8 @@ export default {
     },
     computed: {
         filteredEntries() {
-            const entries = this.$store.filter('populatedEntries', ['type'], this.type === 'all' ? '' : this.type);
-            return entries.filter(entry => {return entry.detail.toLowerCase().includes(this.search.toLowerCase()) || entry.condition.toLowerCase().includes(this.search.toLowerCase())});
+            const entries = this.$store.filter('populatedEntries', ['_title', 'condition'], this.search);
+            return this.type === 'all' ? entries : entries.filter(e => e.type === this.type);
         }
     },
     mounted() {
