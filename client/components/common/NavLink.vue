@@ -32,7 +32,11 @@ export default {
 </script>
 
 <style scoped>
-a.active {
+.side-nav a.active {
+  border-bottom: 3px var(--light) solid;
+}
+
+.top-nav a.active {
   border-bottom: 3px var(--darkPrimary) solid;
 }
 </style>
