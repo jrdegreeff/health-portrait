@@ -22,6 +22,14 @@
         >
         {{ text }}
         </option>
+        <option 
+          v-if="values[id] && !options.find(m => m.value === values[id])"
+          :key="values[id]"
+          :value="values[id]"
+        >
+          {{ values['type'] === 'medication' ? $store.state.medications.find(m => m._id === values[id]).name
+                                             : formatContact($store.state.contacts.find(c => c._id === values[id])) }}
+        </option>
       </select>
       <textarea
         v-else-if="type === 'textarea'"
@@ -125,6 +133,9 @@ export default {
     },
     update(id) {
       this.customUpdaters[id] && this.customUpdaters[id](this);  // escape hatch
+    },
+    formatContact(contact) {
+      return contact ? `${contact.title} ${contact.first_name} ${contact.last_name}` : '';
     },
   },
 };
