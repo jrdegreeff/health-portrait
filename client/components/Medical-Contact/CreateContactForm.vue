@@ -18,7 +18,10 @@ export default {
         {id: 'notes', label: 'Notes', type: 'textarea', optional: true},
       ],
       validators: {
-        phone_number: this.$helpers.validators.phoneNumber
+        title: this.$helpers.validators.nonEmpty,
+        first_name: this.$helpers.validators.nonEmpty,
+        last_name: this.$helpers.validators.nonEmpty,
+        phone_number: this.$helpers.validators.phoneNumber, 
       },
       title: 'Add contact',
       callback: async () => {
