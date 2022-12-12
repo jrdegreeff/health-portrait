@@ -34,17 +34,40 @@ export default {
       ],
       updaters: {
         type: form => {
-          const detailTypes = {
-            '': {id: 'detail', label: '', type: 'hidden'},
-            appointment: {id: 'detail', label: 'Appointment with', type: 'select', options: this.$store.getters.activeContacts.map(
-              c => { return {value: c._id, text: c._title}; }
-            )},
-            medication: {id: 'detail', label: 'Medication', type: 'select', options: this.$store.getters.activeMedications.map(
-              m => { return {value: m._id, text: m._title}; }
-            )},
-            other: {id: 'detail', label: 'Description'},
-          };
-          form.fields[1] = detailTypes[form.values['type']];
+          const formatDetail = r => { return {value: r._id, text: r._title}; }
+
+          const collection = {
+            appointment: this.$store.getters.populatedContacts,
+            medication: this.$store.getters.populatedMedications,
+          }[form.values['type']];
+          const inactive = collection && collection.find(r => (r._id === form.values['detail'] && !r.active));
+
+          const activeCollection = {
+            appointment: this.$store.getters.activeContacts,
+            medication: this.$store.getters.activeMedications,
+          }[form.values['type']];
+          const options = activeCollection && activeCollection.map(formatDetail);
+
+          const label = {
+            '': '',
+            appointment: 'Appointment with',
+            medication: 'Medication',
+            other: 'Description',
+          }[form.values['type']];
+            
+          const type = {
+            '': 'hidden',
+            appointment: 'select',
+            medication: 'select',
+            other: 'text',
+          }[form.values['type']];
+
+          if (inactive) {
+            form.fields[0].disabled = true;
+            form.fields[1] = {id: 'detail', label, type: 'select', options: [formatDetail(inactive)], disabled: true};
+          } else {
+            form.fields[1] = {id: 'detail', label, type, options};
+          }
         }
       },
       validators: {
