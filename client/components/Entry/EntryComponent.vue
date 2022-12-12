@@ -131,4 +131,8 @@ td {
 td > a {
     text-decoration: underline;
 }
+
+p {
+    margin: 1.5rem;
+}
 </style>
