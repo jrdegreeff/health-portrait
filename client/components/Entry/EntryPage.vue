@@ -3,6 +3,14 @@
         <button class="btn-primary" @click="$router.push({ path: `/newLog/${type}` })">
             Add log
         </button>
+        <div class="search-wrapper">
+          <label>Search:</label>
+          <input
+            v-model="search"
+            type="text"
+            placeholder="Search logs..."
+          >
+        </div>
         <table class="entries" v-if="filteredEntries">
             <EntryComponent 
                 v-for="entry in filteredEntries" 
@@ -25,9 +33,15 @@ export default {
             required: true
       }
     },
+    data() {
+      return {
+        search: '',
+      };
+    },
     computed: {
         filteredEntries() {
-            return this.$store.filter('populatedEntries', ['type'], this.type === 'all' ? '' : this.type);
+            const entries = this.$store.filter('populatedEntries', ['type'], this.type === 'all' ? '' : this.type);
+            return entries.filter(entry => {return entry.detail.toLowerCase().includes(this.search.toLowerCase()) || entry.condition.toLowerCase().includes(this.search.toLowerCase())});
         }
     },
     mounted() {
@@ -51,5 +65,8 @@ export default {
     border-bottom: 0px;
     border-spacing: 0px;
     margin-top: 2rem;
+}
+.search-wrapper {
+  padding-top: 20px;
 }
 </style>
