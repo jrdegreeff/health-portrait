@@ -14,6 +14,10 @@ export default {
         {id: 'dose', label: 'Dose'},
         {id: 'notes', label: 'Notes', type: 'textarea', optional: true},
       ],
+      validators: {
+        name: this.$helpers.validators.nonEmpty,
+        dose: this.$helpers.validators.nonEmpty,
+      },
       title: 'Add medication',
       callback: async () => {
         await this.$store.dispatch('refreshMedications');
