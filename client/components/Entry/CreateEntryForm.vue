@@ -36,13 +36,13 @@ export default {
         type: form => {
           const detailTypes = {
             '': {id: 'detail', label: '', type: 'hidden'},
-            appointment: {id: 'detail', label: 'doctor', type: 'select', options: this.$store.getters.activeContacts.map(
+            appointment: {id: 'detail', label: 'Doctor', type: 'select', options: this.$store.getters.activeContacts.map(
               c => { return {value: c._id, text: c.title}; }
             )},
-            medication: {id: 'detail', label: 'medication', type: 'select', options: this.$store.getters.activeMedications.map(
+            medication: {id: 'detail', label: 'Medication', type: 'select', options: this.$store.getters.activeMedications.map(
               m => { return {value: m._id, text: m.title}; }
             )},
-            other: {id: 'detail', label: 'description'},
+            other: {id: 'detail', label: 'Description'},
           };
           form.fields[1] = detailTypes[form.values['type']];
         }

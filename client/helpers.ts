@@ -30,7 +30,6 @@ const helpers = (store) => {
       try {
         return JSON.parse(text);
       } catch (e) {
-        console.log(e);
         return text;
       }
     },

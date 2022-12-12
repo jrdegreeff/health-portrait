@@ -74,8 +74,6 @@ const isValidEntryDetail = (required: boolean) => async (req: Request, res: Resp
     }
 
     if (req.session.accountId !== record.owner._id.toString()) {
-        console.log(req.session.accountId)
-        console.log(record.owner._id.toString())
         res.status(403).json({
             error: 'Cannot link to another account\'s record.'
         });
