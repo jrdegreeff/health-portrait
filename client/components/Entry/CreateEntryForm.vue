@@ -15,7 +15,7 @@ export default {
     return {
       url: '/api/entries',
       method: 'POST',
-      title: 'Create new entry',
+      title: 'Add log',
       fields: [
         {id: 'type', label: 'Type', type: 'select', options: [
           {value: 'appointment', text: 'Appointment'},
@@ -28,15 +28,15 @@ export default {
           {value: 'cognition', text: 'cognition'},
           {value: 'happiness', text: 'happiness'},
         ]},
-        {id: 'scale', label: 'Scale', type: 'range', range: {min: 1, max: 10}, default: 5},
+        {id: 'scale', label: 'Scale', type: 'range', range: {min: 1, max: 10}, default: 5, instructions: '1 for lowest, 10 for highest'},
+        {id: 'date', label: 'Date', type: 'date', default: moment().format('YYYY-MM-DD')},
         {id: 'notes', label: 'Notes', type: 'textarea', optional: true},
-        {id: 'date', label: 'Date', type: 'date', default: moment().format('YYYY-MM-DD')}
       ],
       updaters: {
         type: form => {
           const detailTypes = {
             '': {id: 'detail', label: '', type: 'hidden'},
-            appointment: {id: 'detail', label: 'Doctor', type: 'select', options: this.$store.getters.activeContacts.map(
+            appointment: {id: 'detail', label: 'Appointment with', type: 'select', options: this.$store.getters.activeContacts.map(
               c => { return {value: c._id, text: c.title}; }
             )},
             medication: {id: 'detail', label: 'Medication', type: 'select', options: this.$store.getters.activeMedications.map(

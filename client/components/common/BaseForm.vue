@@ -95,6 +95,7 @@ export default {
     this.fields.forEach(f => {
       const validators = [
         !f.optional && (v => v ? '' : 'required field'),
+        !f.optional && this.$helpers.validators.nonEmpty,
         this.customValidators[f.id]
       ].filter(x => x);
       this.$set(this.validators, f.id, v => validators.reduce((message, validator) => message || validator(v), null));
@@ -148,7 +149,7 @@ span {
 .tooltiptext {
   visibility: hidden;
   background-color: var(--darkGray);
-  color: var(--white);
+  color: var(--light);
   text-align: center;
   padding: 6px;
   border-radius: 6px;
