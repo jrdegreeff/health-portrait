@@ -13,10 +13,6 @@ export default {
         {id: 'dose', label: 'Dose'},
         {id: 'notes', label: 'Notes', type: 'textarea', optional: true},
       ],
-      validators: {
-        name: this.$helpers.validators.nonEmpty,
-        dose: this.$helpers.validators.nonEmpty,
-      },
       deleteCallback: async () => {
         this.$store.commit('alert', {
             message: 'Successfully deleted the medication!',
