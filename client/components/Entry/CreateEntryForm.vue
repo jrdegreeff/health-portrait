@@ -62,13 +62,16 @@ export default {
             other: 'text',
           }[form.values['type']];
 
-          if (inactive) {
+          const recordType = {
+            appointment: 'contact',
+            medication: 'medication',
+          }[form.values['type']];
+
+          if (inactive) {``
             form.fields[0].disabled = true;
             form.fields[1] = {
               id: 'detail', label, type: 'select', options: [formatDetail(inactive)], disabled: true,
-              instructions: `These fields are disabled since the associated ${
-                form.values['type'] === 'appointment' ? 'contact' : form.values['type']
-              } has been deleted`, 
+              instructions: `These fields are disabled since the associated ${recordType} has been deleted`
             };
           } else {
             form.fields[1] = {id: 'detail', label, type, options};
