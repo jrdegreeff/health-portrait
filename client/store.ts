@@ -40,18 +40,23 @@ const store = new Vuex.Store({
     credentials(state) {
       return state.account ? state.account.credentials : [];
     },
-    activeContacts(state) {
-      return state.contacts.filter(c => c.active).map(c => {
-        return { ...c, _title: formatContact(c) };
-      });
+    populatedContacts(state) {
+      return state.contacts.map(c => { return { ...c, _title: formatContact(c) }; });
     },
-    activeInsurances(state) {
+    populatedInsurances(state) {
       return state.insurances;
     },
-    activeMedications(state) {
-      return state.medications.filter(m => m.active).map(m => {
-        return { ...m, _title: formatMedication(m) };
-      });
+    populatedMedications(state) {
+      return state.medications.map(m => { return { ...m, _title: formatMedication(m) }; });
+    },
+    activeContacts(state, getters) {
+      return getters.populatedContacts.filter(c => c.active);
+    },
+    activeInsurances(state, getters) {
+      return getters.populatedInsurances;
+    },
+    activeMedications(state, getters) {
+      return getters.populatedMedications.filter(m => m.active);
     },
     populatedEntries(state) {
       return state.entries.map(e => {

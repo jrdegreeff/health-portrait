@@ -17,10 +17,6 @@ export default {
         {id: 'plan_type', label: 'Plan Type', optional: true},
         {id: 'notes', label: 'Notes', type: 'textarea', optional: true},
       ],
-      validators: {
-        purpose: this.$helpers.validators.nonEmpty,
-        subscriber_name: this.$helpers.validators.nonEmpty,
-      },
       title: 'Add insurance card',
       callback: async () => {
         await this.$store.dispatch('refreshInsurances');

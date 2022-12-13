@@ -6,7 +6,7 @@
     <hr/>
     <section>
       <AddCredentialForm />
-      <AccessList />
+      <AccessList v-if="$store.getters.credentials.length > 1" />
     </section>
     <hr/>
     <section>

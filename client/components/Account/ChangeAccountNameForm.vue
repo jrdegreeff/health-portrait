@@ -14,9 +14,6 @@ export default {
       fields: [
         {id: 'name', label: 'Shared Account Name', instructions: 'This should be the name of the person whose health data will be recorded in this account.'}
       ],
-      validators: {
-        name: this.$helpers.validators.nonEmpty,
-      },
       title: 'Change shared account name',
       callback: () => {
         this.$store.commit('alert', {

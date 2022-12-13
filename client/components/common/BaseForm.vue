@@ -3,7 +3,7 @@
 <template>
   <article>
     <span
-      v-for="{id, label, type, options, range, hint, instructions, optional} in fields"
+      v-for="{id, label, type, options, range, hint, instructions, optional, disabled} in fields"
       :key="id"
     >
       <label v-if="type !== 'hidden'" :for="id"> {{ label }}: </label>
@@ -11,6 +11,7 @@
       <select
         v-if="type === 'select'"
         :class="errors[id] ? 'error' : ''"
+        :disabled="disabled"
         v-model="values[id]"
         @change="() => validate(id)"
       >
@@ -26,16 +27,18 @@
       <textarea
         v-else-if="type === 'textarea'"
         :class="errors[id] ? 'error' : ''"
+        :disabled="disabled"
         v-model="values[id]"
         @input="() => validate(id)"
       />
       <input
         v-else-if="type === 'range'"
+        :class="errors[id] ? 'error' : ''"
         type="range"
         :min="range.min"
         :max="range.max"
         list="tickmarks"
-        :class="errors[id] ? 'error' : ''"
+        :disabled="disabled"
         v-model="values[id]"
         @change="() => validate(id)"
       >
@@ -43,6 +46,7 @@
         v-else
         :class="errors[id] ? 'error' : ''"
         :type="type || 'text'"
+        :disabled="disabled"
         v-model="values[id]"
         @input="() => validate(id)"
       >
@@ -95,6 +99,7 @@ export default {
     this.fields.forEach(f => {
       const validators = [
         !f.optional && (v => v ? '' : 'required field'),
+        !f.optional && this.$helpers.validators.nonEmpty,
         this.customValidators[f.id]
       ].filter(x => x);
       this.$set(this.validators, f.id, v => validators.reduce((message, validator) => message || validator(v), null));
@@ -148,7 +153,7 @@ span {
 .tooltiptext {
   visibility: hidden;
   background-color: var(--darkGray);
-  color: var(--white);
+  color: var(--light);
   text-align: center;
   padding: 6px;
   border-radius: 6px;
