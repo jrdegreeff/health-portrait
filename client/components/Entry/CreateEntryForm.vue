@@ -67,7 +67,7 @@ export default {
             medication: 'medication',
           }[form.values['type']];
 
-          if (inactive) {``
+          if (inactive) {
             form.fields[0].disabled = true;
             form.fields[1] = {
               id: 'detail', label, type: 'select', options: [formatDetail(inactive)], disabled: true,
