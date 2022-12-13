@@ -1,5 +1,10 @@
 # Health Portrait
 
+To view an example of how our application works, feel free to use the login below: 
+
+username: mariasd
+password: 123
+
 ## Running Locally
 
 - Run `npm run serve`, which compiles the frontend for hot-reloading with webpack and serves it at port `8080`.

@@ -7,10 +7,10 @@
                     v-if="entry.active"
                     :to="{name: pageForType(entry.type), hash:`#${entry.detail}`}"
                 >
-                    {{entry.title}}
+                    {{entry._title}}
                 </router-link>
                 <span v-else>
-                    {{entry.title}}
+                    {{entry._title}}
                 </span>
             </td>
             <td>{{entry.condition}}</td>
@@ -138,5 +138,9 @@ td {
 
 td > a {
     text-decoration: underline;
+}
+
+p {
+    margin: 1.5rem;
 }
 </style>

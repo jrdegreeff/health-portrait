@@ -16,8 +16,8 @@ export default {
         {id: 'phone_number', label: 'Phone Number', hint: 'Format: 123-456-7890'},
         {id: 'notes', label: 'Notes', type: 'textarea', optional: true},
       ],
-      validators: {
-        phone_number: this.$helpers.validators.phoneNumber
+      validators: { 
+        phone_number: this.$helpers.validators.phoneNumber,  
       },
       deleteCallback: async () => {
         this.$store.commit('alert', {
