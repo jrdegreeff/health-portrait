@@ -42,7 +42,7 @@ export default {
   --lightSecondary: #c4d3c0;
   --darkSecondary: #82ab74;
   
-  --light: #e9e9e9;
+  --light: #fff;
   --lightGray: #dddddd; 
   --gray: #888888;
   --darkGray: #444444;
