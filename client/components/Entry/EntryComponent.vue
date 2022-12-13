@@ -95,6 +95,14 @@ export default {
     border-bottom: 1px solid var(--dark);
 }
 
+.entryLog a {
+    color: var(--primary);
+}
+
+.entryLog a:focus {
+    color: var(--lightPrimary);
+}
+
 td {
     margin: 1rem 1rem;
     width: 10rem;

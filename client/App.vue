@@ -49,6 +49,7 @@ export default {
   --dark: #000000;
 
   --error: #a61721;
+  --lightError: #be333c;
   --success: #2d8757;
 }
 
@@ -168,13 +169,14 @@ button.btn-secondary:hover {
 }
 
 button.btn-danger {
-  color: var(--error);
-  background-color: var(--secondary);
+  color: var(--light);
+  background-color: var(--error);
   border-color: var(--error);
 }
 
 button.btn-danger:hover {
-  background-color: var(--lightSecondary);
+  color: var(--dark);
+  background-color: var(--lightError);
 }
 
 fieldset {
