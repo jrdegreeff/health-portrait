@@ -1,6 +1,6 @@
 <template>
   <article>
-    <nav>
+    <nav class="side-nav">
       <section>
         <header><h2>
           <NavLink to="/" name="Home" :activatable="false"/>
@@ -85,6 +85,16 @@ h2 {
 
 ul {
   margin: 0;
+  list-style: none; 
+}
+
+ul li::before {
+  content: "\2022"; 
+  color: var(--light); 
+  font-weight: bold; 
+  display: inline-block; 
+  width: 1em; 
+  margin-left: -1em; 
 }
 
 li {

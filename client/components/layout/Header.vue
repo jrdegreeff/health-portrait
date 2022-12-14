@@ -10,7 +10,7 @@
       <h1> {{ $store.state.title }} </h1>
       <div class="placeholder" />
     </header>
-    <nav v-if="Object.keys($store.state.headerLinks).length">
+    <nav v-if="Object.keys($store.state.headerLinks).length" class="top-nav">
       <NavLink
         v-for="(name, to) in $store.state.headerLinks"
         :key="name"

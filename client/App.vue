@@ -35,20 +35,21 @@ export default {
 }
 
 :root {
-  --primary: #e8f3db;
-  --lightPrimary: #f3f9ed;
-  --darkPrimary: #c5e1a5;
-  --secondary: #d9d9d9;
-  --lightSecondary: #e3e3e3;
-  --darkSecondary: #cecece;
+  --primary: #28511c;
+  --lightPrimary: #477439;
+  --darkPrimary: #1b4010;
+  --secondary: #a3bf9a;
+  --lightSecondary: #c4d3c0;
+  --darkSecondary: #82ab74;
   
-  --light: #ffffff;
+  --light: #fff;
   --lightGray: #dddddd; 
   --gray: #888888;
   --darkGray: #444444;
   --dark: #000000;
 
   --error: #a61721;
+  --lightError: #be333c;
   --success: #2d8757;
 }
 
@@ -117,12 +118,25 @@ hr {
   height: 2px;
 }
 
-a {
+.side-nav hr {
+  background-color: var(--darkSecondary);
+}
+
+.side-nav a {
+  color: var(--light);
+  text-decoration: none;
+}
+
+.side-nav a:hover {
+  color: var(--lightGray);
+}
+
+.top-nav a {
   color: var(--dark);
   text-decoration: none;
 }
 
-a:hover {
+.top-nav a:hover {
   color: var(--darkGray);
 }
 
@@ -138,6 +152,7 @@ button:hover {
 
 button.btn-primary {
   background-color: var(--primary);
+  color: var(--light);
 }
 
 button.btn-primary:hover {
@@ -146,6 +161,7 @@ button.btn-primary:hover {
 
 button.btn-secondary {
   background-color: var(--secondary);
+  color: var(--dark);
 }
 
 button.btn-secondary:hover {
@@ -153,13 +169,14 @@ button.btn-secondary:hover {
 }
 
 button.btn-danger {
-  color: var(--error);
-  background-color: var(--secondary);
+  color: var(--light);
+  background-color: var(--error);
   border-color: var(--error);
 }
 
 button.btn-danger:hover {
-  background-color: var(--lightSecondary);
+  color: var(--dark);
+  background-color: var(--lightError);
 }
 
 fieldset {
